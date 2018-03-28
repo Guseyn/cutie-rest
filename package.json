@@ -1,0 +1,26 @@
+{
+  "name": "@guseyn/cutie-rest",
+  "version": "1.0.0",
+  "description": "Cutie extension for using REST (based on cutie-http) in Node.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Guseyn/cutie-rest.git"
+  },
+  "keywords": [
+    "cutie",
+    "rest"
+  ],
+  "dependencies": {
+    "@guseyn/cutie-http": "1.0.2"
+  },
+  "author": "guseyn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Guseyn/cutie-rest/issues"
+  },
+  "homepage": "https://github.com/Guseyn/cutie-rest#readme"
+}
