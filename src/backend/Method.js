@@ -1,13 +1,22 @@
 'use strict'
 
+// interface for REST API method
+
 class Method {
 
-  constructor(url, response) {
-    this.methods = methods;
-    this.response = response;
+  constructor(regexUrl, type) {
+    this.regexUrl = regexUrl;
   }
 
-  run() {
+  url(request) {
+
+  }
+
+  type(request) {
+
+  }
+
+  headers(request) {
 
   }
 

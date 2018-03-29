@@ -1,5 +1,9 @@
 'use strict'
 
+const cutieHttp = require('@guseyn/cutie-http');
+const ListeningServer = cutieHttp.ListeningServer;
+const CreatedHttpServer = cutieHttp.CreatedHttpServer;
+
 class Backend {
 
   constructor(port, host, options) {
@@ -8,8 +12,12 @@ class Backend {
     this.options = options;
   }
 
-  run() {
-
+  runWithApi(api) {
+    new ListeningServer(
+      new CreatedHttpServer(
+        this.options, api
+      ), this.port, this.host
+    )
   }
 
 }
