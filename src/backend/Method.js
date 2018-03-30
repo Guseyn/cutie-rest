@@ -4,7 +4,7 @@
 
 class Method {
 
-  constructor(regexUrl, type) {
+  constructor(regexpUrl, type) {
     this.regexUrl = regexUrl;
     this.type = type;
   }
@@ -17,7 +17,9 @@ class Method {
   }
 
   match(url) {
-    return this.regexUrl.test(url);
+    return this.regexpUrl.test(url);
   }
 
 }
+
+module.exports = Method;
