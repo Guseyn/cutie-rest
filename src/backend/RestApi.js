@@ -9,7 +9,9 @@ class RestApi extends Event {
   }
 
   definedBody(request, response) {
-    // work with meth0ds
+    let machedMethods = this.methods.filter(method => {
+      return method.match(/* replace this all with declarative code */);
+    });
   }
 
 }
