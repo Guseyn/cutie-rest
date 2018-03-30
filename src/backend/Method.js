@@ -6,18 +6,18 @@ class Method {
 
   constructor(regexUrl, type) {
     this.regexUrl = regexUrl;
+    this.type = type;
   }
 
-  url(request) {
-
+  /*
+    To be overriden
+  */
+  invoke(request, response) {
+    throw new Error('method invoke must be overriden');
   }
 
-  type(request) {
-
-  }
-
-  headers(request) {
-
+  match(url) {
+    return this.regexUrl.test(url);
   }
 
 }
