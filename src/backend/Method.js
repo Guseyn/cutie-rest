@@ -5,7 +5,7 @@
 class Method {
 
   constructor(regexpUrl, type) {
-    this.regexUrl = regexUrl;
+    this.regexpUrl = regexpUrl;
     this.type = type;
   }
 

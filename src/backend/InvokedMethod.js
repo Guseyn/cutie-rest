@@ -5,7 +5,7 @@ const AsyncObject = require('@guseyn/cutie').AsyncObject;
 class InvokedMethod extends AsyncObject {
 
   constructor(method, request, response) {
-    super(method);
+    super(method, request, response);
   }
 
   definedSyncCall() {
