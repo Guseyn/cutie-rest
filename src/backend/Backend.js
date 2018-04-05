@@ -6,7 +6,7 @@ const CreatedHttpServer = cutieHttp.CreatedHttpServer;
 const CreatedDefaultHttpServer = cutieHttp.CreatedDefaultHttpServer;
 
 const RestApi = require('./RestApi');
-const ServerListeningEvent = require('./../event/ServerListeningEvent');
+const LoggedListeningServer = require('./LoggedListeningServer');
 
 class Backend {
 
@@ -22,11 +22,10 @@ class Backend {
       ? new CreatedHttpServer(this.options, api)
       : new CreatedDefaultHttpServer(api);
     
-    new ListeningServer(
-      createdHttpServer, this.port, this.host,
-      new ServerListeningEvent(
-        `server is listening on ${this.host}:${this.port} with pid:${process.pid}`
-      )
+    new LoggedListeningServer(
+      new ListeningServer(
+        createdHttpServer, this.port, this.host
+      ), `server is listening on ${this.host}:${this.port} with pid:${process.pid}`
     ).call();
 
   }
