@@ -3,7 +3,7 @@
 const AsyncObject = require('@guseyn/cutie').AsyncObject;
 
 // Represented result is request
-class RequestWithDataEvent extends AsyncObject {
+class RequestWithErrorEvent extends AsyncObject {
 
   constructor(request, event) {
     super(request, event);
@@ -11,11 +11,11 @@ class RequestWithDataEvent extends AsyncObject {
 
   definedSyncCall() {
     return (request, event) => {
-      request.on('data', event);
+      request.on('error', event);
       return request;
     }
   }
 
 }
 
-module.exports = RequestWithDataEvent;
+module.exports = RequestWithErrorEvent;

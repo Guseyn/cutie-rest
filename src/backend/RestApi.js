@@ -1,9 +1,16 @@
 'use strict'
 
 const Event = require('@guseyn/cutie').Event;
-const UrlOfRequest = require('@guseyn/cutie-http').UrlOfRequest;
-const MatchedMethod = require('./MatchedMethod');
-const InvokedMethod = require('./InvokedMethod');
+
+const RequestWithDataEvent = require('./RequestWithDataEvent');
+const RequestWithEndEvent = require('./RequestWithEndEvent');
+const RequestWithErrorEvent = require('./RequestWithErrorEvent');
+
+const DataEvent = require('./DataEvent');
+const EndEvent = require('./EndEvent');
+const ErrorEvent = require('./ErrorEvent'); 
+
+const Logger = require('./../Logger'); 
 
 class RestApi extends Event {
 
@@ -13,11 +20,16 @@ class RestApi extends Event {
   }
 
   definedBody(request, response) {
-    new InvokedMethod(
-      new MatchedMethod(
-        this.methods, new UrlOfRequest(request)
-      ), request, response
-    ).call();
+    let body = [];
+    //new Logger(
+      new RequestWithEndEvent(
+        new RequestWithErrorEvent(
+          new RequestWithDataEvent(
+            request, new DataEvent(body)
+          ), new ErrorEvent()
+        ), new EndEvent(this.methods, request, response, body)
+      ).call();
+    //).call();
   }
 
 }

@@ -16,11 +16,17 @@ class GeneratedResponse extends Method {
     super(regexpUrl, type);
   }
 
-  invoke(request, response) {
+  invoke(headers, type, url, body, response) {
+    console.log({
+      headers,
+      type,
+      url,
+      body
+    });
     new EndedResponse(
       new WrittenResponse(
         response, 'content ... '
-      ), 'is delivered'
+      ), `is delivered => ${body}`
     ).call();
   }
 
@@ -28,6 +34,6 @@ class GeneratedResponse extends Method {
 
 new Backend(4200, '127.0.0.1').runWithApi(
   new RestApi(
-    new GeneratedResponse(new RegExp(/a/), 'GET')
+    new GeneratedResponse(new RegExp(/a/), 'POST')
   )
 );

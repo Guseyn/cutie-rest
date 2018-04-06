@@ -9,7 +9,7 @@ class RequestWithEndEvent extends AsyncObject {
     super(request, event);
   }
 
-  definedAsyncCall() {
+  definedSyncCall() {
     return (request, event) => {
       request.on('end', event);
       return request;

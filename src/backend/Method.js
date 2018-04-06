@@ -12,12 +12,12 @@ class Method {
   /*
     To be overriden
   */
-  invoke(request, response) {
+  invoke(headers, type, url, body, response) {
     throw new Error('method invoke must be overriden');
   }
 
-  match(url) {
-    return this.regexpUrl.test(url);
+  match(type, url) {
+    return this.type === type && this.regexpUrl.test(url);
   }
 
 }
