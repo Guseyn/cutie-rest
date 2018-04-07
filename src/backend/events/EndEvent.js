@@ -1,15 +1,14 @@
 'use strict'
 
 const Event = require('@guseyn/cutie').Event;
-const cutieHttp = require('@guseyn/cutie-http');
 
 const { 
   HeadersOfIncomingMessage,
   MethodOfIncomingMessage,
   UrlOfIncomingMessage
-} = cutieHttp;
-const MatchedMethod = require('./MatchedMethod');
-const InvokedMethod = require('./InvokedMethod');
+} = require('@guseyn/cutie-http');
+const MatchedMethod = require('./../method/MatchedMethod');
+const InvokedMethod = require('./../method/InvokedMethod');
 
 class EndEvent extends Event {
 

@@ -8,9 +8,9 @@ const {
   RequestWithErrorEvent
 } = require('@guseyn/cutie-http');
 
-const DataEvent = require('./DataEvent');
-const EndEvent = require('./EndEvent');
-const ErrorEvent = require('./ErrorEvent'); 
+const DataEvent = require('./events/DataEvent');
+const EndEvent = require('./events/EndEvent');
+const ErrorEvent = require('./events/ErrorEvent'); 
 
 const Logger = require('./../Logger'); 
 
@@ -23,15 +23,15 @@ class RestApi extends Event {
 
   definedBody(request, response) {
     let body = [];
-    //new Logger(
-      new RequestWithEndEvent(
-        new RequestWithErrorEvent(
-          new RequestWithDataEvent(
-            request, new DataEvent(body)
-          ), new ErrorEvent()
-        ), new EndEvent(this.methods, request, response, body)
-      ).call();
-    //).call();
+    new RequestWithEndEvent(
+      new RequestWithErrorEvent(
+        new RequestWithDataEvent(
+          request, new DataEvent(body)
+        ), new ErrorEvent()
+      ), new EndEvent(
+        this.methods, request, response, body
+      )
+    ).call();
   }
 
 }
