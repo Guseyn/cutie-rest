@@ -14,6 +14,8 @@ http.createServer((request, response) => {
       console.error(err);
     });
 
+    let content = {headers, method, url, body};
+
     response.statusCode = 200;
     response.setHeader('Content-Type', 'text/plain');
 
@@ -23,7 +25,10 @@ http.createServer((request, response) => {
       }
     );
     response.write('content');
-    response.end(` ... is delivered => ${body}`);
-
+    response.end(` ... is delivered => ${content}`);
+     
+    const used = process.memoryUsage().heapUsed / 1024 / 1024;
+    console.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`);
+  
   });
 }).listen(4201);
