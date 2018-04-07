@@ -2,9 +2,11 @@
 
 const Event = require('@guseyn/cutie').Event;
 
-const RequestWithDataEvent = require('./RequestWithDataEvent');
-const RequestWithEndEvent = require('./RequestWithEndEvent');
-const RequestWithErrorEvent = require('./RequestWithErrorEvent');
+const {
+  RequestWithDataEvent,
+  RequestWithEndEvent,
+  RequestWithErrorEvent
+} = require('@guseyn/cutie-http');
 
 const DataEvent = require('./DataEvent');
 const EndEvent = require('./EndEvent');
