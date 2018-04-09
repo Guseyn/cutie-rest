@@ -15,7 +15,7 @@
     "rest"
   ],
   "dependencies": {
-    "@guseyn/cutie-http": "1.0.9"
+    "@guseyn/cutie-http": "1.1.1"
   },
   "author": "guseyn",
   "license": "MIT",
