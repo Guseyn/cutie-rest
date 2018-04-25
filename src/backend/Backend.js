@@ -17,17 +17,14 @@ class Backend {
   }
 
   runWithApi(api) {
-    
-    let createdHttpServer = this.options
-      ? new CreatedHttpServer(this.options, api)
-      : new CreatedDefaultHttpServer(api);
-    
     new LoggedListeningServer(
       new ListeningServer(
-        createdHttpServer, this.port, this.host
+        this.options 
+          ? new CreatedHttpServer(this.options, api)
+          : new CreatedDefaultHttpServer(api),
+          this.port, this.host
       ), `server is listening on ${this.host}:${this.port} with pid:${process.pid}`
     ).call();
-
   }
 
 }

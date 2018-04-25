@@ -21,18 +21,13 @@ class EndEvent extends Event {
   }
 
   definedBody() {
-
-    this.body = Buffer.concat(this.body);
-    
-    let headers = new HeadersOfIncomingMessage(this.request);
-    let methodType = new MethodOfIncomingMessage(this.request);
-    let url = new UrlOfIncomingMessage(this.request);
-    
     new InvokedMethod(
       new MatchedMethod(this.methods, methodType, url),
-        headers, methodType, url, this.body, this.response
+        new HeadersOfIncomingMessage(this.request),
+        new MethodOfIncomingMessage(this.request),
+        new UrlOfIncomingMessage(this.request),
+        Buffer.concat(this.body), this.response
     ).call();
-  
   }
 
 }
