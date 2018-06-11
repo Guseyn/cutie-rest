@@ -7,7 +7,6 @@ const {
   WrittenResponse,
   ResponseWithWrittenHead
 } = require('@guseyn/cutie-http');
-const LoggedMemoryUsage = require('./LoggedMemoryUsage');
 
 class GeneratedResponse extends Method {
 
@@ -15,18 +14,15 @@ class GeneratedResponse extends Method {
     super(regexpUrl, type);
   }
 
-  invoke(headers, type, url, body, response) {
-    let content = {headers, type, url, body};
-    new LoggedMemoryUsage(
-      new EndedResponse(
-        new WrittenResponse(
-          new ResponseWithWrittenHead(
-            response, 200, 'ok',  {
-              'Content-Type': 'text/plain' 
-            }
-          ), 'content ... '
-        ), `is delivered => ${content}`
-      )
+  invoke(request, response) {
+    new EndedResponse(
+      new WrittenResponse(
+        new ResponseWithWrittenHead(
+          response, 200, 'ok',  {
+            'Content-Type': 'text/plain' 
+          }
+        ), 'content ... '
+      ), `is delivered`
     ).call();
   }
 

@@ -10,22 +10,20 @@ const LoggedListeningServer = require('./LoggedListeningServer');
 
 class Backend {
 
-  constructor(port, host, options) {
+  constructor(port, host) {
     this.port = port;
     this.host = host;
-    this.options = options;
   }
 
   runWithApi(api) {
     new LoggedListeningServer(
       new ListeningServer(
-        this.options 
-          ? new CreatedHttpServer(this.options, api)
-          : new CreatedDefaultHttpServer(api),
-          this.port, this.host
+        new CreatedHttpServer(api),
+        this.port, this.host
       ), `server is listening on ${this.host}:${this.port} with pid:${process.pid}`
     ).call();
   }
+
 
 }
 
