@@ -12,7 +12,7 @@ class Method {
   /*
     To be overriden
   */
-  invoke(headers, type, url, body, response) {
+  invoke(request, response) {
     throw new Error('method invoke must be overriden');
   }
 

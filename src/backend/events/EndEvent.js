@@ -1,14 +1,18 @@
 'use strict'
 
-const Event = require('@guseyn/cutie').Event;
+const { Event } = require('@guseyn/cutie');
 
 const { 
   HeadersOfIncomingMessage,
   MethodOfIncomingMessage,
   UrlOfIncomingMessage
 } = require('@guseyn/cutie-http');
+const {
+  ConcatenatedBuffers
+} = require('@guseyn/cutie-buffer');
 const MatchedMethod = require('./../method/MatchedMethod');
 const InvokedMethod = require('./../method/InvokedMethod');
+const RequestWithBody = require('./../request/RequestWithBody');
 
 class EndEvent extends Event {
 
@@ -22,11 +26,15 @@ class EndEvent extends Event {
 
   definedBody() {
     new InvokedMethod(
-      new MatchedMethod(this.methods, methodType, url),
-        new HeadersOfIncomingMessage(this.request),
+      new MatchedMethod(
+        this.methods,
         new MethodOfIncomingMessage(this.request),
-        new UrlOfIncomingMessage(this.request),
-        Buffer.concat(this.body), this.response
+        new UrlOfIncomingMessage(this.request)
+      ),
+      new RequestWithBody(
+        this.request, new ConcatenatedBuffers(this.body)
+      ),
+      this.response
     ).call();
   }
 
