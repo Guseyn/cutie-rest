@@ -10,7 +10,6 @@ class Logger extends AsyncObject {
 
   definedSyncCall() {
     return (obj) => {
-      console.log(obj);
       return obj;
     }
   }
