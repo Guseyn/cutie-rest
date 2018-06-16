@@ -1,6 +1,7 @@
 'use strict'
 
 const AsyncObject = require('@guseyn/cutie').AsyncObject;
+const NotFoundMethod = require('./NotFoundMethod');
 
 class MatchedMethod extends AsyncObject {
 
@@ -10,17 +11,21 @@ class MatchedMethod extends AsyncObject {
 
   definedSyncCall() {
     return (methods, type, url) => {
-      let matchedMethods = methods.filter(method => {
-        return method.match(type, url) ;
+      let matchedMethod = methods.find(method => {
+        return method.match(type, url);
       });
-      if (matchedMethods.length === 0) {
+      if (!matchedMethod) {
         // 404
-        throw new Error(`no methods matchs to url:${url} with type of method:${type}`);
+        let notFoundMethod = methods.find(method => {
+          return method instanceof NotFoundMethod;
+        });
+        if (!notFoundMethod) {
+          throw new Error(`no methods matchs to url:${url} with type of method: ${type}`);
+        }
+        return notFoundMethod;
+      } else {
+        return matchedMethod;
       }
-      if (matchedMethods.length > 1) {
-        throw new Error(`url ${url} matches to more than one method with type of method:${type}`);
-      }
-      return matchedMethods[0];
     }
   }
 
