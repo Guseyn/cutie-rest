@@ -1,8 +1,5 @@
 'use strict'
 
-const { AsyncObject } = require('@guseyn/cutie');
-const Method = require('./../method/Method');
-
 const {
   ResponseWithWrittenHead,
   UrlOfIncomingMessage
@@ -11,32 +8,39 @@ const {
   CreatedReadStream
 } = require('@guseyn/cutie-fs');
 const {
-  PipedReadable
-} = require('@guseyn/cutie-stream');
-const {
   ResolvedPath
 } = require('@guseyn/cutie-path');
+const {
+  PipedReadable,
+  ReadableWithErrorEvent
+} = require('@guseyn/cutie-stream');
+const Method = require('./../method/Method');
 const FSPathByUrl = require('./FSPathByUrl');
+const NotFoundErrorEvent = require('./NotFoundErrorEvent');
 
 class ServingFiles extends Method {
 
-  constructor(regexpUrl, type, dir) {
-    super(regexpUrl, type);
-    this.dir = dir;
+  constructor(regexpUrl, mapper, notFoundMethod) {
+    super(regexpUrl, 'GET');
+    this.mapper = mapper;
+    this.notFoundMethod = notFoundMethod;
   }
 
   invoke(request, response) {
-    if (!this.dir) {
-      throw new Error('Serving directory is not specified');
-    }
     new PipedReadable(
-      new CreatedReadStream(
-        new ResolvedPath(
-          this.dir, new FSPathByUrl(
-            new UrlOfIncomingMessage(request)
+      new ReadableWithErrorEvent(
+        new CreatedReadStream(
+          new ResolvedPath(
+            new FSPathByUrl(
+              new UrlOfIncomingMessage(request),
+              this.mapper
+            )
           )
+        ), 
+        new NotFoundErrorEvent(
+          this.notFoundMethod, request, response
         )
-      ), response
+      ), new ResponseWithWrittenHead(response, 200, 'ok')
     ).call();
   }
 

@@ -1,18 +1,14 @@
 'use strict'
 
 const Event = require('@guseyn/cutie').Event;
-
 const {
   RequestWithDataEvent,
   RequestWithEndEvent,
   RequestWithErrorEvent
 } = require('@guseyn/cutie-http');
-
-const DataEvent = require('./events/DataEvent');
-const EndEvent = require('./events/EndEvent');
-const ErrorEvent = require('./events/ErrorEvent'); 
-
-const Logger = require('./../Logger'); 
+const DataEvent = require('./../events/DataEvent');
+const EndEvent = require('./../events/EndEvent');
+const ErrorEvent = require('./../events/ErrorEvent'); 
 
 class RestApi extends Event {
 
@@ -28,9 +24,7 @@ class RestApi extends Event {
         new RequestWithDataEvent(
           request, new DataEvent(body)
         ), new ErrorEvent()
-      ), new EndEvent(
-        this.methods, request, response, body
-      )
+      ), new EndEvent(this.methods, request, response, body)
     ).call();
   }
 
