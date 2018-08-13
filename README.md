@@ -57,7 +57,7 @@ new Backend(8080, '127.0.0.1', new RestApi(
 ```js
 'use strict'
 
-const NotFoundMethod = require('./../src/backend/method/NotFoundMethod');
+const { NotFoundMethod } = require('./NotFoundMethod');
 
 class CustomNotFoundMethod extends NotFoundMethod {
 
