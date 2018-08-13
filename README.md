@@ -13,7 +13,7 @@ const {
 } = require('@guseyn/cutie-rest');
 ```
 
-This library provides following objects: `Backend`, `RestApi`, `ServingFiles`, `CachedServingFiles` and `Method`, `NotFoundMethod` interface.
+This library provides following objects: `Backend`, `RestApi`, `ServingFiles`, `CachedServingFiles` and `Method`, `NotFoundMethod` interfaces.
 
 | Object | Parameters | Description |
 | ------ | -----------| ----------- |
