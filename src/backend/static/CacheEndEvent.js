@@ -16,7 +16,6 @@ class CacheEndEvent extends AsyncObject {
         if (!cache[key]) {
           cache[key] = [];
         }
-        cache[key] = Buffer.concat(cache[key]);
       }
     }
   }

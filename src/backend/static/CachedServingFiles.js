@@ -7,14 +7,19 @@ const {
   If, Else
 } = require('@guseyn/cutie-if-else');
 const {
-  ResponseWithWrittenHead,
+  ResponseWithHeader,
+  ResponseWithStatusCode,
   UrlOfIncomingMessage
 } = require('@guseyn/cutie-http');
+const {
+  ConcatenatedBuffers
+} = require('@guseyn/cutie-buffer');
 const {
   CreatedReadStream
 } = require('@guseyn/cutie-fs');
 const {
-  ResolvedPath
+  ResolvedPath,
+  Extname
 } = require('@guseyn/cutie-path');
 const {
   PipedReadable,
@@ -30,6 +35,7 @@ const CacheEndEvent = require('./CacheEndEvent');
 const IsCached = require('./IsCached');
 const CachedValue = require('./CachedValue');
 const CreatedReadableBufferStream = require('./CreatedReadableBufferStream');
+const MimeTypeForExtension = require('./MimeTypeForExtension');
 
 class CachedServingFiles extends Method {
 
@@ -41,16 +47,30 @@ class CachedServingFiles extends Method {
   }
 
   invoke(request, response) {
-    new FSPathByUrl(
-      new UrlOfIncomingMessage(request),
-      this.mapper
-    ).as('path').after(
+    let okResponse = new ResponseWithStatusCode(
+      new ResponseWithHeader(
+        response, 'Content-Type',
+        new MimeTypeForExtension(
+          new Extname(
+            as('resolvedPath')
+          )
+        )
+      ), 200
+    );
+    new ResolvedPath(
+      new FSPathByUrl(
+        new UrlOfIncomingMessage(request),
+        this.mapper
+      )
+    ).as('resolvedPath').after(
       new If(
-        new IsCached(this.cache, as('path')),
+        new IsCached(this.cache, as('resolvedPath')),
         new PipedReadable(
           new CreatedReadableBufferStream(
-            {}, new CachedValue(this.cache, as('path'))
-          ), response
+            new ConcatenatedBuffers(
+              new CachedValue(this.cache, as('resolvedPath'))
+            )
+          ), okResponse
         ),
         new Else(
           new PipedReadable(
@@ -58,16 +78,17 @@ class CachedServingFiles extends Method {
               new ReadableWithDataEvent(
                 new ReadableWithErrorEvent(
                   new CreatedReadStream(
-                    new ResolvedPath(
-                      as('path')
-                    )
-                  ), 
+                    as('resolvedPath')
+                  ),
                   new NotFoundErrorEvent(
                     this.notFoundMethod, request, response
                   )
-                ), new CacheDataEvent(this.cache, as('path'))
-              ), new CacheEndEvent(this.cache, as('path'))
-            ), new ResponseWithWrittenHead(response, 200, 'ok')
+                ),
+                new CacheDataEvent(this.cache, as('resolvedPath'))
+              ),
+              new CacheEndEvent(this.cache, as('resolvedPath'))
+            ),
+            okResponse
           )
         )
       )

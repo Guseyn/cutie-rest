@@ -3,7 +3,9 @@
 const Method = require('./../method/Method');
 
 const {
-  ResponseWithWrittenHead,
+  ResponseWithHeader,
+  ResponseWithStatusCode,
+  ResponseWithStatusMessage,
   WrittenResponse,
   EndedResponse
 } = require('@guseyn/cutie-http');
@@ -17,7 +19,12 @@ class NotFoundMethod extends Method {
   invoke(request, response) {
     new EndedResponse(
       new WrittenResponse(
-        new ResponseWithWrittenHead(response, 404, 'Not found'), 
+        new ResponseWithHeader(
+          new ResponseWithStatusMessage(
+            new ResponseWithStatusCode(response, 404), 'Not found'
+          ),
+          'Content-Type', 'text/plain'
+        ), 
         '404: Not found'
       )
     ).call();
