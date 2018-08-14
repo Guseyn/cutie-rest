@@ -8,6 +8,10 @@ class CustomNotFoundMethod extends NotFoundMethod {
     super(regexpUrl);
   }
 
+  invoke(request, response) {
+    super.invoke(request, response);
+  }
+
 }
 
 module.exports = CustomNotFoundMethod;

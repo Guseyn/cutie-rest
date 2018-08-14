@@ -1,14 +1,19 @@
 'use strict'
 
 const {
-  ResponseWithWrittenHead,
-  UrlOfIncomingMessage
+  as
+} = require('@guseyn/cutie');
+const {
+  UrlOfIncomingMessage,
+  ResponseWithStatusCode,
+  ResponseWithHeader
 } = require('@guseyn/cutie-http');
 const {
   CreatedReadStream
 } = require('@guseyn/cutie-fs');
 const {
-  ResolvedPath
+  ResolvedPath,
+  Extname
 } = require('@guseyn/cutie-path');
 const {
   PipedReadable,
@@ -17,6 +22,7 @@ const {
 const Method = require('./../method/Method');
 const FSPathByUrl = require('./FSPathByUrl');
 const NotFoundErrorEvent = require('./NotFoundErrorEvent');
+const MimeTypeForExtension = require('./MimeTypeForExtension');
 
 class ServingFiles extends Method {
 
@@ -27,20 +33,32 @@ class ServingFiles extends Method {
   }
 
   invoke(request, response) {
-    new PipedReadable(
-      new ReadableWithErrorEvent(
-        new CreatedReadStream(
-          new ResolvedPath(
-            new FSPathByUrl(
-              new UrlOfIncomingMessage(request),
-              this.mapper
-            )
+    new ResolvedPath(
+      new FSPathByUrl(
+        new UrlOfIncomingMessage(request),
+        this.mapper
+      )
+    ).as('resolvedPath').after(
+      new PipedReadable(
+        new ReadableWithErrorEvent(
+          new CreatedReadStream(
+            as('resolvedPath')
+          ),
+          new NotFoundErrorEvent(
+            this.notFoundMethod, request, response
           )
-        ), 
-        new NotFoundErrorEvent(
-          this.notFoundMethod, request, response
+        ),
+        new ResponseWithStatusCode(
+          new ResponseWithHeader(
+            response, 'Content-Type',
+            new MimeTypeForExtension(
+              new Extname(
+                as('resolvedPath')
+              )
+            )
+          ), 200
         )
-      ), new ResponseWithWrittenHead(response, 200, 'ok')
+      )
     ).call();
   }
 

@@ -8,13 +8,13 @@ const ReadableBufferStream = require('./ReadableBufferStream');
 // Represented result is ReadableBufferStream
 class CreatedReadableBufferStream extends AsyncObject {
 
-  constructor(options, buffer) {
-    super(options, buffer);
+  constructor(buffer, options) {
+    super(buffer, options);
   }
 
   definedSyncCall() {
-    return (options, buffer) => {
-      return new ReadableBufferStream(options, buffer);
+    return (buffer, options) => {
+      return new ReadableBufferStream(buffer, options);
     }
   }
 
