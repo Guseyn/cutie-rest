@@ -73,7 +73,7 @@ class CustomNotFoundMethod extends NotFoundMethod {
 
 module.exports = CustomNotFoundMethod;
 ```
-[NotFoundMethod]()
+[NotFoundMethod](https://github.com/Guseyn/cutie-rest/blob/master/src/backend/method/NotFoundMethod.js)
 
 ## GeneratedResponse
 
