@@ -1,9 +1,8 @@
 # cutie-rest
-Cutie extension for using REST (based on cutie-http) in Node.
 
 [![NPM Version][npm-image]][npm-url]
 
-[Cutie](https://github.com/Guseyn/cutie) extension for fs module in Node. It's based on the [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf).
+Cutie extension for using REST (based on cutie-http) in Node. It's based on the [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf).
 
 # Usage
 
