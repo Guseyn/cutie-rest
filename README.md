@@ -17,8 +17,8 @@ This library provides following objects: `Backend`, `RestApi`, `ServingFiles`, `
 | Object | Parameters | Description |
 | ------ | -----------| ----------- |
 | `Backend` | `port` (number), `host` (string), `api` (`RestApi`)| Declares backend server(just http for now) on specified `port` and `host`, also it provides declared `api` (REST).|
-| `RestApi` | ...methods(classes that extend `Method`) | Declares methods of api. |
-| `Method` | `regexp` (`RegExp`), method (string) | Declares a method(in api) with url that matches `regexp` and specified `method`('GET', 'POST', etc.). This class has a method `invoke(request, response)` that needs to be overridden.|
+| `RestApi` | `...methods`(classes that extend `Method`) | Declares methods of api. |
+| `Method` | `regexp` (`RegExp`), `method` (string) | Declares a method(in api) with url that matches `regexp` and specified `method`('GET', 'POST', etc.). This class has a method `invoke(request, response)` that needs to be overridden.|
 | `ServingFiles` | `regexp` (`RegExp`), mapper (`function(url)`), `notFoundMethod` (`Method`) | Extends `Method` and serves files on url that mathes `regexp` with `mapper` function that gets location of a file on a disk by the url. Also it's required to declare `notFoundMethod` that handles the cases when a file is not found. |
 | `CachedServingFiles` | `regexp` (`RegExp`), `mapper` (`function(url)`), `notFoundMethod` (`Method`) | Does the same that `ServingFiles` does and caches files for increasing speed of serving them. |
 | `NotFoundMethod` | `regexp` (`RegExp`) | Method is used in `RestApi`, `ServingFiles`, `CachedServingFiles` for declaring method on 404(NOT_FOUND) status. |
