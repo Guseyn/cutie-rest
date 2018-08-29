@@ -2,23 +2,23 @@
 
 const {
   as
-} = require('@guseyn/cutie');
+} = require('@cuties/cutie');
 const {
   UrlOfIncomingMessage,
   ResponseWithStatusCode,
   ResponseWithHeader
-} = require('@guseyn/cutie-http');
+} = require('@cuties/http');
 const {
   CreatedReadStream
-} = require('@guseyn/cutie-fs');
+} = require('@cuties/fs');
 const {
   ResolvedPath,
   Extname
-} = require('@guseyn/cutie-path');
+} = require('@cuties/path');
 const {
   PipedReadable,
   ReadableWithErrorEvent
-} = require('@guseyn/cutie-stream');
+} = require('@cuties/stream');
 const Method = require('./../method/Method');
 const FSPathByUrl = require('./FSPathByUrl');
 const NotFoundErrorEvent = require('./NotFoundErrorEvent');

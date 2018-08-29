@@ -6,7 +6,7 @@ const {
   EndedResponse,
   WrittenResponse,
   ResponseWithWrittenHead
-} = require('@guseyn/cutie-http');
+} = require('@cuties/http');
 
 class GeneratedResponse extends Method {
 

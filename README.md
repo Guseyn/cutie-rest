@@ -9,7 +9,7 @@ Cutie extension for using REST (based on [cutie-http](https://github.com/Guseyn/
 ```js
 const {
   // Needed async objects here from the table below
-} = require('@guseyn/cutie-rest');
+} = require('@cuties/rest');
 ```
 
 This library provides following objects: `Backend, RestApi, ServingFiles, CachedServingFiles` and `Method, NotFoundMethod` interfaces.
@@ -33,7 +33,7 @@ const {
   Backend,
   RestApi,
   CachedServingFiles
-} = require('@guseyn/cutie-rest');
+} = require('@cuties/rest');
 const GeneratedResponse = require('./GeneratedResponse');
 const CustomNotFoundMethod = require('./CustomNotFoundMethod');
 
@@ -81,13 +81,13 @@ This class also uses [cutie-http](https://github.com/Guseyn/cutie-http)
 ```js
 'use strict'
 
-const { Method } = require('@guseyn/cutie-rest');
+const { Method } = require('@cuties/rest');
 
 const {
   EndedResponse,
   WrittenResponse,
   ResponseWithWrittenHead
-} = require('@guseyn/cutie-http');
+} = require('@cuties/http');
 
 class GeneratedResponse extends Method {
 
@@ -113,5 +113,5 @@ module.exports = GeneratedResponse;
 ```
 
 
-[npm-image]: https://img.shields.io/npm/v/@guseyn/cutie-rest.svg
-[npm-url]: https://npmjs.org/package/@guseyn/cutie-rest
+[npm-image]: https://img.shields.io/npm/v/@cuties/rest.svg
+[npm-url]: https://npmjs.org/package/@cuties/rest

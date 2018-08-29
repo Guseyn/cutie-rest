@@ -1,6 +1,6 @@
 'use strcit'
 
-const { AsyncObject } = require('@guseyn/cutie');
+const { AsyncObject } = require('@cuties/cutie');
 
 class FSPathByUrl extends AsyncObject {
 
