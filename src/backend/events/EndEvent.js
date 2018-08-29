@@ -1,15 +1,15 @@
 'use strict'
 
-const { Event } = require('@guseyn/cutie');
+const { Event } = require('@cuties/cutie');
 
 const { 
   HeadersOfIncomingMessage,
   MethodOfIncomingMessage,
   UrlOfIncomingMessage
-} = require('@guseyn/cutie-http');
+} = require('@cuties/http');
 const {
   ConcatenatedBuffers
-} = require('@guseyn/cutie-buffer');
+} = require('@cuties/buffer');
 const MatchedMethod = require('./../method/MatchedMethod');
 const InvokedMethod = require('./../method/InvokedMethod');
 const RequestWithBody = require('./../request/RequestWithBody');

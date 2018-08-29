@@ -2,7 +2,7 @@
 
 const {
   AsyncObject
-} = require('@guseyn/cutie');
+} = require('@cuties/cutie');
 
 class CacheEndEvent extends AsyncObject {
 

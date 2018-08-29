@@ -1,11 +1,11 @@
 'use strict'
 
-const Event = require('@guseyn/cutie').Event;
+const Event = require('@cuties/cutie').Event;
 const {
   RequestWithDataEvent,
   RequestWithEndEvent,
   RequestWithErrorEvent
-} = require('@guseyn/cutie-http');
+} = require('@cuties/http');
 const DataEvent = require('./../events/DataEvent');
 const EndEvent = require('./../events/EndEvent');
 const ErrorEvent = require('./../events/ErrorEvent'); 

@@ -1,6 +1,6 @@
 'use strict'
 
-const Event = require('@guseyn/cutie').Event;
+const Event = require('@cuties/cutie').Event;
 
 class ErrorEvent extends Event {
 

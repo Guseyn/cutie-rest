@@ -1,10 +1,10 @@
 {
-  "name": "@guseyn/cutie-rest",
-  "version": "1.0.7",
+  "name": "@cuties/rest",
+  "version": "1.0.8",
   "description": "Cutie extension for using REST (based on cutie-http) in Node.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/example.js"
   },
   "repository": {
     "type": "git",
@@ -15,17 +15,17 @@
     "rest"
   ],
   "dependencies": {
-    "@guseyn/cutie": "1.4.0",
-    "@guseyn/cutie-http": "1.1.8",
-    "@guseyn/cutie-fs": "1.1.0",
-    "@guseyn/cutie-assert": "1.1.0",
-    "@guseyn/cutie-is": "1.0.3",
-    "@guseyn/cutie-if-else": "1.0.1",
-    "@guseyn/cutie-buffer": "1.0.9",
-    "@guseyn/cutie-stream": "1.0.9",
-    "@guseyn/cutie-process": "1.0.7",
-    "@guseyn/cutie-path": "1.0.1",
-    "test-executor": "1.0.8"
+    "@cuties/cutie": "1.4.3",
+    "@cuties/http": "1.1.9",
+    "@cuties/fs": "1.1.1",
+    "@cuties/assert": "1.1.4",
+    "@cuties/is": "1.0.6",
+    "@cuties/if-else": "1.0.2",
+    "@cuties/buffer": "1.1.0",
+    "@cuties/stream": "1.1.0",
+    "@cuties/process": "1.0.8",
+    "@cuties/path": "1.0.2",
+    "test-executor": "1.1.0"
   },
   "author": "guseyn",
   "license": "MIT",

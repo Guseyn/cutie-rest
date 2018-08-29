@@ -2,7 +2,7 @@
 
 const {
   AsyncObject
-} = require('@guseyn/cutie');
+} = require('@cuties/cutie');
 const ReadableBufferStream = require('./ReadableBufferStream');
 
 // Represented result is ReadableBufferStream

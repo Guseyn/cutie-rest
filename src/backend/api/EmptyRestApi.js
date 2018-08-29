@@ -1,10 +1,10 @@
 'use strict'
 
-const Event = require('@guseyn/cutie').Event;
+const Event = require('@cuties/cutie').Event;
 const {
   WrittenResponse,
   EndedResponse
-} = require('@guseyn/cutie-http');
+} = require('@cuties/http');
 
 class EmptyRestApi extends Event {
 

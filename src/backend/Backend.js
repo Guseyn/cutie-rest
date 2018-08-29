@@ -1,11 +1,11 @@
 'use strict'
 
-const Event = require('@guseyn/cutie').Event;
+const Event = require('@cuties/cutie').Event;
 const {
   ListeningServer,
   CreatedHttpServer,
   CreatedDefaultHttpServer
-} = require('@guseyn/cutie-http');
+} = require('@cuties/http');
 const RestApi = require('./api/RestApi');
 const EmptyRestApi = require('./api/EmptyRestApi');
 const LoggedListeningServer = require('./server/LoggedListeningServer');
