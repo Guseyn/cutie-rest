@@ -1,6 +1,6 @@
 {
   "name": "@cuties/rest",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Cutie extension for using REST (based on cutie-http) in Node.",
   "main": "index.js",
   "scripts": {
@@ -16,14 +16,14 @@
   ],
   "dependencies": {
     "@cuties/cutie": "1.4.3",
-    "@cuties/http": "1.1.9",
+    "@cuties/http": "1.2.0",
     "@cuties/fs": "1.1.1",
     "@cuties/assert": "1.1.4",
     "@cuties/is": "1.0.6",
     "@cuties/if-else": "1.0.2",
     "@cuties/buffer": "1.1.0",
     "@cuties/stream": "1.1.0",
-    "@cuties/process": "1.0.8",
+    "@cuties/process": "1.0.9",
     "@cuties/path": "1.0.2",
     "test-executor": "1.1.0"
   },
