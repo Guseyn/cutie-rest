@@ -12,12 +12,13 @@ const {
 } = require('@cuties/rest');
 ```
 
-This library provides following objects: `Backend, RestApi, ServingFiles, CachedServingFiles` and `Method, NotFoundMethod` interfaces.
+This library provides following objects: `Backend, RestApi, RequestBody, ServingFiles, CachedServingFiles` and `Method, NotFoundMethod` interfaces.
 
 | Object | Parameters(type) | Description |
 | ------ | -----------| ----------- |
-| `Backend` | `port(number), host(string), api(RestApi)`| Declares backend server(just http for now) on specified `port` and `host`, also it provides declared `api` (REST).|
-| `RestApi` | `...methods`(classes that extend `Method`) | Declares methods of api. |
+| `Backend` | `port(number), host(string), api(RestApi)`| It's `AsyncObject`. It Declares backend server(just http for now) on specified `port` and `host`, also it provides declared `api` (REST).|
+| `RestApi` | `...methods`(classes that extend `Method`) | It's `Event`. Declares methods of api. |
+| `RequestBody` | `request` | Reads body of `request` in `invoke(request, response)` method of `Method` implementation |
 | `Method` | `regexp(RegExp), method(string)` | Declares a method(in api) with url that matches `regexp` and specified `method`('GET', 'POST', etc.). This class has a method `invoke(request, response)` that needs to be overridden.|
 | `ServingFiles` | `regexp (RegExp), mapper (function(url)`), `notFoundMethod(Method)` | Extends `Method` and serves files on url that mathes `regexp` with `mapper` function that gets location of a file on a disk by the url. Also it's required to declare `notFoundMethod` that handles the cases when a file is not found. |
 | `CachedServingFiles` | `regexp(RegExp), mapper(function(url)), notFoundMethod(Method)` | Does the same that `ServingFiles` does and caches files for increasing speed of serving them. |
@@ -44,11 +45,13 @@ const mapper = (url) => {
   return path.join(...paths);
 }
 
-new Backend(8080, '127.0.0.1', new RestApi(
-  new GeneratedResponse(new RegExp(/\/response/), 'GET'),
-  new CachedServingFiles(new RegExp(/\/files/), mapper, notFoundMethod),
-  notFoundMethod
-)).run();
+new Backend(
+  8080, '127.0.0.1', new RestApi(
+    new GeneratedResponse(new RegExp(/\/response/), 'GET'),
+    new CachedServingFiles(new RegExp(/\/files/), mapper, notFoundMethod),
+    notFoundMethod
+  )
+).call();
 
 ```
 ## CustomNotFoundMethod
@@ -96,6 +99,7 @@ class GeneratedResponse extends Method {
   }
 
   invoke(request, response) {
+    // request also contains body(as buffer), use RequestBody object for that
     new EndedResponse(
       new WrittenResponse(
         new ResponseWithWrittenHead(

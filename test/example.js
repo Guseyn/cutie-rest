@@ -15,8 +15,10 @@ const mapper = (url) => {
   return path.join(...paths);
 }
 
-new Backend(8000, '127.0.0.1', new RestApi(
-  new GeneratedResponse(new RegExp(/\/response/), 'GET'),
-  new CachedServingFiles(new RegExp(/\/files/), mapper, notFoundMethod),
-  notFoundMethod
-)).run();
+new Backend(
+  8000, '127.0.0.1', new RestApi(
+    new GeneratedResponse(new RegExp(/\/response/), 'GET'),
+    new CachedServingFiles(new RegExp(/\/files/), mapper, notFoundMethod),
+    notFoundMethod
+  )
+).call();
