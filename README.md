@@ -82,8 +82,6 @@ module.exports = CustomNotFoundMethod;
 
 ## SimpleResponseOnGETRequest
 
-This class also uses [cutie-http](https://github.com/Guseyn/cutie-http)
-
 ```js
 'use strict'
 
@@ -119,8 +117,6 @@ module.exports = SimpleResponseOnGETRequest;
 ```
 
 ## SimpleResponseOnPOSTRequest
-
-This class also uses [cutie-http](https://github.com/Guseyn/cutie-http)
 
 ```js
 'use strict'
