@@ -33,9 +33,11 @@ const path = require('path');
 const {
   Backend,
   RestApi,
+  ServingFiles,
   CachedServingFiles
 } = require('@cuties/rest');
-const GeneratedResponse = require('./GeneratedResponse');
+const SimpleResponseOnGETRequest = require('./SimpleResponseOnGETRequest');
+const SimpleResponseOnPOSTRequest = require('./SimpleResponseOnPOSTRequest');
 const CustomNotFoundMethod = require('./CustomNotFoundMethod');
 
 const notFoundMethod = new CustomNotFoundMethod(new RegExp(/\/not-found/));
@@ -46,8 +48,9 @@ const mapper = (url) => {
 }
 
 new Backend(
-  8080, '127.0.0.1', new RestApi(
-    new GeneratedResponse(new RegExp(/\/response/), 'GET'),
+  8000, '127.0.0.1', new RestApi(
+    new SimpleResponseOnGETRequest(new RegExp(/\/get/), 'GET'),
+    new SimpleResponseOnPOSTRequest(new RegExp(/\/post/), 'POST'),
     new CachedServingFiles(new RegExp(/\/files/), mapper, notFoundMethod),
     notFoundMethod
   )
@@ -77,7 +80,7 @@ module.exports = CustomNotFoundMethod;
 ```
 [NotFoundMethod](https://github.com/Guseyn/cutie-rest/blob/master/src/backend/method/NotFoundMethod.js)
 
-## GeneratedResponse
+## SimpleResponseOnGETRequest
 
 This class also uses [cutie-http](https://github.com/Guseyn/cutie-http)
 
@@ -85,6 +88,44 @@ This class also uses [cutie-http](https://github.com/Guseyn/cutie-http)
 'use strict'
 
 const { Method } = require('@cuties/rest');
+const {
+  EndedResponse,
+  WrittenResponse,
+  ResponseWithWrittenHead
+} = require('@cuties/http');
+
+class SimpleResponseOnGETRequest extends Method {
+
+  constructor(regexpUrl, type) {
+    super(regexpUrl, type);
+  }
+
+  invoke(request, response) {
+    new EndedResponse(
+      new WrittenResponse(
+        new ResponseWithWrittenHead(
+          response, 200, 'ok',  {
+            'Content-Type': 'text/plain' 
+          }
+        ), 'constent'
+      ), ' is delivered'
+    ).call();
+  }
+
+}
+
+module.exports = SimpleResponseOnGETRequest;
+
+```
+
+## SimpleResponseOnPOSTRequest
+
+This class also uses [cutie-http](https://github.com/Guseyn/cutie-http)
+
+```js
+'use strict'
+
+const { Method, RequestBody } = require('@cuties/rest');
 
 const {
   EndedResponse,
@@ -92,7 +133,7 @@ const {
   ResponseWithWrittenHead
 } = require('@cuties/http');
 
-class GeneratedResponse extends Method {
+class SimpleResponseOnPOSTRequest extends Method {
 
   constructor(regexpUrl, type) {
     super(regexpUrl, type);
@@ -106,14 +147,15 @@ class GeneratedResponse extends Method {
           response, 200, 'ok',  {
             'Content-Type': 'text/plain' 
           }
-        ), 'content ... '
-      ), `is delivered`
+        ), new RequestBody(request)
+      ), ' is delivered'
     ).call();
   }
 
 }
 
-module.exports = GeneratedResponse;
+module.exports = SimpleResponseOnPOSTRequest;
+
 ```
 
 

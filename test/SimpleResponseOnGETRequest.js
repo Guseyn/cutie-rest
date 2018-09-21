@@ -1,6 +1,8 @@
 'use strict'
 
-const Method = require('./../src/backend/method/Method');
+const {
+  Method
+} = require('./../index');
 
 const {
   EndedResponse,
@@ -8,7 +10,7 @@ const {
   ResponseWithWrittenHead
 } = require('@cuties/http');
 
-class GeneratedResponse extends Method {
+class SimpleResponseOnGETRequest extends Method {
 
   constructor(regexpUrl, type) {
     super(regexpUrl, type);
@@ -21,11 +23,11 @@ class GeneratedResponse extends Method {
           response, 200, 'ok',  {
             'Content-Type': 'text/plain' 
           }
-        ), 'content ... '
-      ), `is delivered`
+        ), 'constent'
+      ), ' is delivered'
     ).call();
   }
 
 }
 
-module.exports = GeneratedResponse;
+module.exports = SimpleResponseOnGETRequest;
