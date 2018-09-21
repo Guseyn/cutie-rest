@@ -122,7 +122,6 @@ module.exports = SimpleResponseOnGETRequest;
 'use strict'
 
 const { Method, RequestBody } = require('@cuties/rest');
-
 const {
   EndedResponse,
   WrittenResponse,
