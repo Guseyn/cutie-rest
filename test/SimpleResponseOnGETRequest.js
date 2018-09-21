@@ -3,7 +3,6 @@
 const {
   Method
 } = require('./../index');
-
 const {
   EndedResponse,
   WrittenResponse,
