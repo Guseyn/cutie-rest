@@ -62,7 +62,9 @@ new Backend(
 ```js
 'use strict'
 
-const { NotFoundMethod } = require('./NotFoundMethod');
+const {
+  NotFoundMethod
+} = require('@cuties/rest');
 
 class CustomNotFoundMethod extends NotFoundMethod {
 
