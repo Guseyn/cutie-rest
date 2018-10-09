@@ -1,6 +1,6 @@
 'use strict'
 
-const NotFoundMethod = require('./../src/backend/method/NotFoundMethod');
+const { NotFoundMethod } = require('./../index');
 
 class CustomNotFoundMethod extends NotFoundMethod {
 
