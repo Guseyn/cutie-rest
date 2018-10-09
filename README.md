@@ -22,8 +22,8 @@ This library provides following objects: `Backend, RestApi, RequestBody, Serving
 | `Method` | `regexp(RegExp), method(string)` | Declares a method(in api) with url that matches `regexp` and specified `method`('GET', 'POST', etc.). This class has a method `invoke(request, response)` that needs to be overridden.|
 | `ServingFiles` | `regexp (RegExp), mapper (function(url)`), `notFoundMethod(Method)` | Extends `Method` and serves files on url that mathes `regexp` with `mapper` function that gets location of a file on a disk by the url. Also it's required to declare `notFoundMethod` that handles the cases when a file is not found. |
 | `CachedServingFiles` | `regexp(RegExp), mapper(function(url)), notFoundMethod(Method)` | Does the same that `ServingFiles` does and caches files for increasing speed of serving them. |
-| `Index` | no args | `Method` is used for representing index page. |
-| `NotFoundMethod` | `regexp(RegExp)` | `Method` is used in `RestApi, ServingFiles, CachedServingFiles` for declaring method on 404(NOT_FOUND) status. |
+| `Index` | no args | `Method` that is used for representing index page. |
+| `NotFoundMethod` | `regexp(RegExp)` | `Method` that is used in `RestApi, ServingFiles, CachedServingFiles` for declaring method on 404(NOT_FOUND) status. |
 
 # Example
 
@@ -35,12 +35,12 @@ const {
   Backend,
   RestApi,
   ServingFiles,
-  CachedServingFiles,
-  CustomIndex
+  CachedServingFiles
 } = require('@cuties/rest');
 const SimpleResponseOnGETRequest = require('./SimpleResponseOnGETRequest');
 const SimpleResponseOnPOSTRequest = require('./SimpleResponseOnPOSTRequest');
 const CustomNotFoundMethod = require('./CustomNotFoundMethod');
+const CustomIndex = require('./CustomIndex');
 
 const notFoundMethod = new CustomNotFoundMethod(new RegExp(/\/not-found/));
 
