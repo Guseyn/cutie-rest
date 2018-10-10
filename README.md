@@ -12,7 +12,7 @@ const {
 } = require('@cuties/rest');
 ```
 
-This library provides following objects: `Backend, RestApi, RequestBody, ServingFiles, CachedServingFiles` and `Method, NotFoundMethod` interfaces.
+This library provides following objects: `Backend, RestApi, RequestBody, CreatedServingFilesMethod, CreatedCachedServingFilesMethod, ServingFiles, CachedServingFiles` and `Method, NotFoundMethod, Index` interfaces.
 
 | Object | Parameters(type) | Description |
 | ------ | -----------| ----------- |
@@ -20,6 +20,8 @@ This library provides following objects: `Backend, RestApi, RequestBody, Serving
 | `RestApi` | `...methods`(classes that extend `Method`) | Represents request-response listener. Declares methods of api. |
 | `RequestBody` | `request` | Reads body of `request` in `invoke(request, response)` method of `Method` implementation |
 | `Method` | `regexp(RegExp), method(string)` | Declares a method(in api) with url that matches `regexp` and specified `method`('GET', 'POST', etc.). This class has a method `invoke(request, response)` that needs to be overridden.|
+| `CreatedServingFilesMethod` | `regexp (RegExp or AsyncObject that represents RegExp), mapper (function(url) or AsyncObject that represents mapper function), notFoundMethod(Method or AsyncObject that represents Method)` | `AsyncObject` that represents `ServingFiles` |
+| `CreatedCachedServingFilesMethod` | `regexp (RegExp or AsyncObject that represents RegExp), mapper (function(url) or AsyncObject that represents mapper function), notFoundMethod(Method or AsyncObject that represents Method)` | `AsyncObject` that represents `CachedServingFiles` |
 | `ServingFiles` | `regexp (RegExp), mapper (function(url)`), `notFoundMethod(Method)` | Extends `Method` and serves files on url that mathes `regexp` with `mapper` function that gets location of a file on a disk by the url. Also it's required to declare `notFoundMethod` that handles the cases when a file is not found. |
 | `CachedServingFiles` | `regexp(RegExp), mapper(function(url)), notFoundMethod(Method)` | Does the same that `ServingFiles` does and caches files for increasing speed of serving them. |
 | `Index` | no args | `Method` that is used for representing index page. |
@@ -35,7 +37,7 @@ const {
   Backend,
   RestApi,
   ServingFiles,
-  CachedServingFiles
+  CreatedCachedServingFilesMethod
 } = require('@cuties/rest');
 const SimpleResponseOnGETRequest = require('./SimpleResponseOnGETRequest');
 const SimpleResponseOnPOSTRequest = require('./SimpleResponseOnPOSTRequest');
@@ -54,7 +56,7 @@ new Backend(
     new CustomIndex(),
     new SimpleResponseOnGETRequest(new RegExp(/^\/get/), 'GET'),
     new SimpleResponseOnPOSTRequest(new RegExp(/^\/post/), 'POST'),
-    new CachedServingFiles(new RegExp(/^\/files/), mapper, notFoundMethod),
+    new CreatedCachedServingFilesMethod(new RegExp(/^\/files/), mapper, notFoundMethod),
     notFoundMethod
   )
 ).call();

@@ -6,6 +6,8 @@ module.exports = {
   Method: require('./src/backend/method/Method'),
   NotFoundMethod: require('./src/backend/method/NotFoundMethod'),
   RequestBody: require('./src/backend/request/RequestBody'),
+  CreatedServingFilesMethod: require('./src/backend/static/CreatedServingFilesMethod'),
+  CreatedCachedServingFilesMethod: require('./src/backend/static/CreatedCachedServingFilesMethod'),
   ServingFiles: require('./src/backend/static/ServingFiles'),
   CachedServingFiles: require('./src/backend/static/CachedServingFiles')
 
