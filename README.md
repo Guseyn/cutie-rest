@@ -17,7 +17,7 @@ This library provides following objects: `Backend, RestApi, RequestBody, Serving
 | Object | Parameters(type) | Description |
 | ------ | -----------| ----------- |
 | `Backend` | `port(number), host(string), api(RestApi)`| It's `AsyncObject`. It Declares backend server(just http for now) on specified `port` and `host`, also it provides declared `api` (REST).|
-| `RestApi` | `...methods`(classes that extend `Method`) | It's `Event`. Declares methods of api. |
+| `RestApi` | `...methods`(classes that extend `Method`) | Represents request-response listener. Declares methods of api. |
 | `RequestBody` | `request` | Reads body of `request` in `invoke(request, response)` method of `Method` implementation |
 | `Method` | `regexp(RegExp), method(string)` | Declares a method(in api) with url that matches `regexp` and specified `method`('GET', 'POST', etc.). This class has a method `invoke(request, response)` that needs to be overridden.|
 | `ServingFiles` | `regexp (RegExp), mapper (function(url)`), `notFoundMethod(Method)` | Extends `Method` and serves files on url that mathes `regexp` with `mapper` function that gets location of a file on a disk by the url. Also it's required to declare `notFoundMethod` that handles the cases when a file is not found. |
@@ -42,7 +42,7 @@ const SimpleResponseOnPOSTRequest = require('./SimpleResponseOnPOSTRequest');
 const CustomNotFoundMethod = require('./CustomNotFoundMethod');
 const CustomIndex = require('./CustomIndex');
 
-const notFoundMethod = new CustomNotFoundMethod(new RegExp(/\/not-found/));
+const notFoundMethod = new CustomNotFoundMethod(new RegExp(/^\/not-found/));
 
 const mapper = (url) => {
   let paths = url.split('/').filter(path => path !== '');
