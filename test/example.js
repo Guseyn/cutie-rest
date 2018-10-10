@@ -4,6 +4,8 @@ const path = require('path');
 const {
   Backend,
   RestApi,
+  CreatedServingFilesMethod,
+  CreatedCachedServingFilesMethod,
   ServingFiles,
   CachedServingFiles
 } = require('./../index');
@@ -24,7 +26,7 @@ new Backend(
     new CustomIndex(),
     new SimpleResponseOnGETRequest(new RegExp(/^\/get/), 'GET'),
     new SimpleResponseOnPOSTRequest(new RegExp(/^\/post/), 'POST'),
-    new CachedServingFiles(new RegExp(/^\/files/), mapper, notFoundMethod),
+    new CreatedCachedServingFilesMethod(new RegExp(/^\/files/), mapper, notFoundMethod),
     notFoundMethod
   )
 ).call();
