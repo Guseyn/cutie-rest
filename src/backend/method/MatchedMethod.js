@@ -22,10 +22,9 @@ class MatchedMethod extends AsyncObject {
         if (!notFoundMethod) {
           throw new Error(`no methods matchs to url:${url} with type of method: ${type}`);
         }
-        return notFoundMethod;
-      } else {
-        return matchedMethod;
+        matchedMethod = notFoundMethod;
       }
+      return matchedMethod;
     }
   }
 
