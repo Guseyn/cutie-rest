@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "@cuties/cutie": "1.4.4",
-    "@cuties/http": "1.2.1",
+    "@cuties/http": "1.2.5",
     "@cuties/fs": "1.1.2",
     "@cuties/assert": "1.1.5",
     "@cuties/is": "1.0.8",
