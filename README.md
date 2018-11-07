@@ -16,7 +16,7 @@ This library provides following objects: `Backend, RestApi, RequestBody, Created
 
 | Object | Parameters(type) | Description |
 | ------ | -----------| ----------- |
-| `Backend` | `port(number), host(string), api(RestApi)`| It's `AsyncObject`. It Declares backend server(just http for now) on specified `port` and `host`, also it provides declared `api` (REST).|
+| `Backend` | `protocol, port(number), host(string), api(RestApi)[, options]`| It's `AsyncObject`. It Declares backend server with `protocol`(`http` or `https`) on specified `port` and `host`, also it provides declared `api` (REST). `options` is for options of the http/https server(it's optional).|
 | `RestApi` | `...methods`(classes that extend `Method`) | Represents request-response listener. Declares methods of api. |
 | `RequestBody` | `request` | Reads body of `request` in `invoke(request, response)` method of `Method` implementation |
 | `Method` | `regexp(RegExp), method(string)` | Declares a method(in api) with url that matches `regexp` and specified `method`('GET', 'POST', etc.). This class has a method `invoke(request, response)` that needs to be overridden.|
@@ -39,6 +39,10 @@ const {
   ServingFiles,
   CreatedCachedServingFilesMethod
 } = require('@cuties/rest');
+const {
+  CreatedOptions
+} = require('@cuties/https');
+const { ReadDataByPath } = require('@cuties/fs');
 const SimpleResponseOnGETRequest = require('./SimpleResponseOnGETRequest');
 const SimpleResponseOnPOSTRequest = require('./SimpleResponseOnPOSTRequest');
 const CustomNotFoundMethod = require('./CustomNotFoundMethod');
@@ -52,12 +56,19 @@ const mapper = (url) => {
 }
 
 new Backend(
-  8000, '127.0.0.1', new RestApi(
+  'https',
+  8000, 
+  '127.0.0.1', 
+  new RestApi(
     new CustomIndex(),
     new SimpleResponseOnGETRequest(new RegExp(/^\/get/), 'GET'),
     new SimpleResponseOnPOSTRequest(new RegExp(/^\/post/), 'POST'),
     new CreatedCachedServingFilesMethod(new RegExp(/^\/files/), mapper, notFoundMethod),
     notFoundMethod
+  ),
+  new CreatedOptions(
+    'key', new ReadDataByPath('key.pem'),
+    'cert', new ReadDataByPath('cert.pem')
   )
 ).call();
 
