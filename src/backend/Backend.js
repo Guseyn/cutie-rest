@@ -5,9 +5,11 @@ const {
 } = require('@cuties/cutie');
 const {
   ListeningServer,
-  CreatedHttpServer,
-  CreatedDefaultHttpServer
+  CreatedHttpServer
 } = require('@cuties/http');
+const {
+  CreatedHttpsServer
+} = require('@cuties/https');
 const RestApi = require('./api/RestApi');
 const EmptyRestApi = require('./api/EmptyRestApi');
 const LoggedListeningServer = require('./server/LoggedListeningServer');
@@ -15,15 +17,23 @@ const LoggedListeningServer = require('./server/LoggedListeningServer');
 // Represented result is server(with attached api)
 class Backend extends AsyncObject {
 
-  constructor(port, host, api) {
-    super(port, host, api);
+  constructor(protocol, port, host, api, options) {
+    super(protocol, port, host, api, options);
   }
 
   definedSyncCall() {
-    return (port, host, api) => {
+    return (protocol, port, host, api, options) => {
+      let serverCore;
+      if (protocol === 'http') {
+        serverCore = new CreatedHttpServer(options, api || new EmptyRestApi());
+      } else if (protocol === 'https') {
+        serverCore = new CreatedHttpsServer(options, api || new EmptyRestApi());
+      } else {
+        throw new Error(`Protocol ${protocol} is not allowed.`);
+      }
       let server = new LoggedListeningServer(
         new ListeningServer(
-          new CreatedHttpServer(api || new EmptyRestApi()), port, host
+          serverCore, port, host
         ), `server is listening on ${host}:${port} with pid:${process.pid}`
       );
       server.call();
