@@ -16,9 +16,11 @@ const { ReadDataByPath } = require('@cuties/fs');
 const SimpleResponseOnGETRequest = require('./SimpleResponseOnGETRequest');
 const SimpleResponseOnPOSTRequest = require('./SimpleResponseOnPOSTRequest');
 const CustomNotFoundMethod = require('./CustomNotFoundMethod');
+const CustomInternalServerErrorMethod = require('./CustomInternalServerErrorMethod');
 const CustomIndex = require('./CustomIndex');
 
 const notFoundMethod = new CustomNotFoundMethod(new RegExp(/\/not-found/));
+const internalServerErrorMethod = new CustomInternalServerErrorMethod();
 
 const mapper = (url) => {
   let paths = url.split('/').filter(path => path !== '');
@@ -34,7 +36,8 @@ new Backend(
     new SimpleResponseOnGETRequest(new RegExp(/^\/get/), 'GET'),
     new SimpleResponseOnPOSTRequest(new RegExp(/^\/post/), 'POST'),
     new CreatedCachedServingFilesMethod(new RegExp(/^\/files/), mapper, notFoundMethod),
-    notFoundMethod
+    notFoundMethod,
+    internalServerErrorMethod
   ), new CreatedOptions(
     'key', new ReadDataByPath('./test/pem/key.pem'),
     'cert', new ReadDataByPath('./test/pem/cert.pem')

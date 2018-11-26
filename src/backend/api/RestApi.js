@@ -1,7 +1,7 @@
 'use strict'
 
 const { AsyncObject } = require('@cuties/cutie');
-const { RequestWithDataEvent, RequestWithEndEvent, RequestWithErrorEvent } = require('@cuties/http');
+const { ReadableWithDataEvent, ReadableWithEndEvent, ReadableWithErrorEvent } = require('@cuties/stream');
 const DataEvent = require('./../events/DataEvent');
 const EndEvent = require('./../events/EndEvent');
 const ErrorEvent = require('./../events/ErrorEvent'); 
@@ -17,11 +17,11 @@ class RestApi extends AsyncObject {
     return (...methods) => {
       return (request, response) => {
         let body = [];
-        new RequestWithEndEvent(
-          new RequestWithErrorEvent(
-            new RequestWithDataEvent(
-              request, new DataEvent(body)
-            ), new ErrorEvent()
+        new ReadableWithEndEvent(
+          new ReadableWithDataEvent(
+            new ReadableWithErrorEvent(
+              request, new ErrorEvent(methods, request, response)
+            ), new DataEvent(body)
           ), new EndEvent(methods, request, response, body)
         ).call();
       }
