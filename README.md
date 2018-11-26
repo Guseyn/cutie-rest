@@ -12,20 +12,21 @@ const {
 } = require('@cuties/rest');
 ```
 
-This library provides following objects: `Backend, RestApi, RequestBody, CreatedServingFilesMethod, CreatedCachedServingFilesMethod, ServingFiles, CachedServingFiles` and `Method, NotFoundMethod, Index` interfaces.
+This library provides following objects: `Backend, RestApi, RequestBody, CreatedServingFilesMethod, CreatedCachedServingFilesMethod, ServingFiles, CachedServingFiles` and `Method, NotFoundMethod, Index, InternalServerErrorMethod` interfaces.
 
 | Object | Parameters(type) | Description |
 | ------ | -----------| ----------- |
 | `Backend` | `protocol, port(number), host(string), api(RestApi)[, options]`| It's `AsyncObject`. It Declares backend server with `protocol`(`http` or `https`) on specified `port` and `host`, also it provides declared `api` (REST). `options` is for options of the http/https server(it's optional).|
 | `RestApi` | `...methods`(classes that extend `Method`) | Represents request-response listener. Declares methods of api. |
 | `RequestBody` | `request` | Reads body of `request` in `invoke(request, response)` method of `Method` implementation |
-| `Method` | `regexp(RegExp), method(string)` | Declares a method(in api) with url that matches `regexp` and specified `method`('GET', 'POST', etc.). This class has a method `invoke(request, response)` that needs to be overridden.|
+| `Method` | `regexp(RegExp), method(string)[, ...args]` | Declares a method(in api) with url that matches `regexp` and specified `method`('GET', 'POST', etc.). Also it's possible to pass some custom arguments via `...args`. This class has a method `invoke(request, response[, ...args])` that needs to be overridden.|
 | `CreatedServingFilesMethod` | `regexp (RegExp or AsyncObject that represents RegExp), mapper (function(url) or AsyncObject that represents mapper function), notFoundMethod(Method or AsyncObject that represents Method)` | `AsyncObject` that represents `ServingFiles` |
 | `CreatedCachedServingFilesMethod` | `regexp (RegExp or AsyncObject that represents RegExp), mapper (function(url) or AsyncObject that represents mapper function), notFoundMethod(Method or AsyncObject that represents Method)` | `AsyncObject` that represents `CachedServingFiles` |
 | `ServingFiles` | `regexp (RegExp), mapper (function(url)`), `notFoundMethod(Method)` | Extends `Method` and serves files on url that mathes `regexp` with `mapper` function that gets location of a file on a disk by the url. Also it's required to declare `notFoundMethod` that handles the cases when a file is not found. |
 | `CachedServingFiles` | `regexp(RegExp), mapper(function(url)), notFoundMethod(Method)` | Does the same that `ServingFiles` does and caches files for increasing speed of serving them. |
 | `Index` | no args | `Method` that is used for representing index page. |
 | `NotFoundMethod` | `regexp(RegExp)` | `Method` that is used in `RestApi, ServingFiles, CachedServingFiles` for declaring method on 404(NOT_FOUND) status. |
+| `InternalServerErrorMethod` | no args | `Method` that is used for handling underlying internal failure(not for user error). |
 
 # Example
 
@@ -47,8 +48,10 @@ const SimpleResponseOnGETRequest = require('./SimpleResponseOnGETRequest');
 const SimpleResponseOnPOSTRequest = require('./SimpleResponseOnPOSTRequest');
 const CustomNotFoundMethod = require('./CustomNotFoundMethod');
 const CustomIndex = require('./CustomIndex');
+const CustomInternalServerErrorMethod = require('./CustomInternalServerErrorMethod');
 
 const notFoundMethod = new CustomNotFoundMethod(new RegExp(/^\/not-found/));
+const internalServerErrorMethod = new CustomInternalServerErrorMethod();
 
 const mapper = (url) => {
   let paths = url.split('/').filter(path => path !== '');
@@ -64,7 +67,8 @@ new Backend(
     new SimpleResponseOnGETRequest(new RegExp(/^\/get/), 'GET'),
     new SimpleResponseOnPOSTRequest(new RegExp(/^\/post/), 'POST'),
     new CreatedCachedServingFilesMethod(new RegExp(/^\/files/), mapper, notFoundMethod),
-    notFoundMethod
+    notFoundMethod,
+    internalServerErrorMethod
   ),
   new CreatedOptions(
     'key', new ReadDataByPath('key.pem'),
@@ -197,6 +201,30 @@ module.exports = SimpleResponseOnPOSTRequest;
 
 ```
 
+## CustomInternalServerErrorMethod
+
+```js
+'use strict'
+
+const {
+  InternalServerErrorMethod
+} = require('@cuties/rest');
+
+class CustomInternalServerErrorMethod extends InternalServerErrorMethod {
+
+  constructor() {
+    super();
+  }
+  
+  invoke(request, response, error) {
+    super.invoke(request, response, error);
+  }
+
+}
+
+module.exports = CustomInternalServerErrorMethod;
+```
+[InternalServerErrorMethod](https://github.com/Guseyn/cutie-rest/blob/master/src/backend/method/InternalServerErrorMethod.js)
 
 [npm-image]: https://img.shields.io/npm/v/@cuties/rest.svg
 [npm-url]: https://npmjs.org/package/@cuties/rest
