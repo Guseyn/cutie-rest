@@ -42,7 +42,7 @@ class Backend extends AsyncObject {
       let server = new LoggedListeningServer(
         new ListeningServer(
           serverCore, port, host
-        ), `server is listening on ${host}:${port} with pid:${process.pid}`
+        ), `${protocol} server is listening on ${host}:${port} with pid:${process.pid}`
       );
       server.call();
       return server;

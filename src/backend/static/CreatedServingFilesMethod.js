@@ -1,7 +1,7 @@
 'use strict'
 
 const { AsyncObject } = require('@cuties/cutie');
-const ServingFiles = require('./ServingFiles');
+const ServingFilesMethod = require('./ServingFilesMethod');
 
 class CreatedServingFilesMethod extends AsyncObject {
 
@@ -11,7 +11,7 @@ class CreatedServingFilesMethod extends AsyncObject {
 
   definedSyncCall() {
     return (regexpUrl, mapper, notFoundMethod) => {
-      return new ServingFiles(regexpUrl, mapper, notFoundMethod);
+      return new ServingFilesMethod(regexpUrl, mapper, notFoundMethod);
     }
   }
 

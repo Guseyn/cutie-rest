@@ -37,7 +37,7 @@ const CachedValue = require('./CachedValue');
 const CreatedReadableBufferStream = require('./CreatedReadableBufferStream');
 const MimeTypeForExtension = require('./MimeTypeForExtension');
 
-class CachedServingFiles extends Method {
+class CachedServingFilesMethod extends Method {
 
   constructor(regexpUrl, mapper, notFoundMethod) {
     super(regexpUrl, 'GET');
@@ -97,4 +97,4 @@ class CachedServingFiles extends Method {
 
 }
 
-module.exports = CachedServingFiles;
+module.exports = CachedServingFilesMethod;

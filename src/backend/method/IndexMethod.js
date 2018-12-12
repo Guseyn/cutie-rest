@@ -10,7 +10,7 @@ const {
   EndedResponse
 } = require('@cuties/http');
 
-class Index extends Method {
+class IndexMethod extends Method {
 
   constructor() {
     super(new RegExp(/^(\/|)$/), 'GET');
@@ -32,4 +32,4 @@ class Index extends Method {
 
 }
 
-module.exports = Index;
+module.exports = IndexMethod;
