@@ -23,7 +23,7 @@ This library provides following objects: `Backend, RestApi, RequestBody, Created
 | `CreatedServingFilesMethod` | `regexp (RegExp or AsyncObject that represents RegExp), mapper (function(url) or AsyncObject that represents mapper function), notFoundMethod(Method or AsyncObject that represents Method)` | `AsyncObject` that represents `ServingFilesMethod` |
 | `CreatedCachedServingFilesMethod` | `regexp (RegExp or AsyncObject that represents RegExp), mapper (function(url) or AsyncObject that represents mapper function), notFoundMethod(Method or AsyncObject that represents Method)` | `AsyncObject` that represents `CachedServingFilesMethod` |
 | `ServingFilesMethod` | `regexp (RegExp), mapper (function(url)`), `notFoundMethod(Method)` | Extends `Method` and serves files on url that mathes `regexp` with `mapper` function that gets location of a file on a disk by the url. Also it's required to declare `notFoundMethod` that handles the cases when a file is not found. |
-| `CachedServingFilesMethod` | `regexp(RegExp), mapper(function(url)), notFoundMethod(Method)` | Does the same that `ServingFiles` does and caches files for increasing speed of serving them. |
+| `CachedServingFilesMethod` | `regexp(RegExp), mapper(function(url)), notFoundMethod(Method)` | Does the same that `ServingFilesMethod` does and caches files for increasing speed of serving them. |
 | `IndexMethod` | no args | `Method` that is used for representing index page. |
 | `NotFoundMethod` | `regexp(RegExp)` | `Method` that is used in `RestApi, ServingFilesMethod, CachedServingFilesMethod` for declaring method on 404(NOT_FOUND) status. |
 | `InternalServerErrorMethod` | no args | `Method` that is used for handling underlying internal failure(not for user error). |
