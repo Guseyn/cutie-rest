@@ -107,7 +107,7 @@ module.exports = CustomIndex;
 
 ```
 
-[IndexMethod](https://github.com/Guseyn/cutie-rest/blob/master/src/backend/method/Index.js)
+[IndexMethod](https://github.com/Guseyn/cutie-rest/blob/master/src/backend/method/IndexMethod.js)
 
 ## CustomNotFoundMethod
 
