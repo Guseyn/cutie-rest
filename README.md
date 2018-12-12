@@ -12,7 +12,7 @@ const {
 } = require('@cuties/rest');
 ```
 
-This library provides following objects: `Backend, RestApi, RequestBody, CreatedServingFilesMethod, CreatedCachedServingFilesMethod, ServingFiles, CachedServingFiles` and `Method, NotFoundMethod, Index, InternalServerErrorMethod` interfaces.
+This library provides following objects: `Backend, RestApi, RequestBody, CreatedServingFilesMethod, CreatedCachedServingFilesMethod, ServingFiles, CachedServingFiles` and `Method, NotFoundMethod, IndexMethod, InternalServerErrorMethod` interfaces.
 
 | Object | Parameters(type) | Description |
 | ------ | -----------| ----------- |
