@@ -5,9 +5,7 @@ const {
   Backend,
   RestApi,
   CreatedServingFilesMethod,
-  CreatedCachedServingFilesMethod,
-  ServingFiles,
-  CachedServingFiles
+  CreatedCachedServingFilesMethod
 } = require('./../index');
 const {
   CreatedOptions
@@ -17,14 +15,20 @@ const SimpleResponseOnGETRequest = require('./SimpleResponseOnGETRequest');
 const SimpleResponseOnPOSTRequest = require('./SimpleResponseOnPOSTRequest');
 const CustomNotFoundMethod = require('./CustomNotFoundMethod');
 const CustomInternalServerErrorMethod = require('./CustomInternalServerErrorMethod');
-const CustomIndex = require('./CustomIndex');
+const CustomIndexMethod = require('./CustomIndexMethod');
 
 const notFoundMethod = new CustomNotFoundMethod(new RegExp(/\/not-found/));
 const internalServerErrorMethod = new CustomInternalServerErrorMethod();
 
 const mapper = (url) => {
-  let paths = url.split('/').filter(path => path !== '');
-  return path.join(...paths);
+  let parts = url.split('/').filter(part => part !== '');
+  return path.join(...parts);
+}
+
+const cacheMapper = (url) => {
+  let parts = url.split('/').filter(part => part !== '').slice(1);
+  parts.unshift('files');
+  return path.join(...parts);
 }
 
 new Backend(
@@ -32,10 +36,11 @@ new Backend(
   8000, 
   '127.0.0.1',
   new RestApi(
-    new CustomIndex(),
+    new CustomIndexMethod(),
     new SimpleResponseOnGETRequest(new RegExp(/^\/get/), 'GET'),
     new SimpleResponseOnPOSTRequest(new RegExp(/^\/post/), 'POST'),
-    new CreatedCachedServingFilesMethod(new RegExp(/^\/files/), mapper, notFoundMethod),
+    new CreatedServingFilesMethod(new RegExp(/^\/files/), mapper, notFoundMethod),
+    new CreatedCachedServingFilesMethod(new RegExp(/^\/cached/), cacheMapper, notFoundMethod),
     notFoundMethod,
     internalServerErrorMethod
   ), new CreatedOptions(

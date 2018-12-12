@@ -20,12 +20,12 @@ This library provides following objects: `Backend, RestApi, RequestBody, Created
 | `RestApi` | `...methods`(classes that extend `Method`) | Represents request-response listener. Declares methods of api. |
 | `RequestBody` | `request` | Reads body of `request` in `invoke(request, response)` method of `Method` implementation |
 | `Method` | `regexp(RegExp), method(string)[, ...args]` | Declares a method(in api) with url that matches `regexp` and specified `method`('GET', 'POST', etc.). Also it's possible to pass some custom arguments via `...args`. This class has a method `invoke(request, response[, ...args])` that needs to be overridden.|
-| `CreatedServingFilesMethod` | `regexp (RegExp or AsyncObject that represents RegExp), mapper (function(url) or AsyncObject that represents mapper function), notFoundMethod(Method or AsyncObject that represents Method)` | `AsyncObject` that represents `ServingFiles` |
-| `CreatedCachedServingFilesMethod` | `regexp (RegExp or AsyncObject that represents RegExp), mapper (function(url) or AsyncObject that represents mapper function), notFoundMethod(Method or AsyncObject that represents Method)` | `AsyncObject` that represents `CachedServingFiles` |
-| `ServingFiles` | `regexp (RegExp), mapper (function(url)`), `notFoundMethod(Method)` | Extends `Method` and serves files on url that mathes `regexp` with `mapper` function that gets location of a file on a disk by the url. Also it's required to declare `notFoundMethod` that handles the cases when a file is not found. |
-| `CachedServingFiles` | `regexp(RegExp), mapper(function(url)), notFoundMethod(Method)` | Does the same that `ServingFiles` does and caches files for increasing speed of serving them. |
-| `Index` | no args | `Method` that is used for representing index page. |
-| `NotFoundMethod` | `regexp(RegExp)` | `Method` that is used in `RestApi, ServingFiles, CachedServingFiles` for declaring method on 404(NOT_FOUND) status. |
+| `CreatedServingFilesMethod` | `regexp (RegExp or AsyncObject that represents RegExp), mapper (function(url) or AsyncObject that represents mapper function), notFoundMethod(Method or AsyncObject that represents Method)` | `AsyncObject` that represents `ServingFilesMethod` |
+| `CreatedCachedServingFilesMethod` | `regexp (RegExp or AsyncObject that represents RegExp), mapper (function(url) or AsyncObject that represents mapper function), notFoundMethod(Method or AsyncObject that represents Method)` | `AsyncObject` that represents `CachedServingFilesMethod` |
+| `ServingFilesMethod` | `regexp (RegExp), mapper (function(url)`), `notFoundMethod(Method)` | Extends `Method` and serves files on url that mathes `regexp` with `mapper` function that gets location of a file on a disk by the url. Also it's required to declare `notFoundMethod` that handles the cases when a file is not found. |
+| `CachedServingFilesMethod` | `regexp(RegExp), mapper(function(url)), notFoundMethod(Method)` | Does the same that `ServingFiles` does and caches files for increasing speed of serving them. |
+| `IndexMethod` | no args | `Method` that is used for representing index page. |
+| `NotFoundMethod` | `regexp(RegExp)` | `Method` that is used in `RestApi, ServingFilesMethod, CachedServingFilesMethod` for declaring method on 404(NOT_FOUND) status. |
 | `InternalServerErrorMethod` | no args | `Method` that is used for handling underlying internal failure(not for user error). |
 
 # Example
@@ -37,7 +37,7 @@ const path = require('path');
 const {
   Backend,
   RestApi,
-  ServingFiles,
+  CreatedServingFilesMethod,
   CreatedCachedServingFilesMethod
 } = require('@cuties/rest');
 const {
@@ -47,45 +47,51 @@ const { ReadDataByPath } = require('@cuties/fs');
 const SimpleResponseOnGETRequest = require('./SimpleResponseOnGETRequest');
 const SimpleResponseOnPOSTRequest = require('./SimpleResponseOnPOSTRequest');
 const CustomNotFoundMethod = require('./CustomNotFoundMethod');
-const CustomIndex = require('./CustomIndex');
+const CustomIndexMethod = require('./CustomIndexMethod');
 const CustomInternalServerErrorMethod = require('./CustomInternalServerErrorMethod');
 
 const notFoundMethod = new CustomNotFoundMethod(new RegExp(/^\/not-found/));
 const internalServerErrorMethod = new CustomInternalServerErrorMethod();
 
 const mapper = (url) => {
-  let paths = url.split('/').filter(path => path !== '');
-  return path.join(...paths);
+  let parts = url.split('/').filter(part => part !== '');
+  return path.join(...parts);
+}
+
+const cacheMapper = (url) => {
+  let parts = url.split('/').filter(part => part !== '').slice(1);
+  parts.unshift('files');
+  return path.join(...parts);
 }
 
 new Backend(
-  'https',
+  'https', 
   8000, 
-  '127.0.0.1', 
+  '127.0.0.1',
   new RestApi(
-    new CustomIndex(),
+    new CustomIndexMethod(),
     new SimpleResponseOnGETRequest(new RegExp(/^\/get/), 'GET'),
     new SimpleResponseOnPOSTRequest(new RegExp(/^\/post/), 'POST'),
-    new CreatedCachedServingFilesMethod(new RegExp(/^\/files/), mapper, notFoundMethod),
+    new CreatedServingFilesMethod(new RegExp(/^\/files/), mapper, notFoundMethod),
+    new CreatedCachedServingFilesMethod(new RegExp(/^\/cached/), cacheMapper, notFoundMethod),
     notFoundMethod,
     internalServerErrorMethod
-  ),
-  new CreatedOptions(
-    'key', new ReadDataByPath('key.pem'),
-    'cert', new ReadDataByPath('cert.pem')
+  ), new CreatedOptions(
+    'key', new ReadDataByPath('./test/pem/key.pem'),
+    'cert', new ReadDataByPath('./test/pem/cert.pem')
   )
 ).call();
 
 ```
 
-## CustomIndex
+## CustomIndexMethod
 
 ```js
 'use strict'
 
-const { Index } = require('./../index');;
+const { IndexMethod } = require('./../index');
 
-class CustomIndex extends Index {
+class CustomIndex extends IndexMethod {
 
   constructor() {
     super();
@@ -101,7 +107,7 @@ module.exports = CustomIndex;
 
 ```
 
-[Index](https://github.com/Guseyn/cutie-rest/blob/master/src/backend/method/Index.js)
+[IndexMethod](https://github.com/Guseyn/cutie-rest/blob/master/src/backend/method/IndexMethod.js)
 
 ## CustomNotFoundMethod
 
@@ -223,6 +229,7 @@ class CustomInternalServerErrorMethod extends InternalServerErrorMethod {
 }
 
 module.exports = CustomInternalServerErrorMethod;
+
 ```
 [InternalServerErrorMethod](https://github.com/Guseyn/cutie-rest/blob/master/src/backend/method/InternalServerErrorMethod.js)
 

@@ -24,7 +24,7 @@ const FSPathByUrl = require('./FSPathByUrl');
 const NotFoundErrorEvent = require('./NotFoundErrorEvent');
 const MimeTypeForExtension = require('./MimeTypeForExtension');
 
-class ServingFiles extends Method {
+class ServingFilesMethod extends Method {
 
   constructor(regexpUrl, mapper, notFoundMethod) {
     super(regexpUrl, 'GET');
@@ -64,4 +64,4 @@ class ServingFiles extends Method {
 
 }
 
-module.exports = ServingFiles;
+module.exports = ServingFilesMethod;
