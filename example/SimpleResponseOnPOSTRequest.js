@@ -6,17 +6,18 @@ const {
   ResponseWithWrittenHead
 } = require('@cuties/http')
 const {
-  Method,
+  Endpoint,
   RequestBody
 } = require('./../index')
 
-class SimpleResponseOnPOSTRequest extends Method {
+class SimpleResponseOnPOSTRequest extends Endpoint {
   constructor (regexpUrl, type) {
     super(regexpUrl, type)
   }
 
-  invoke (request, response) {
+  body (request, response) {
     // request also contains body(as buffer), use RequestBody object for that
+    return
     new EndedResponse(
       new WrittenResponse(
         new ResponseWithWrittenHead(
@@ -25,7 +26,7 @@ class SimpleResponseOnPOSTRequest extends Method {
           }
         ), new RequestBody(request)
       ), ' is delivered'
-    ).call()
+    )
   }
 }
 

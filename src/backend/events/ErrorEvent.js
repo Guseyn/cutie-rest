@@ -1,23 +1,23 @@
 'use strict'
 
 const Event = require('@cuties/cutie').Event
-const InternalServerErrorMethod = require('./../method/InternalServerErrorMethod')
-const InvokedMethod = require('./../method/InvokedMethod')
+const InternalServerErroEndpoint = require('./../endpoint/InternalServerErrorEndpoint')
+const InvokedEndpoint = require('./../endpoint/InvokedEndpoint')
 
 class ErrorEvent extends Event {
-  constructor (methods, request, response) {
+  constructor (endpoints, request, response) {
     super()
-    this.methods = methods
+    this.endpoints = endpoints
     this.request = request
     this.response = response
   }
 
   definedBody (error) {
-    let internalServerErrorMethod = this.methods.find(method => {
-      return method instanceof InternalServerErrorMethod
+    let internalServerErrorEndpoint = this.endpoints.find(endpoint => {
+      return endpoint instanceof InternalServerErrorEndpoint
     })
-    new InvokedMethod(
-      internalServerErrorMethod,
+    new InvokedEndpoint(
+      internalServerErrorEndpoint,
       this.request,
       this.response,
       error

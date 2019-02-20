@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "node test-executor",
-    "example": "node example"
+    "example": "node example",
+    "procedural-example": "node procedural-example"
   },
   "repository": {
     "type": "git",

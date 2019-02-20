@@ -8,20 +8,20 @@ const ErrorEvent = require('./../events/ErrorEvent')
 
 // Represents request-response listener
 class RestApi extends AsyncObject {
-  constructor (...methods) {
-    super(...methods)
+  constructor (...endpoints) {
+    super(...endpoints)
   }
 
   definedSyncCall () {
-    return (...methods) => {
+    return (...endpoints) => {
       return (request, response) => {
         let body = []
         new ReadableWithEndEvent(
           new ReadableWithDataEvent(
             new ReadableWithErrorEvent(
-              request, new ErrorEvent(methods, request, response)
+              request, new ErrorEvent(endpoints, request, response)
             ), new DataEvent(body)
-          ), new EndEvent(methods, request, response, body)
+          ), new EndEvent(endpoints, request, response, body)
         ).call()
       }
     }
