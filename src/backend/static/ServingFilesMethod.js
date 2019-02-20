@@ -2,37 +2,36 @@
 
 const {
   as
-} = require('@cuties/cutie');
+} = require('@cuties/cutie')
 const {
   UrlOfIncomingMessage,
   ResponseWithStatusCode,
   ResponseWithHeader
-} = require('@cuties/http');
+} = require('@cuties/http')
 const {
   CreatedReadStream
-} = require('@cuties/fs');
+} = require('@cuties/fs')
 const {
   ResolvedPath,
   Extname
-} = require('@cuties/path');
+} = require('@cuties/path')
 const {
   PipedReadable,
   ReadableWithErrorEvent
-} = require('@cuties/stream');
-const Method = require('./../method/Method');
-const FSPathByUrl = require('./FSPathByUrl');
-const NotFoundErrorEvent = require('./NotFoundErrorEvent');
-const MimeTypeForExtension = require('./MimeTypeForExtension');
+} = require('@cuties/stream')
+const Method = require('./../method/Method')
+const FSPathByUrl = require('./FSPathByUrl')
+const NotFoundErrorEvent = require('./NotFoundErrorEvent')
+const MimeTypeForExtension = require('./MimeTypeForExtension')
 
 class ServingFilesMethod extends Method {
-
-  constructor(regexpUrl, mapper, notFoundMethod) {
-    super(regexpUrl, 'GET');
-    this.mapper = mapper;
-    this.notFoundMethod = notFoundMethod;
+  constructor (regexpUrl, mapper, notFoundMethod) {
+    super(regexpUrl, 'GET')
+    this.mapper = mapper
+    this.notFoundMethod = notFoundMethod
   }
 
-  invoke(request, response) {
+  invoke (request, response) {
     new ResolvedPath(
       new FSPathByUrl(
         new UrlOfIncomingMessage(request),
@@ -59,9 +58,8 @@ class ServingFilesMethod extends Method {
           ), 200
         )
       )
-    ).call();
+    ).call()
   }
-
 }
 
-module.exports = ServingFilesMethod;
+module.exports = ServingFilesMethod

@@ -1,30 +1,28 @@
 'use strict'
 
-const { Event } = require('@cuties/cutie');
+const { Event } = require('@cuties/cutie')
 
-const { 
-  HeadersOfIncomingMessage,
+const {
   MethodOfIncomingMessage,
   UrlOfIncomingMessage
-} = require('@cuties/http');
+} = require('@cuties/http')
 const {
   ConcatenatedBuffers
-} = require('@cuties/buffer');
-const MatchedMethod = require('./../method/MatchedMethod');
-const InvokedMethod = require('./../method/InvokedMethod');
-const RequestWithBody = require('./../request/RequestWithBody');
+} = require('@cuties/buffer')
+const MatchedMethod = require('./../method/MatchedMethod')
+const InvokedMethod = require('./../method/InvokedMethod')
+const RequestWithBody = require('./../request/RequestWithBody')
 
 class EndEvent extends Event {
-
-  constructor(methods, request, response, body) {
-    super();
-    this.methods = methods;
-    this.request = request;
-    this.response = response;
-    this.body = body;
+  constructor (methods, request, response, body) {
+    super()
+    this.methods = methods
+    this.request = request
+    this.response = response
+    this.body = body
   }
 
-  definedBody() {
+  definedBody () {
     new InvokedMethod(
       new MatchedMethod(
         this.methods,
@@ -35,9 +33,8 @@ class EndEvent extends Event {
         this.request, new ConcatenatedBuffers(this.body)
       ),
       this.response
-    ).call();
+    ).call()
   }
-
 }
 
-module.exports = EndEvent;
+module.exports = EndEvent

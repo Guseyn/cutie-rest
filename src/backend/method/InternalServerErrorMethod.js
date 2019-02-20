@@ -1,6 +1,6 @@
 'use strict'
 
-const Method = require('./../method/Method');
+const Method = require('./../method/Method')
 
 const {
   ResponseWithHeader,
@@ -8,15 +8,14 @@ const {
   ResponseWithStatusMessage,
   WrittenResponse,
   EndedResponse
-} = require('@cuties/http');
+} = require('@cuties/http')
 
 class InternalServerErrorMethod extends Method {
-
-  constructor() {
-    super();
+  constructor () {
+    super()
   }
 
-  invoke(request, response, error) {
+  invoke (request, response, error) {
     new EndedResponse(
       new WrittenResponse(
         new ResponseWithHeader(
@@ -24,12 +23,11 @@ class InternalServerErrorMethod extends Method {
             new ResponseWithStatusCode(response, 500), 'Internal Server Error'
           ),
           'Content-Type', 'text/plain'
-        ), 
+        ),
         `500: Internal Server Error, \n${error}`
       )
-    ).call();
+    ).call()
   }
-
 }
 
-module.exports = InternalServerErrorMethod;
+module.exports = InternalServerErrorMethod

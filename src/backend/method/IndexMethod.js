@@ -1,6 +1,6 @@
 'use strict'
 
-const Method = require('./Method');
+const Method = require('./Method')
 
 const {
   ResponseWithHeader,
@@ -8,15 +8,14 @@ const {
   ResponseWithStatusMessage,
   WrittenResponse,
   EndedResponse
-} = require('@cuties/http');
+} = require('@cuties/http')
 
 class IndexMethod extends Method {
-
-  constructor() {
-    super(new RegExp(/^(\/|)$/), 'GET');
+  constructor () {
+    super(new RegExp(/^(\/|)$/), 'GET')
   }
 
-  invoke(request, response) {
+  invoke (request, response) {
     new EndedResponse(
       new WrittenResponse(
         new ResponseWithHeader(
@@ -24,12 +23,11 @@ class IndexMethod extends Method {
             new ResponseWithStatusCode(response, 200), 'Ok'
           ),
           'Content-Type', 'text/plain'
-        ), 
+        ),
         'Index.'
       )
-    ).call();
+    ).call()
   }
-
 }
 
-module.exports = IndexMethod;
+module.exports = IndexMethod

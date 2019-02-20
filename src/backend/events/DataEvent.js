@@ -1,18 +1,16 @@
 'use strict'
 
-const Event = require('@cuties/cutie').Event;
+const Event = require('@cuties/cutie').Event
 
 class DataEvent extends Event {
-
-  constructor(body) {
-    super();
-    this.body = body;
+  constructor (body) {
+    super()
+    this.body = body
   }
 
-  definedBody(data) {
-    this.body.push(data);
+  definedBody (data) {
+    this.body.push(data)
   }
-
 }
 
-module.exports = DataEvent;
+module.exports = DataEvent

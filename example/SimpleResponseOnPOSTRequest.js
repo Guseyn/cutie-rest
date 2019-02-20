@@ -4,31 +4,29 @@ const {
   EndedResponse,
   WrittenResponse,
   ResponseWithWrittenHead
-} = require('@cuties/http');
+} = require('@cuties/http')
 const {
   Method,
   RequestBody
-} = require('./../index');
+} = require('./../index')
 
 class SimpleResponseOnPOSTRequest extends Method {
-
-  constructor(regexpUrl, type) {
-    super(regexpUrl, type);
+  constructor (regexpUrl, type) {
+    super(regexpUrl, type)
   }
 
-  invoke(request, response) {
+  invoke (request, response) {
     // request also contains body(as buffer), use RequestBody object for that
     new EndedResponse(
       new WrittenResponse(
         new ResponseWithWrittenHead(
-          response, 200, 'ok',  {
-            'Content-Type': 'text/plain' 
+          response, 200, 'ok', {
+            'Content-Type': 'text/plain'
           }
         ), new RequestBody(request)
       ), ' is delivered'
-    ).call();
+    ).call()
   }
-
 }
 
-module.exports = SimpleResponseOnPOSTRequest;
+module.exports = SimpleResponseOnPOSTRequest

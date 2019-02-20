@@ -2,21 +2,19 @@
 
 const {
   Event
-} = require('@cuties/cutie');
+} = require('@cuties/cutie')
 
 class NotFoundErrorEvent extends Event {
-
-  constructor(notFoundMethod, request, response) {
-    super();
-    this.notFoundMethod = notFoundMethod;
-    this.request = request;
-    this.response = response;
+  constructor (notFoundMethod, request, response) {
+    super()
+    this.notFoundMethod = notFoundMethod
+    this.request = request
+    this.response = response
   }
 
-  definedBody(error) {
-    this.notFoundMethod.invoke(this.request, this.response);
+  definedBody (error) {
+    this.notFoundMethod.invoke(this.request, this.response, error)
   }
-
 }
 
-module.exports = NotFoundErrorEvent;
+module.exports = NotFoundErrorEvent
