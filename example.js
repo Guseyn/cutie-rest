@@ -6,16 +6,16 @@ const {
   RestApi,
   CreatedServingFilesMethod,
   CreatedCachedServingFilesMethod
-} = require('./../index');
+} = require('./index');
 const {
   CreatedOptions
 } = require('@cuties/https');
 const { ReadDataByPath } = require('@cuties/fs');
-const SimpleResponseOnGETRequest = require('./SimpleResponseOnGETRequest');
-const SimpleResponseOnPOSTRequest = require('./SimpleResponseOnPOSTRequest');
-const CustomNotFoundMethod = require('./CustomNotFoundMethod');
-const CustomInternalServerErrorMethod = require('./CustomInternalServerErrorMethod');
-const CustomIndexMethod = require('./CustomIndexMethod');
+const SimpleResponseOnGETRequest = require('./example/SimpleResponseOnGETRequest');
+const SimpleResponseOnPOSTRequest = require('./example/SimpleResponseOnPOSTRequest');
+const CustomNotFoundMethod = require('./example/CustomNotFoundMethod');
+const CustomInternalServerErrorMethod = require('./example/CustomInternalServerErrorMethod');
+const CustomIndexMethod = require('./example/CustomIndexMethod');
 
 const notFoundMethod = new CustomNotFoundMethod(new RegExp(/\/not-found/));
 const internalServerErrorMethod = new CustomInternalServerErrorMethod();
@@ -44,7 +44,7 @@ new Backend(
     notFoundMethod,
     internalServerErrorMethod
   ), new CreatedOptions(
-    'key', new ReadDataByPath('./test/pem/key.pem'),
-    'cert', new ReadDataByPath('./test/pem/cert.pem')
+    'key', new ReadDataByPath('./example/pem/key.pem'),
+    'cert', new ReadDataByPath('./example/pem/cert.pem')
   )
 ).call();

@@ -2,25 +2,23 @@
 
 const {
   AsyncObject
-} = require('@cuties/cutie');
+} = require('@cuties/cutie')
 
 class CacheDataEvent extends AsyncObject {
-
-  constructor(cache, key) {
-    super(cache, key);
+  constructor (cache, key) {
+    super(cache, key)
   }
 
-  definedSyncCall() {
+  definedSyncCall () {
     return (cache, key) => {
       return (chunk) => {
         if (!cache[key]) {
-          cache[key] = [];
+          cache[key] = []
         }
-        cache[key].push(chunk);
+        cache[key].push(chunk)
       }
     }
   }
-
 }
 
-module.exports = CacheDataEvent;
+module.exports = CacheDataEvent

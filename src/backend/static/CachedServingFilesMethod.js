@@ -2,51 +2,50 @@
 
 const {
   as
-} = require('@cuties/cutie');
+} = require('@cuties/cutie')
 const {
   If, Else
-} = require('@cuties/if-else');
+} = require('@cuties/if-else')
 const {
   ResponseWithHeader,
   ResponseWithStatusCode,
   UrlOfIncomingMessage
-} = require('@cuties/http');
+} = require('@cuties/http')
 const {
   ConcatenatedBuffers
-} = require('@cuties/buffer');
+} = require('@cuties/buffer')
 const {
   CreatedReadStream
-} = require('@cuties/fs');
+} = require('@cuties/fs')
 const {
   ResolvedPath,
   Extname
-} = require('@cuties/path');
+} = require('@cuties/path')
 const {
   PipedReadable,
   ReadableWithErrorEvent,
   ReadableWithDataEvent,
   ReadableWithEndEvent
-} = require('@cuties/stream');
-const Method = require('./../method/Method');
-const FSPathByUrl = require('./FSPathByUrl');
-const NotFoundErrorEvent = require('./NotFoundErrorEvent');
-const CacheDataEvent = require('./CacheDataEvent');
-const CacheEndEvent = require('./CacheEndEvent');
-const IsCached = require('./IsCached');
-const CachedValue = require('./CachedValue');
-const CreatedReadableBufferStream = require('./CreatedReadableBufferStream');
-const MimeTypeForExtension = require('./MimeTypeForExtension');
+} = require('@cuties/stream')
+const Method = require('./../method/Method')
+const FSPathByUrl = require('./FSPathByUrl')
+const NotFoundErrorEvent = require('./NotFoundErrorEvent')
+const CacheDataEvent = require('./CacheDataEvent')
+const CacheEndEvent = require('./CacheEndEvent')
+const IsCached = require('./IsCached')
+const CachedValue = require('./CachedValue')
+const CreatedReadableBufferStream = require('./CreatedReadableBufferStream')
+const MimeTypeForExtension = require('./MimeTypeForExtension')
 
 class CachedServingFilesMethod extends Method {
-
-  constructor(regexpUrl, mapper, notFoundMethod) {
-    super(regexpUrl, 'GET');
-    this.mapper = mapper;
-    this.notFoundMethod = notFoundMethod;
-    this.cache = {};
+  constructor (regexpUrl, mapper, notFoundMethod) {
+    super(regexpUrl, 'GET')
+    this.mapper = mapper
+    this.notFoundMethod = notFoundMethod
+    this.cache = {}
   }
 
-  invoke(request, response) {
+  invoke (request, response) {
     let okResponse = new ResponseWithStatusCode(
       new ResponseWithHeader(
         response, 'Content-Type',
@@ -56,7 +55,7 @@ class CachedServingFilesMethod extends Method {
           )
         )
       ), 200
-    );
+    )
     new ResolvedPath(
       new FSPathByUrl(
         new UrlOfIncomingMessage(request),
@@ -92,9 +91,8 @@ class CachedServingFilesMethod extends Method {
           )
         )
       )
-    ).call();
+    ).call()
   }
-
 }
 
-module.exports = CachedServingFilesMethod;
+module.exports = CachedServingFilesMethod

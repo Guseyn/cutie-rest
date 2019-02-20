@@ -2,20 +2,18 @@
 
 const {
   AsyncObject
-} = require('@cuties/cutie');
+} = require('@cuties/cutie')
 
 class CachedValue extends AsyncObject {
-
-  constructor(cache, key) {
-    super(cache, key);
+  constructor (cache, key) {
+    super(cache, key)
   }
 
-  definedSyncCall() {
+  definedSyncCall () {
     return (cache, key) => {
-      return cache[key];
+      return cache[key]
     }
   }
-
 }
 
-module.exports = CachedValue;
+module.exports = CachedValue

@@ -4,7 +4,8 @@
   "description": "Cutie extension for using REST (based on cutie-http) in Node.",
   "main": "index.js",
   "scripts": {
-    "test": "node test/example.js"
+    "test": "node test-executor",
+    "example": "node example"
   },
   "repository": {
     "type": "git",
@@ -14,24 +15,33 @@
     "cutie",
     "rest"
   ],
-  "dependencies": {
-    "@cuties/assert": "1.1.5",
-    "@cuties/buffer": "1.1.1",
-    "@cuties/cutie": "1.4.4",
-    "@cuties/fs": "1.1.2",
-    "@cuties/http": "1.2.6",
-    "@cuties/https": "^1.0.3",
-    "@cuties/if-else": "1.0.3",
-    "@cuties/is": "1.0.8",
-    "@cuties/path": "1.0.3",
-    "@cuties/process": "1.1.0",
-    "@cuties/stream": "1.1.1",
-    "test-executor": "1.1.2"
-  },
   "author": "guseyn",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Guseyn/cutie-rest/issues"
   },
-  "homepage": "https://github.com/Guseyn/cutie-rest#readme"
+  "homepage": "https://github.com/Guseyn/cutie-rest#readme",
+  "dependencies": {
+    "@cuties/assert": "^1.1.11",
+    "@cuties/buffer": "^1.1.4",
+    "@cuties/cutie": "^1.6.8",
+    "@cuties/fs": "^1.1.6",
+    "@cuties/http": "^1.2.9",
+    "@cuties/https": "^1.0.4",
+    "@cuties/if-else": "^1.0.7",
+    "@cuties/is": "^1.0.14",
+    "@cuties/path": "^1.0.7",
+    "@cuties/process": "^1.1.4",
+    "@cuties/stream": "^1.1.4",
+    "@cuties/wall": "^1.0.19",
+    "test-executor": "^1.1.35"
+  },
+  "devDependencies": {
+    "eslint": "^5.14.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0"
+  }
 }

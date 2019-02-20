@@ -2,28 +2,27 @@
 
 const {
   AsyncObject
-} = require('@cuties/cutie');
+} = require('@cuties/cutie')
 
 class MimeTypeForExtension extends AsyncObject {
-
-  constructor(ext) {
-    super(ext);
+  constructor (ext) {
+    super(ext)
     this.mimeTypes = {
       evy: 'application/envoy',
-      fif: 'application/fractals',    
+      fif: 'application/fractals',
       spl: 'application/futuresplash',
       hta: 'application/hta',
       acx: 'application/internet-property-stream',
       hqx: 'application/mac-binhex40',
       doc: 'application/msword',
-      dot: 'application/msword', 
+      dot: 'application/msword',
       '*': 'application/octet-stream',
-      bin: 'application/octet-stream', 
+      bin: 'application/octet-stream',
       class: 'application/octet-stream',
       dms: 'application/octet-stream',
-      exe: 'application/octet-stream', 
-      lha: 'application/octet-stream', 
-      lzh: 'application/octet-stream', 
+      exe: 'application/octet-stream',
+      lha: 'application/octet-stream',
+      lzh: 'application/octet-stream',
       oda: 'application/oda',
       axs: 'application/olescript',
       pdf: 'application/pdf',
@@ -37,13 +36,13 @@ class MimeTypeForExtension extends AsyncObject {
       setpay: 'application/set-payment-initiation',
       setreg: 'application/set-registration-initiation',
       xla: 'application/vnd.ms-excel',
-      xlc: 'application/vnd.ms-excel', 
-      xlm: 'application/vnd.ms-excel', 
-      xls: 'application/vnd.ms-excel', 
-      xlt: 'application/vnd.ms-excel', 
-      xlw: 'application/vnd.ms-excel', 
+      xlc: 'application/vnd.ms-excel',
+      xlm: 'application/vnd.ms-excel',
+      xls: 'application/vnd.ms-excel',
+      xlt: 'application/vnd.ms-excel',
+      xlw: 'application/vnd.ms-excel',
       msg: 'application/vnd.ms-outlook',
-      sst:'application/vnd.ms-pkicertstore',
+      sst: 'application/vnd.ms-pkicertstore',
       cat: 'application/vnd.ms-pkiseccat',
       stl: 'application/vnd.ms-pkistl',
       pot: 'application/vnd.ms-powerpoint',
@@ -52,8 +51,8 @@ class MimeTypeForExtension extends AsyncObject {
       mpp: 'application/vnd.ms-project',
       wcm: 'application/vnd.ms-works',
       wdb: 'application/vnd.ms-works',
-      wks: 'application/vnd.ms-works', 
-      wps: 'application/vnd.ms-works', 
+      wks: 'application/vnd.ms-works',
+      wps: 'application/vnd.ms-works',
       hlp: 'application/winhlp',
       bcpio: 'application/x-bcpio',
       cdf: 'application/x-cdf',
@@ -62,8 +61,8 @@ class MimeTypeForExtension extends AsyncObject {
       cpio: 'application/x-cpio',
       csh: 'application/x-csh',
       dcr: 'application/x-director',
-      dir: 'application/x-director', 
-      dxr: 'application/x-director', 
+      dir: 'application/x-director',
+      dxr: 'application/x-director',
       dvi: 'application/x-dvi',
       gtar: 'application/x-gtar',
       gz: 'application/x-gzip',
@@ -73,7 +72,7 @@ class MimeTypeForExtension extends AsyncObject {
       iii: 'application/x-iphone',
       js: 'application/x-javascript',
       latex: 'application/x-latex',
-      mdb: 'application/x-msaccess',  
+      mdb: 'application/x-msaccess',
       crd: 'application/x-mscardfile',
       clp: 'application/x-msclip',
       dll: 'application/x-msdownload',
@@ -86,7 +85,6 @@ class MimeTypeForExtension extends AsyncObject {
       scd: 'application/x-msschedule',
       trm: 'application/x-msterminal',
       wri: 'application/x-mswrite',
-      cdf: 'application/x-netcdf',
       nc: 'application/x-netcdf',
       pma: 'application/x-perfmon',
       pmc: 'application/x-perfmon',
@@ -95,14 +93,14 @@ class MimeTypeForExtension extends AsyncObject {
       pmw: 'application/x-perfmon',
       p12: 'application/x-pkcs12',
       pfx: 'application/x-pkcs12',
-      p7b: 'application/x-pkcs7-certificates', 
-      spc: 'application/x-pkcs7-certificates', 
+      p7b: 'application/x-pkcs7-certificates',
+      spc: 'application/x-pkcs7-certificates',
       p7r: 'application/x-pkcs7-certreqresp',
       p7c: 'application/x-pkcs7-mime',
       p7m: 'application/x-pkcs7-mime',
       p7s: 'application/x-pkcs7-signature',
       sh: 'application/x-sh',
-      shar: 'application/x-shar',  
+      shar: 'application/x-shar',
       swf: 'application/x-shockwave-flash',
       sit: 'application/x-stuffit',
       sv4cpio: 'application/x-sv4cpio',
@@ -113,22 +111,22 @@ class MimeTypeForExtension extends AsyncObject {
       texi: 'application/x-texinfo',
       texinfo: 'application/x-texinfo',
       roff: 'application/x-troff',
-      t:'application/x-troff',
+      t: 'application/x-troff',
       tr: 'application/x-troff',
       man: 'application/x-troff-man',
       me: 'application/x-troff-me',
-      ms: 'application/x-troff-ms', 
+      ms: 'application/x-troff-ms',
       ustar: 'application/x-ustar',
       src: 'application/x-wais-source',
       cer: 'application/x-x509-ca-cert',
-      crt: 'application/x-x509-ca-cert', 
+      crt: 'application/x-x509-ca-cert',
       der: 'application/x-x509-ca-cert',
       pko: 'application/ynd.ms-pkipko',
       zip: 'application/zip',
 
-      au:'audio/basic',
-      snd:'audio/basic',
-      mid:'audio/mid',
+      au: 'audio/basic',
+      snd: 'audio/basic',
+      mid: 'audio/mid',
       rmi: 'audio/mid',
       mp3: 'audio/mpeg',
       aif: 'audio/x-aiff',
@@ -137,7 +135,7 @@ class MimeTypeForExtension extends AsyncObject {
       m3u: 'audio/x-mpegurl',
       ra: 'audio/x-pn-realaudio',
       ram: 'audio/x-pn-realaudio',
-      wav: 'audio/x-wav', 
+      wav: 'audio/x-wav',
 
       bmp: 'image/bmp',
       cod: 'image/cis-cod',
@@ -163,7 +161,7 @@ class MimeTypeForExtension extends AsyncObject {
       xwd: 'image/x-xwindowdump',
 
       mht: 'message/rfc822',
-      mhtml: 'message/rfc822', 
+      mhtml: 'message/rfc822',
       nws: 'message/rfc822',
 
       css: 'text/css',
@@ -175,47 +173,46 @@ class MimeTypeForExtension extends AsyncObject {
       bas: 'text/plain',
       c: 'text/plain',
       h: 'text/plain',
-      txt:'text/plain',
-      rtx:'text/richtext',
-      sct: 'text/scriptlet',  
-      tsv:'text/tab-separated-values',
-      htt:'text/webviewhtml',
-      htc:'text/x-component',
-      etx:'text/x-setext',
-      vcf:'text/x-vcard',
+      txt: 'text/plain',
+      rtx: 'text/richtext',
+      sct: 'text/scriptlet',
+      tsv: 'text/tab-separated-values',
+      htt: 'text/webviewhtml',
+      htc: 'text/x-component',
+      etx: 'text/x-setext',
+      vcf: 'text/x-vcard',
 
-      mp2:'video/mpeg',
-      mpa:'video/mpeg',
-      mpe:'video/mpeg',
-      mpeg:'video/mpeg', 
+      mp2: 'video/mpeg',
+      mpa: 'video/mpeg',
+      mpe: 'video/mpeg',
+      mpeg: 'video/mpeg',
       mpg: 'video/mpeg',
-      mpv2: 'video/mpeg',  
+      mpv2: 'video/mpeg',
       mp4: 'video/mp4',
       mov: 'video/quicktime',
-      qt:'video/quicktime',
-      lsf:'video/x-la-asf', 
-      lsx:'video/x-la-asf', 
-      asf:'video/x-ms-asf', 
-      asr:'video/x-ms-asf', 
-      asx:'video/x-ms-asf', 
-      avi:'video/x-msvideo', 
-      movie:'video/x-sgi-movie', 
+      qt: 'video/quicktime',
+      lsf: 'video/x-la-asf',
+      lsx: 'video/x-la-asf',
+      asf: 'video/x-ms-asf',
+      asr: 'video/x-ms-asf',
+      asx: 'video/x-ms-asf',
+      avi: 'video/x-msvideo',
+      movie: 'video/x-sgi-movie',
 
       flr: 'x-world/x-vrml',
-      vrml:'x-world/x-vrml',
-      wrl:'x-world/x-vrml',
-      wrz:'x-world/x-vrml',
-      xaf:'x-world/x-vrml',
-      xof:'x-world/x-vrml'
+      vrml: 'x-world/x-vrml',
+      wrl: 'x-world/x-vrml',
+      wrz: 'x-world/x-vrml',
+      xaf: 'x-world/x-vrml',
+      xof: 'x-world/x-vrml'
     }
   }
 
-  definedSyncCall() {
+  definedSyncCall () {
     return (ext) => {
-      return this.mimeTypes[ext.toLowerCase().trim().split('.')[1]] || this.mimeTypes['txt'];
+      return this.mimeTypes[ext.toLowerCase().trim().split('.')[1]] || this.mimeTypes['txt']
     }
   }
-
 }
 
-module.exports = MimeTypeForExtension;
+module.exports = MimeTypeForExtension

@@ -1,19 +1,17 @@
 'use strict'
 
-const AsyncObject = require('@cuties/cutie').AsyncObject;
+const AsyncObject = require('@cuties/cutie').AsyncObject
 
 class RequestBody extends AsyncObject {
-
-  constructor(request) {
-    super(request);
+  constructor (request) {
+    super(request)
   }
 
-  definedSyncCall() {
+  definedSyncCall () {
     return (request) => {
-      return request.body;
+      return request.body
     }
   }
-
 }
 
-module.exports = RequestBody;
+module.exports = RequestBody

@@ -1,20 +1,18 @@
 'use strict'
 
-const AsyncObject = require('@cuties/cutie').AsyncObject;
+const AsyncObject = require('@cuties/cutie').AsyncObject
 
 class LoggedListeningServer extends AsyncObject {
-  
-  constructor(server, listeningMessage) {
-    super(server, listeningMessage);
+  constructor (server, listeningMessage) {
+    super(server, listeningMessage)
   }
 
-  definedSyncCall() {
+  definedSyncCall () {
     return (server, listeningMessage) => {
-      console.log(listeningMessage);
-      return server;
+      console.log(listeningMessage)
+      return server
     }
   }
-
 }
 
-module.exports = LoggedListeningServer;
+module.exports = LoggedListeningServer

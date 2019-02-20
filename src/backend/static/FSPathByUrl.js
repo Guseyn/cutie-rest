@@ -1,19 +1,17 @@
 'use strcit'
 
-const { AsyncObject } = require('@cuties/cutie');
+const { AsyncObject } = require('@cuties/cutie')
 
 class FSPathByUrl extends AsyncObject {
-
-  constructor(url, mapper) {
-    super(url, mapper);
+  constructor (url, mapper) {
+    super(url, mapper)
   }
 
-  definedSyncCall() {
+  definedSyncCall () {
     return (url, mapper) => {
-      return mapper(url);
+      return mapper(url)
     }
   }
-
 }
 
-module.exports = FSPathByUrl;
+module.exports = FSPathByUrl

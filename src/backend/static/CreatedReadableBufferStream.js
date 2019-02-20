@@ -2,22 +2,20 @@
 
 const {
   AsyncObject
-} = require('@cuties/cutie');
-const ReadableBufferStream = require('./ReadableBufferStream');
+} = require('@cuties/cutie')
+const ReadableBufferStream = require('./ReadableBufferStream')
 
 // Represented result is ReadableBufferStream
 class CreatedReadableBufferStream extends AsyncObject {
-
-  constructor(buffer, options) {
-    super(buffer, options);
+  constructor (buffer, options) {
+    super(buffer, options)
   }
 
-  definedSyncCall() {
+  definedSyncCall () {
     return (buffer, options) => {
-      return new ReadableBufferStream(buffer, options);
+      return new ReadableBufferStream(buffer, options)
     }
   }
-
 }
 
-module.exports = CreatedReadableBufferStream;
+module.exports = CreatedReadableBufferStream
