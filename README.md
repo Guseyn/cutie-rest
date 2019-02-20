@@ -1,10 +1,32 @@
 # cutie-rest
 
-[![NPM Version][npm-image]][npm-url]
+[![NPM Version](https://img.shields.io/npm/v/@cuties/rest.svg)](https://npmjs.org/package/@cuties/rest)
+[![Build Status](https://travis-ci.org/Guseyn/cutie-rest.svg?branch=master)](https://travis-ci.org/Guseyn/cutie-rest)
+[![codecov](https://codecov.io/gh/Guseyn/cutie-rest/branch/master/graph/badge.svg)](https://codecov.io/gh/Guseyn/cutie-rest)
 
 [Cutie](https://github.com/Guseyn/cutie) extension for using REST (based on [cutie-http](https://github.com/Guseyn/cutie-http)) in Node. It's based on the [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf).
 
-# Usage
+## Install
+
+`npm install @cuties/https`
+
+## Run test
+
+`npm test`
+
+## Run build
+
+`npm run build`
+
+## Run example
+
+`npm run example`
+
+## Run procedural example
+
+`npm run procedural-example`
+
+## Usage
 
 ```js
 const {
@@ -28,12 +50,12 @@ This library provides following objects: `Backend, RestApi, RequestBody, Created
 | `NotFoundEndpoint` | `regexp(RegExp)` | `Endpoint` that is used in `RestApi, ServingFilesEndpoint, CachedServingFilesEndpoint` for declaring endpoint on 404(NOT_FOUND) status. |
 | `InternalServerErrorEndpoint` | no args | `Endpoint` that is used for handling underlying internal failure(not for user error). |
 
-# Example
+## Example
 
 ```js
 'use strict'
 
-const path = require('path');
+const path = require('path')
 const {
   Backend,
   RestApi,
@@ -42,26 +64,26 @@ const {
 } = require('@cuties/rest');
 const {
   CreatedOptions
-} = require('@cuties/https');
-const { ReadDataByPath } = require('@cuties/fs');
-const SimpleResponseOnGETRequest = require('./example/SimpleResponseOnGETRequest');
-const SimpleResponseOnPOSTRequest = require('./example/SimpleResponseOnPOSTRequest');
-const CustomNotFoundEndpoint = require('./example/CustomNotFoundEndpoint');
-const CustomInternalServerErrorEndpoint = require('./example/CustomInternalServerErrorEndpoint');
-const CustomIndexEndpoint = require('./example/CustomIndexEndpoint');
+} = require('@cuties/https')
+const { ReadDataByPath } = require('@cuties/fs')
+const SimpleResponseOnGETRequest = require('./example/SimpleResponseOnGETRequest')
+const SimpleResponseOnPOSTRequest = require('./example/SimpleResponseOnPOSTRequest')
+const CustomNotFoundEndpoint = require('./example/CustomNotFoundEndpoint')
+const CustomInternalServerErrorEndpoint = require('./example/CustomInternalServerErrorEndpoint')
+const CustomIndexEndpoint = require('./example/CustomIndexEndpoint')
 
-const notFoundEndpoint = new CustomNotFoundEndpoint(new RegExp(/\/not-found/));
-const internalServerErrorEndpoint = new CustomInternalServerErrorEndpoint();
+const notFoundEndpoint = new CustomNotFoundEndpoint(new RegExp(/\/not-found/))
+const internalServerErrorEndpoint = new CustomInternalServerErrorEndpoint()
 
 const mapper = (url) => {
-  let parts = url.split('/').filter(part => part !== '');
-  return path.join(...parts);
+  let parts = url.split('/').filter(part => part !== '')
+  return path.join(...parts)
 }
 
 const cacheMapper = (url) => {
-  let parts = url.split('/').filter(part => part !== '').slice(1);
-  parts.unshift('files');
-  return path.join(...parts);
+  let parts = url.split('/').filter(part => part !== '').slice(1)
+  parts.unshift('files')
+  return path.join(...parts)
 }
 
 new Backend(
@@ -80,7 +102,8 @@ new Backend(
     'key', new ReadDataByPath('./example/pem/key.pem'),
     'cert', new ReadDataByPath('./example/pem/cert.pem')
   )
-).call();
+).call()
+
 
 ```
 
@@ -150,14 +173,13 @@ class SimpleResponseOnGETRequest extends Endpoint {
   }
 
   body (request, response) {
-    return
-    new EndedResponse(
+    return new EndedResponse(
       new WrittenResponse(
         new ResponseWithWrittenHead(
           response, 200, 'ok', {
             'Content-Type': 'text/plain'
           }
-        ), 'constent'
+        ), 'content'
       ), ' is delivered'
     )
   }
@@ -189,8 +211,7 @@ class SimpleResponseOnPOSTRequest extends Endpoint {
 
   body (request, response) {
     // request also contains body(as buffer), use RequestBody object for that
-    return
-    new EndedResponse(
+    return new EndedResponse(
       new WrittenResponse(
         new ResponseWithWrittenHead(
           response, 200, 'ok', {
@@ -227,6 +248,3 @@ module.exports = CustomInternalServerErrorEndpoint
 
 ```
 [InternalServerErrorMethod](https://github.com/Guseyn/cutie-rest/blob/master/src/backend/endpoint/InternalServerErrorEndpoint.js)
-
-[npm-image]: https://img.shields.io/npm/v/@cuties/rest.svg
-[npm-url]: https://npmjs.org/package/@cuties/rest

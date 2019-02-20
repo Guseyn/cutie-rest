@@ -56,8 +56,7 @@ class CachedServingFilesEndpoint extends Endpoint {
         )
       ), 200
     )
-    return
-    new ResolvedPath(
+    return new ResolvedPath(
       new FSPathByUrl(
         new UrlOfIncomingMessage(request),
         this.mapper

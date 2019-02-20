@@ -11,7 +11,7 @@ class IsCached extends AsyncObject {
 
   definedSyncCall () {
     return (cache, key) => {
-      return !!cache[key]
+      return cache[key] !== undefined
     }
   }
 }

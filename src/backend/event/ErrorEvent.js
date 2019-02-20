@@ -1,7 +1,7 @@
 'use strict'
 
 const Event = require('@cuties/cutie').Event
-const InternalServerErroEndpoint = require('./../endpoint/InternalServerErrorEndpoint')
+const InternalServerErrorEndpoint = require('./../endpoint/InternalServerErrorEndpoint')
 const InvokedEndpoint = require('./../endpoint/InvokedEndpoint')
 
 class ErrorEvent extends Event {
@@ -16,12 +16,14 @@ class ErrorEvent extends Event {
     let internalServerErrorEndpoint = this.endpoints.find(endpoint => {
       return endpoint instanceof InternalServerErrorEndpoint
     })
-    new InvokedEndpoint(
-      internalServerErrorEndpoint,
-      this.request,
-      this.response,
-      error
-    ).call()
+    if (internalServerErrorEndpoint) {
+      new InvokedEndpoint(
+        internalServerErrorEndpoint,
+        this.request,
+        this.response,
+        error
+      ).call()
+    }
   }
 }
 

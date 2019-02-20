@@ -16,8 +16,7 @@ class NotFoundEndpoint extends Endpoint {
   }
 
   body (request, response) {
-    return
-    new EndedResponse(
+    return new EndedResponse(
       new WrittenResponse(
         new ResponseWithHeader(
           new ResponseWithStatusMessage(

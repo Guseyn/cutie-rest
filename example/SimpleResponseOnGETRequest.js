@@ -15,14 +15,13 @@ class SimpleResponseOnGETRequest extends Endpoint {
   }
 
   body (request, response) {
-    return
-    new EndedResponse(
+    return new EndedResponse(
       new WrittenResponse(
         new ResponseWithWrittenHead(
           response, 200, 'ok', {
             'Content-Type': 'text/plain'
           }
-        ), 'constent'
+        ), 'content'
       ), ' is delivered'
     )
   }

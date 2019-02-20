@@ -4,14 +4,14 @@ const AsyncObject = require('@cuties/cutie').AsyncObject
 const NotFoundEndpoint = require('./NotFoundEndpoint')
 
 class MatchedEndpoint extends AsyncObject {
-  constructor (endpoints, type, url) {
-    super(endpoints, type, url)
+  constructor (endpoints, url, type) {
+    super(endpoints, url, type)
   }
 
   definedSyncCall () {
-    return (endpoints, type, url) => {
+    return (endpoints, url, type) => {
       let matchedEndpoint = endpoints.find(endpoint => {
-        return endpoint.match(type, url)
+        return endpoint.match(url, type)
       })
       if (!matchedEndpoint) {
         // 404
