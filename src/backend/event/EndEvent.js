@@ -26,8 +26,8 @@ class EndEvent extends Event {
     new InvokedEndpoint(
       new MatchedEndpoint(
         this.endpoints,
-        new MethodOfIncomingMessage(this.request),
-        new UrlOfIncomingMessage(this.request)
+        new UrlOfIncomingMessage(this.request),
+        new MethodOfIncomingMessage(this.request)
       ),
       new RequestWithBody(
         this.request, new ConcatenatedBuffers(this.body)

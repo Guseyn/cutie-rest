@@ -2,9 +2,9 @@
 
 const { AsyncObject } = require('@cuties/cutie')
 const { ReadableWithDataEvent, ReadableWithEndEvent, ReadableWithErrorEvent } = require('@cuties/stream')
-const DataEvent = require('./../events/DataEvent')
-const EndEvent = require('./../events/EndEvent')
-const ErrorEvent = require('./../events/ErrorEvent')
+const DataEvent = require('./../event/DataEvent')
+const EndEvent = require('./../event/EndEvent')
+const ErrorEvent = require('./../event/ErrorEvent')
 
 // Represents request-response listener
 class RestApi extends AsyncObject {

@@ -32,8 +32,7 @@ class ServingFilesEndpoint extends Endpoint {
   }
 
   body (request, response) {
-    return
-    new ResolvedPath(
+    return new ResolvedPath(
       new FSPathByUrl(
         new UrlOfIncomingMessage(request),
         this.mapper

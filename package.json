@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node test-executor",
+    "build": "node build",
     "example": "node example",
     "procedural-example": "node procedural-example"
   },
@@ -27,10 +28,11 @@
     "@cuties/buffer": "^1.1.4",
     "@cuties/cutie": "^1.6.8",
     "@cuties/fs": "^1.1.6",
-    "@cuties/http": "^1.2.9",
-    "@cuties/https": "^1.0.4",
+    "@cuties/http": "^1.2.10",
+    "@cuties/https": "^1.0.5",
     "@cuties/if-else": "^1.0.7",
     "@cuties/is": "^1.0.14",
+    "@cuties/json": "^1.0.3",
     "@cuties/path": "^1.0.7",
     "@cuties/process": "^1.1.4",
     "@cuties/stream": "^1.1.4",

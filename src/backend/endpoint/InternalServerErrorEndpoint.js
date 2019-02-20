@@ -16,8 +16,7 @@ class InternalServerErrorEndpoint extends Endpoint {
   }
 
   body (request, response, error) {
-    return
-    new EndedResponse(
+    return new EndedResponse(
       new WrittenResponse(
         new ResponseWithHeader(
           new ResponseWithStatusMessage(

@@ -5,15 +5,15 @@ const {
 } = require('@cuties/cutie')
 
 class NotFoundErrorEvent extends Event {
-  constructor (notFoundMethod, request, response) {
+  constructor (notFoundEndpoint, request, response) {
     super()
-    this.notFoundMethod = notFoundMethod
+    this.notFoundEndpoint = notFoundEndpoint
     this.request = request
     this.response = response
   }
 
   definedBody (error) {
-    this.notFoundMethod.invoke(this.request, this.response, error)
+    this.notFoundEndpoint.body(this.request, this.response, error).call()
   }
 }
 

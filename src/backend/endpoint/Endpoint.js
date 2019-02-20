@@ -15,7 +15,7 @@ class Endpoint {
     throw new Error('method invoke must be overriden')
   }
 
-  match (type, url) {
+  match (url, type) {
     return this.type === type && this.regexpUrl.test(url)
   }
 }

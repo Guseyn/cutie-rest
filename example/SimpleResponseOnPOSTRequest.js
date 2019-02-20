@@ -17,8 +17,7 @@ class SimpleResponseOnPOSTRequest extends Endpoint {
 
   body (request, response) {
     // request also contains body(as buffer), use RequestBody object for that
-    return
-    new EndedResponse(
+    return new EndedResponse(
       new WrittenResponse(
         new ResponseWithWrittenHead(
           response, 200, 'ok', {
