@@ -4,8 +4,8 @@ const path = require('path');
 const {
   Backend,
   RestApi,
-  CreatedServingFilesMethod,
-  CreatedCachedServingFilesMethod
+  CreatedServingFilesEndpoint,
+  CreatedCachedServingFilesEndpoint
 } = require('./index');
 const {
   CreatedOptions
@@ -13,12 +13,12 @@ const {
 const { ReadDataByPath } = require('@cuties/fs');
 const SimpleResponseOnGETRequest = require('./example/SimpleResponseOnGETRequest');
 const SimpleResponseOnPOSTRequest = require('./example/SimpleResponseOnPOSTRequest');
-const CustomNotFoundMethod = require('./example/CustomNotFoundMethod');
-const CustomInternalServerErrorMethod = require('./example/CustomInternalServerErrorMethod');
-const CustomIndexMethod = require('./example/CustomIndexMethod');
+const CustomNotFoundEndpoint = require('./example/CustomNotFoundEndpoint');
+const CustomInternalServerErrorEndpoint = require('./example/CustomInternalServerErrorEndpoint');
+const CustomIndexEndpoint = require('./example/CustomIndexEndpoint');
 
-const notFoundMethod = new CustomNotFoundMethod(new RegExp(/\/not-found/));
-const internalServerErrorMethod = new CustomInternalServerErrorMethod();
+const notFoundEndpoint = new CustomNotFoundEndpoint(new RegExp(/\/not-found/));
+const internalServerErrorEndpoint = new CustomInternalServerErrorEndpoint();
 
 const mapper = (url) => {
   let parts = url.split('/').filter(part => part !== '');
@@ -36,13 +36,13 @@ new Backend(
   8000, 
   '127.0.0.1',
   new RestApi(
-    new CustomIndexMethod(),
+    new CustomIndexEndpoint(),
     new SimpleResponseOnGETRequest(new RegExp(/^\/get/), 'GET'),
     new SimpleResponseOnPOSTRequest(new RegExp(/^\/post/), 'POST'),
-    new CreatedServingFilesMethod(new RegExp(/^\/files/), mapper, notFoundMethod),
-    new CreatedCachedServingFilesMethod(new RegExp(/^\/cached/), cacheMapper, notFoundMethod),
-    notFoundMethod,
-    internalServerErrorMethod
+    new CreatedServingFilesEndpoint(new RegExp(/^\/files/), mapper, notFoundEndpoint),
+    new CreatedCachedServingFilesEndpoint(new RegExp(/^\/cached/), cacheMapper, notFoundEndpoint),
+    notFoundEndpoint,
+    internalServerErrorEndpoint
   ), new CreatedOptions(
     'key', new ReadDataByPath('./example/pem/key.pem'),
     'cert', new ReadDataByPath('./example/pem/cert.pem')

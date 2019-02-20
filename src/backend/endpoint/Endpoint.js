@@ -2,16 +2,16 @@
 
 // interface for REST API method
 
-class Method {
+class Endpoint {
   constructor (regexpUrl, type) {
     this.regexpUrl = regexpUrl
     this.type = type
   }
 
   /*
-    To be overriden
+    To be overriden (must return async object)
   */
-  invoke (request, response, ...args) {
+  body (request, response, ...args) {
     throw new Error('method invoke must be overriden')
   }
 
@@ -20,4 +20,4 @@ class Method {
   }
 }
 
-module.exports = Method
+module.exports = Endpoint

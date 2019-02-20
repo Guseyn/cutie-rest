@@ -1,7 +1,7 @@
 'use strict'
 
 const {
-  Method
+  Endpoint
 } = require('./../index')
 const {
   EndedResponse,
@@ -9,12 +9,13 @@ const {
   ResponseWithWrittenHead
 } = require('@cuties/http')
 
-class SimpleResponseOnGETRequest extends Method {
+class SimpleResponseOnGETRequest extends Endpoint {
   constructor (regexpUrl, type) {
     super(regexpUrl, type)
   }
 
-  invoke (request, response) {
+  body (request, response) {
+    return
     new EndedResponse(
       new WrittenResponse(
         new ResponseWithWrittenHead(
@@ -23,7 +24,7 @@ class SimpleResponseOnGETRequest extends Method {
           }
         ), 'constent'
       ), ' is delivered'
-    ).call()
+    )
   }
 }
 

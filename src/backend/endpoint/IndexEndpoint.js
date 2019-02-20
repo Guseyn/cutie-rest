@@ -1,6 +1,6 @@
 'use strict'
 
-const Method = require('./Method')
+const Endpoint = require('./Endpoint')
 
 const {
   ResponseWithHeader,
@@ -10,12 +10,13 @@ const {
   EndedResponse
 } = require('@cuties/http')
 
-class IndexMethod extends Method {
+class IndexEndpoint extends Endpoint {
   constructor () {
     super(new RegExp(/^(\/|)$/), 'GET')
   }
 
-  invoke (request, response) {
+  body (request, response) {
+    return 
     new EndedResponse(
       new WrittenResponse(
         new ResponseWithHeader(
@@ -26,8 +27,8 @@ class IndexMethod extends Method {
         ),
         'Index.'
       )
-    ).call()
+    )
   }
 }
 
-module.exports = IndexMethod
+module.exports = IndexEndpoint

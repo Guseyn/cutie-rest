@@ -27,7 +27,7 @@ const {
   ReadableWithDataEvent,
   ReadableWithEndEvent
 } = require('@cuties/stream')
-const Method = require('./../method/Method')
+const Endpoint = require('./../endpoint/Endpoint')
 const FSPathByUrl = require('./FSPathByUrl')
 const NotFoundErrorEvent = require('./NotFoundErrorEvent')
 const CacheDataEvent = require('./CacheDataEvent')
@@ -37,15 +37,15 @@ const CachedValue = require('./CachedValue')
 const CreatedReadableBufferStream = require('./CreatedReadableBufferStream')
 const MimeTypeForExtension = require('./MimeTypeForExtension')
 
-class CachedServingFilesMethod extends Method {
-  constructor (regexpUrl, mapper, notFoundMethod) {
+class CachedServingFilesEndpoint extends Endpoint {
+  constructor (regexpUrl, mapper, notFoundEndpoint) {
     super(regexpUrl, 'GET')
     this.mapper = mapper
-    this.notFoundMethod = notFoundMethod
+    this.notFoundEndpoint = notFoundEndpoint
     this.cache = {}
   }
 
-  invoke (request, response) {
+  body (request, response) {
     let okResponse = new ResponseWithStatusCode(
       new ResponseWithHeader(
         response, 'Content-Type',
@@ -56,6 +56,7 @@ class CachedServingFilesMethod extends Method {
         )
       ), 200
     )
+    return
     new ResolvedPath(
       new FSPathByUrl(
         new UrlOfIncomingMessage(request),
@@ -69,7 +70,8 @@ class CachedServingFilesMethod extends Method {
             new ConcatenatedBuffers(
               new CachedValue(this.cache, as('resolvedPath'))
             )
-          ), okResponse
+          ),
+          okResponse
         ),
         new Else(
           new PipedReadable(
@@ -80,7 +82,7 @@ class CachedServingFilesMethod extends Method {
                     as('resolvedPath')
                   ),
                   new NotFoundErrorEvent(
-                    this.notFoundMethod, request, response
+                    this.notFoundEndpoint, request, response
                   )
                 ),
                 new CacheDataEvent(this.cache, as('resolvedPath'))
@@ -91,8 +93,8 @@ class CachedServingFilesMethod extends Method {
           )
         )
       )
-    ).call()
+    )
   }
 }
 
-module.exports = CachedServingFilesMethod
+module.exports = CachedServingFilesEndpoint

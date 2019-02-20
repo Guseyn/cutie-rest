@@ -1,6 +1,6 @@
 'use strict'
 
-const Method = require('./../method/Method')
+const Endpoint = require('./../endpoint/Endpoint')
 
 const {
   ResponseWithHeader,
@@ -10,12 +10,13 @@ const {
   EndedResponse
 } = require('@cuties/http')
 
-class NotFoundMethod extends Method {
+class NotFoundEndpoint extends Endpoint {
   constructor (regexpUrl) {
     super(regexpUrl, 'GET')
   }
 
-  invoke (request, response) {
+  body (request, response) {
+    return
     new EndedResponse(
       new WrittenResponse(
         new ResponseWithHeader(
@@ -26,8 +27,8 @@ class NotFoundMethod extends Method {
         ),
         '404: Not found'
       )
-    ).call()
+    )
   }
 }
 
-module.exports = NotFoundMethod
+module.exports = NotFoundEndpoint

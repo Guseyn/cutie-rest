@@ -19,19 +19,20 @@ const {
   PipedReadable,
   ReadableWithErrorEvent
 } = require('@cuties/stream')
-const Method = require('./../method/Method')
+const Endpoint = require('./../endpoint/Endpoint')
 const FSPathByUrl = require('./FSPathByUrl')
 const NotFoundErrorEvent = require('./NotFoundErrorEvent')
 const MimeTypeForExtension = require('./MimeTypeForExtension')
 
-class ServingFilesMethod extends Method {
-  constructor (regexpUrl, mapper, notFoundMethod) {
+class ServingFilesEndpoint extends Endpoint {
+  constructor (regexpUrl, mapper, notFoundEndpoint) {
     super(regexpUrl, 'GET')
     this.mapper = mapper
-    this.notFoundMethod = notFoundMethod
+    this.notFoundEndpoint = notFoundEndpoint
   }
 
-  invoke (request, response) {
+  body (request, response) {
+    return
     new ResolvedPath(
       new FSPathByUrl(
         new UrlOfIncomingMessage(request),
@@ -44,7 +45,7 @@ class ServingFilesMethod extends Method {
             as('resolvedPath')
           ),
           new NotFoundErrorEvent(
-            this.notFoundMethod, request, response
+            this.notFoundEndpoint, request, response
           )
         ),
         new ResponseWithStatusCode(
@@ -58,8 +59,8 @@ class ServingFilesMethod extends Method {
           ), 200
         )
       )
-    ).call()
+    )
   }
 }
 
-module.exports = ServingFilesMethod
+module.exports = ServingFilesEndpoint

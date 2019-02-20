@@ -9,23 +9,23 @@ const {
 const {
   ConcatenatedBuffers
 } = require('@cuties/buffer')
-const MatchedMethod = require('./../method/MatchedMethod')
-const InvokedMethod = require('./../method/InvokedMethod')
+const MatchedEndpoint = require('./../endpoint/MatchedEndpoint')
+const InvokedEndpoint = require('./../endpoint/InvokedEndpoint')
 const RequestWithBody = require('./../request/RequestWithBody')
 
 class EndEvent extends Event {
-  constructor (methods, request, response, body) {
+  constructor (endpoints, request, response, body) {
     super()
-    this.methods = methods
+    this.endpoints = endpoints
     this.request = request
     this.response = response
     this.body = body
   }
 
   definedBody () {
-    new InvokedMethod(
-      new MatchedMethod(
-        this.methods,
+    new InvokedEndpoint(
+      new MatchedEndpoint(
+        this.endpoints,
         new MethodOfIncomingMessage(this.request),
         new UrlOfIncomingMessage(this.request)
       ),
