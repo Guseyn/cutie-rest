@@ -9,7 +9,7 @@ class Timeout extends AsyncObject {
     super(ms)
   }
 
-  definedAsyncCall () {
+  asyncCall () {
     return timeout
   }
 

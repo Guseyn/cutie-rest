@@ -11,7 +11,7 @@ class CreatedReadableBufferStream extends AsyncObject {
     super(buffer, options)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (buffer, options) => {
       return new ReadableBufferStream(buffer, options)
     }

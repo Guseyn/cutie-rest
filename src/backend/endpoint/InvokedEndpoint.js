@@ -7,7 +7,7 @@ class InvokedEndpoint extends AsyncObject {
     super(endpoint, request, response, ...args)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (endpoint, request, response, ...args) => {
       endpoint.body(request, response, ...args).call()
       return endpoint

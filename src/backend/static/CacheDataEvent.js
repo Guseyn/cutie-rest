@@ -9,7 +9,7 @@ class CacheDataEvent extends AsyncObject {
     super(cache, key)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (cache, key) => {
       return (chunk) => {
         if (!cache[key]) {

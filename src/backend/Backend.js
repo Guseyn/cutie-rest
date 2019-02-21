@@ -18,7 +18,7 @@ class CallbackForServer extends AsyncObject {
     super(callback, server)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (callback, server) => {
       callback(server)
       return callback
@@ -32,7 +32,7 @@ class Backend extends AsyncObject {
     super(protocol, port, host, api, options)
   }
 
-  definedAsyncCall () {
+  asyncCall () {
     return (protocol, port, host, api, options, callback) => {
       new CallbackForServer(
         callback, new LoggedListeningServer(

@@ -18,6 +18,6 @@ new Assertion(
       requestMock,
       new ResponseMock(),
       []
-    ).definedBody()
+    ).body()
   )
 ).call()

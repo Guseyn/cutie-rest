@@ -12,7 +12,7 @@ class ErrorEvent extends Event {
     this.response = response
   }
 
-  definedBody (error) {
+  body (error) {
     let internalServerErrorEndpoint = this.endpoints.find(endpoint => {
       return endpoint instanceof InternalServerErrorEndpoint
     })

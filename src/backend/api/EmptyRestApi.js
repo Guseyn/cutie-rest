@@ -11,7 +11,7 @@ class EmptyRestApi extends Event {
     super()
   }
 
-  definedBody (request, response) {
+  body (request, response) {
     new EndedResponse(
       new WrittenResponse(response, 'API is not cofigured.')
     ).call()

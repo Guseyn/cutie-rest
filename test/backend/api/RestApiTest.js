@@ -14,7 +14,7 @@ new Assertion(
 
 new Assertion(
   new IsUndefined(
-    new RestApi().definedSyncCall()()(
+    new RestApi().syncCall()()(
       new RequestMock(), new ResponseMock()
     )
   )

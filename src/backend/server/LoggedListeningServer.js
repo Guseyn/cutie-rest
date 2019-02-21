@@ -7,7 +7,7 @@ class LoggedListeningServer extends AsyncObject {
     super(server, listeningMessage)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (server, listeningMessage) => {
       console.log(listeningMessage)
       return server

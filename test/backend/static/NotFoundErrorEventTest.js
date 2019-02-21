@@ -23,6 +23,6 @@ new Assertion(
       new CustomNotFoundEndpoint(new RegExp(/\/not-found/)),
       new RequestMock(),
       new ResponseMock()
-    ).definedBody(new Error('error'))
+    ).body(new Error('error'))
   )
 ).call()

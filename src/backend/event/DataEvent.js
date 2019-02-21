@@ -5,11 +5,11 @@ const Event = require('@cuties/cutie').Event
 class DataEvent extends Event {
   constructor (body) {
     super()
-    this.body = body
+    this.bodyArray = body
   }
 
-  definedBody (data) {
-    this.body.push(data)
+  body (data) {
+    this.bodyArray.push(data)
   }
 }
 

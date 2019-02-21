@@ -8,7 +8,7 @@
 
 ## Install
 
-`npm install @cuties/https`
+`npm install @cuties/rest`
 
 ## Run test
 
