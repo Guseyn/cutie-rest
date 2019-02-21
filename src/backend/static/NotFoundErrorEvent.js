@@ -12,7 +12,7 @@ class NotFoundErrorEvent extends Event {
     this.response = response
   }
 
-  definedBody (error) {
+  body (error) {
     this.notFoundEndpoint.body(this.request, this.response, error).call()
   }
 }

@@ -7,7 +7,7 @@ class RequestWithBody extends AsyncObject {
     super(request, body)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (request, body) => {
       request.body = body
       return request

@@ -208,7 +208,7 @@ class MimeTypeForExtension extends AsyncObject {
     }
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (ext) => {
       return this.mimeTypes[ext.toLowerCase().trim().split('.')[1]] || this.mimeTypes['txt']
     }

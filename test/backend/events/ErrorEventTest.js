@@ -23,7 +23,7 @@ new Assertion(
       [ new IndexEndpoint(), new CustomInternalServerErrorEndpoint() ],
       new RequestMock(),
       new ResponseMock()
-    ).definedBody(new Error('error'))
+    ).body(new Error('error'))
   )
 ).call()
 
@@ -33,6 +33,6 @@ new Assertion(
       [ new IndexEndpoint() ],
       new RequestMock(),
       new ResponseMock()
-    ).definedBody(new Error('error'))
+    ).body(new Error('error'))
   )
 ).call()

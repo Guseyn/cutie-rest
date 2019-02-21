@@ -5,7 +5,7 @@ const CacheDataEvent = require('./../../../src/backend/static/CacheDataEvent')
 const CacheEndEvent = require('./../../../src/backend/static/CacheEndEvent')
 
 let cache = {}
-new CacheEndEvent(cache, 'key').definedSyncCall()(cache, 'key')()
+new CacheEndEvent(cache, 'key').syncCall()(cache, 'key')()
 new DeepStrictEqualAssertion(
   cache,
   {
@@ -13,8 +13,8 @@ new DeepStrictEqualAssertion(
   }
 ).call()
 
-new CacheDataEvent(cache, 'key').definedSyncCall()(cache, 'key')('data')
-new CacheEndEvent(cache, 'key').definedSyncCall()(cache, 'key')()
+new CacheDataEvent(cache, 'key').syncCall()(cache, 'key')('data')
+new CacheEndEvent(cache, 'key').syncCall()(cache, 'key')()
 new DeepStrictEqualAssertion(
   cache,
   {

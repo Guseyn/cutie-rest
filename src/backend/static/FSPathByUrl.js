@@ -7,7 +7,7 @@ class FSPathByUrl extends AsyncObject {
     super(url, mapper)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (url, mapper) => {
       return mapper(url)
     }

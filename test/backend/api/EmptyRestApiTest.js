@@ -14,7 +14,7 @@ new Assertion(
 
 new Assertion(
   new IsUndefined(
-    new EmptyRestApi().definedBody(
+    new EmptyRestApi().body(
       new RequestMock(), new ResponseMock()
     )
   )

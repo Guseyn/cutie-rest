@@ -19,10 +19,10 @@ class EndEvent extends Event {
     this.endpoints = endpoints
     this.request = request
     this.response = response
-    this.body = body
+    this.bodyArray = body
   }
 
-  definedBody () {
+  body () {
     new InvokedEndpoint(
       new MatchedEndpoint(
         this.endpoints,
@@ -30,7 +30,7 @@ class EndEvent extends Event {
         new MethodOfIncomingMessage(this.request)
       ),
       new RequestWithBody(
-        this.request, new ConcatenatedBuffers(this.body)
+        this.request, new ConcatenatedBuffers(this.bodyArray)
       ),
       this.response
     ).call()

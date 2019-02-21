@@ -8,7 +8,7 @@ class MatchedEndpoint extends AsyncObject {
     super(endpoints, url, type)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (endpoints, url, type) => {
       let matchedEndpoint = endpoints.find(endpoint => {
         return endpoint.match(url, type)

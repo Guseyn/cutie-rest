@@ -9,7 +9,7 @@ class CacheEndEvent extends AsyncObject {
     super(cache, key)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (cache, key) => {
       return () => {
         if (!cache[key]) {

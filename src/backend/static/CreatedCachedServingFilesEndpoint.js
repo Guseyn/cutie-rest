@@ -8,7 +8,7 @@ class CreatedCachedServingFilesEndpoint extends AsyncObject {
     super(regexpUrl, mapper, notFounEndpoint)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (regexpUrl, mapper, notFounEndpoint) => {
       return new CachedServingFilesEndpoint(regexpUrl, mapper, notFounEndpoint)
     }

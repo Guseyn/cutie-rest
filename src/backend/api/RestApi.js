@@ -12,7 +12,7 @@ class RestApi extends AsyncObject {
     super(...endpoints)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (...endpoints) => {
       return (request, response) => {
         let body = []

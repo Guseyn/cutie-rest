@@ -9,7 +9,7 @@ class CachedValue extends AsyncObject {
     super(cache, key)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (cache, key) => {
       return cache[key]
     }
