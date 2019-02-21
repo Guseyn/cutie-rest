@@ -247,4 +247,4 @@ class CustomInternalServerErrorEndpoint extends InternalServerErrorEndpoint {
 module.exports = CustomInternalServerErrorEndpoint
 
 ```
-[InternalServerErrorMethod](https://github.com/Guseyn/cutie-rest/blob/master/src/backend/endpoint/InternalServerErrorEndpoint.js)
+[InternalServerErrorEndpoint](https://github.com/Guseyn/cutie-rest/blob/master/src/backend/endpoint/InternalServerErrorEndpoint.js)
