@@ -14,6 +14,10 @@ try {
 
 new Assertion(
   new IsBoolean(
-    new Endpoint(new RegExp(/^\/url/), 'GET').match('GET', 'url')
+    new Endpoint(new RegExp(/^\/url/), 'GET').match('/url', 'GET')
   )
+).call()
+
+new Assertion(
+  new Endpoint(new RegExp(/^\/url/)).match('/url', 'ANY_METHOD')
 ).call()
