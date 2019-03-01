@@ -16,7 +16,13 @@ class Endpoint {
   }
 
   match (url, type) {
-    return this.type === type && this.regexpUrl.test(url)
+    let match = false
+    if (this.type) {
+      match = this.type === type && this.regexpUrl.test(url)
+    } else {
+      match = this.regexpUrl.test(url)
+    }
+    return match
   }
 }
 
