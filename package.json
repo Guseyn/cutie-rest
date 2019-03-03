@@ -1,6 +1,6 @@
 {
   "name": "@cuties/rest",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Cutie extension for using REST (based on cutie-http) in Node.",
   "main": "index.js",
   "scripts": {
