@@ -71,6 +71,7 @@ class MimeTypeForExtension extends AsyncObject {
       isp: 'application/x-internet-signup',
       iii: 'application/x-iphone',
       js: 'application/x-javascript',
+      json: 'application/json',
       latex: 'application/x-latex',
       mdb: 'application/x-msaccess',
       crd: 'application/x-mscardfile',
