@@ -11,8 +11,8 @@ const {
 } = require('@cuties/http')
 
 class InternalServerErrorEndpoint extends Endpoint {
-  constructor () {
-    super()
+  constructor (regexpUrl) {
+    super(regexpUrl || new RegExp(/^\/internal-server-error/))
   }
 
   body (request, response, error) {

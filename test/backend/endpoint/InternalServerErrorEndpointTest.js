@@ -8,7 +8,9 @@ const ResponseMock = require('./../../../mock/ResponseMock')
 
 new Assertion(
   new Is(
-    new InternalServerErrorEndpoint().body(
+    new InternalServerErrorEndpoint(
+      new RegExp(/^\/internal-server-error/)
+    ).body(
       new RequestMock(), new ResponseMock()
     ), ResponseMock
   )
