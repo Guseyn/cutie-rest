@@ -25,6 +25,7 @@ new Assertion(
     new CreatedServingFilesEndpoint(
       new RegExp(/^\/files/),
       mapper,
+      {},
       new CustomNotFoundEndpoint(new RegExp(/\/not-found/))
     ),
     ServingFilesEndpoint

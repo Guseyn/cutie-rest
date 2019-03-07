@@ -32,6 +32,7 @@ new Assertion(
     new CachedServingFilesEndpoint(
       new RegExp(/^\/cached/),
       cacheMapper,
+      {},
       new CustomNotFoundEndpoint(new RegExp(/\/not-found/))
     ).body(
       requestMock, new ResponseMock()

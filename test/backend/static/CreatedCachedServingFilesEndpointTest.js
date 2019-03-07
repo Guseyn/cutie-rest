@@ -26,6 +26,7 @@ new Assertion(
     new CreatedCachedServingFilesEndpoint(
       new RegExp(/^\/cached/),
       cacheMapper,
+      {},
       new CustomNotFoundEndpoint(new RegExp(/\/not-found/))
     ),
     CachedServingFilesEndpoint

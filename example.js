@@ -32,7 +32,7 @@ const cacheMapper = (url) => {
 }
 
 new Backend(
-  'https', 
+  'http', 
   8000, 
   '127.0.0.1',
   new RestApi(

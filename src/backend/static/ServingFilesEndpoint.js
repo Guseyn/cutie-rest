@@ -6,7 +6,8 @@ const {
 const {
   UrlOfIncomingMessage,
   ResponseWithStatusCode,
-  ResponseWithHeader
+  ResponseWithHeader,
+  ResponseWithHeaders
 } = require('@cuties/http')
 const {
   CreatedReadStream
@@ -25,9 +26,10 @@ const NotFoundErrorEvent = require('./NotFoundErrorEvent')
 const MimeTypeForExtension = require('./MimeTypeForExtension')
 
 class ServingFilesEndpoint extends Endpoint {
-  constructor (regexpUrl, mapper, notFoundEndpoint) {
+  constructor (regexpUrl, mapper, headers, notFoundEndpoint) {
     super(regexpUrl, 'GET')
     this.mapper = mapper
+    this.headers = headers
     this.notFoundEndpoint = notFoundEndpoint
   }
 
@@ -48,13 +50,15 @@ class ServingFilesEndpoint extends Endpoint {
           )
         ),
         new ResponseWithStatusCode(
-          new ResponseWithHeader(
-            response, 'Content-Type',
-            new MimeTypeForExtension(
-              new Extname(
-                as('resolvedPath')
+          new ResponseWithHeaders(
+            new ResponseWithHeader(
+              response, 'Content-Type',
+              new MimeTypeForExtension(
+                new Extname(
+                  as('resolvedPath')
+                )
               )
-            )
+            ), this.headers
           ), 200
         )
       )
