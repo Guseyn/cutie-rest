@@ -31,6 +31,7 @@ new Assertion(
     new ServingFilesEndpoint(
       new RegExp(/^\/files/),
       mapper,
+      {},
       new CustomNotFoundEndpoint(new RegExp(/\/not-found/))
     ).body(
       requestMock, new ResponseMock()

@@ -8,6 +8,7 @@ const {
 } = require('@cuties/if-else')
 const {
   ResponseWithHeader,
+  ResponseWithHeaders,
   ResponseWithStatusCode,
   UrlOfIncomingMessage
 } = require('@cuties/http')
@@ -38,22 +39,25 @@ const CreatedReadableBufferStream = require('./CreatedReadableBufferStream')
 const MimeTypeForExtension = require('./MimeTypeForExtension')
 
 class CachedServingFilesEndpoint extends Endpoint {
-  constructor (regexpUrl, mapper, notFoundEndpoint) {
+  constructor (regexpUrl, mapper, headers, notFoundEndpoint) {
     super(regexpUrl, 'GET')
     this.mapper = mapper
     this.notFoundEndpoint = notFoundEndpoint
+    this.headers = headers
     this.cache = {}
   }
 
   body (request, response) {
     let okResponse = new ResponseWithStatusCode(
-      new ResponseWithHeader(
-        response, 'Content-Type',
-        new MimeTypeForExtension(
-          new Extname(
-            as('resolvedPath')
+      new ResponseWithHeaders(
+        new ResponseWithHeader(
+          response, 'Content-Type',
+          new MimeTypeForExtension(
+            new Extname(
+              as('resolvedPath')
+            )
           )
-        )
+        ), this.headers
       ), 200
     )
     return new ResolvedPath(
