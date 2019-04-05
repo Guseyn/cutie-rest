@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/Guseyn/cutie-rest.svg?branch=master)](https://travis-ci.org/Guseyn/cutie-rest)
 [![codecov](https://codecov.io/gh/Guseyn/cutie-rest/branch/master/graph/badge.svg)](https://codecov.io/gh/Guseyn/cutie-rest)
 
-[Cutie](https://github.com/Guseyn/cutie) extension for using REST (based on [cutie-http](https://github.com/Guseyn/cutie-http)) in Node. It's based on the [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf).
+[Cutie](https://github.com/Guseyn/cutie) extension for using REST (based on [cutie-http](https://github.com/Guseyn/cutie-http) and [cutie-https](https://github.com/Guseyn/cutie-https)) in Node. It's based on the [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf).
 
 ## Install
 
