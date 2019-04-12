@@ -102,7 +102,6 @@ new Backend(
   )
 ).call()
 
-
 ```
 
 ## CustomIndexEndpoint
