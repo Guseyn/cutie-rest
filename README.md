@@ -42,8 +42,6 @@ This library provides following objects: `Backend, RestApi, RequestBody, Created
 | `RestApi` | `...endpoints`(classes that extend `Endpoint`) | Represents request-response listener. Declares endpoints of api. |
 | `RequestBody` | `request` | Reads body of `request` in `body(request, response)` method of `Endpoint` implementation |
 | `Endpoint` | `regexpUrl (RegExp), method(string)[, ...args]` | Declares an endpoint(in api) with url that matches `regexpUrl` and specified `method`('GET', 'POST', etc.). Also it's possible to pass some custom arguments via `...args`. This class has a method `body(request, response[, ...args])` that needs to be overridden and must return async object.|
-| `CreatedServingFilesEndpoint` | `regexpUrl (RegExp or AsyncObject that represents RegExp), mapper (function(url) or AsyncObject that represents mapper function), headers(additional headers to the 'Content-Type' in response or Async Object that represents headers), notFoundEndpoint(Endpoint or AsyncObject that represents Endpoint)` | `AsyncObject` that represents `ServingFilesEndpoint` |
-| `CreatedCachedServingFilesEndpoint` | `regexpUrl (RegExp or AsyncObject that represents RegExp), mapper (function(url) or AsyncObject that represents mapper function), headers(additional headers to 'Content-Type' or Async Object that represents headers), notFoundEndpoint(Endpoint or AsyncObject that represents Endpoint)` | `AsyncObject` that represents `CachedServingFilesEndpoint` |
 | `ServingFilesEndpoint` | `regexpUrl (RegExp), mapper (function(url)), headers(additional headers to 'Content-Type' in response), notFoundEndpoint(Endpoint)` | Extends `Endpoint` and serves files on url that mathes `regexpUrl` with `mapper` function that gets location of a file on a disk by the url. Also it's required to declare `notFoundEndpoint` that handles the cases when a file is not found. You also can specify headers in response(no need to specify the 'Content-Type', library makes it for you). |
 | `CachedServingFilesEndpoint` | `regexpUrl (RegExp), mapper(function(url)), headers(additional headers to 'Content-Type' in response), notFoundEndpoint(Endpoint)` | Does the same that `ServingFilesEndpoint` does and caches files on server side for increasing speed of serving them. |
 | `IndexEndpoint` | no args | `Endpoint` that is used for representing index page. |
@@ -59,8 +57,8 @@ const path = require('path')
 const {
   Backend,
   RestApi,
-  CreatedServingFilesEndpoint,
-  CreatedCachedServingFilesEndpoint
+  ServingFilesEndpoint,
+  CachedServingFilesEndpoint
 } = require('@cuties/rest');
 const {
   CreatedOptions
@@ -94,8 +92,8 @@ new Backend(
     new CustomIndexEndpoint(),
     new SimpleResponseOnGETRequest(new RegExp(/^\/get/), 'GET'),
     new SimpleResponseOnPOSTRequest(new RegExp(/^\/post/), 'POST'),
-    new CreatedServingFilesEndpoint(new RegExp(/^\/files/), mapper, {}, notFoundEndpoint),
-    new CreatedCachedServingFilesEndpoint(new RegExp(/^\/cached/), cacheMapper, {}, notFoundEndpoint),
+    new ServingFilesEndpoint(new RegExp(/^\/files/), mapper, {}, notFoundEndpoint),
+    new CachedServingFilesEndpoint(new RegExp(/^\/cached/), cacheMapper, {}, notFoundEndpoint),
     notFoundEndpoint,
     internalServerErrorEndpoint
   ), new CreatedOptions(

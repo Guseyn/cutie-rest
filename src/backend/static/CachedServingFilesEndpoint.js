@@ -28,6 +28,9 @@ const {
   ReadableWithDataEvent,
   ReadableWithEndEvent
 } = require('@cuties/stream')
+const {
+  Created
+} = require('@cuties/created')
 const Endpoint = require('./../endpoint/Endpoint')
 const FSPathByUrl = require('./FSPathByUrl')
 const NotFoundErrorEvent = require('./NotFoundErrorEvent')
@@ -35,7 +38,7 @@ const CacheDataEvent = require('./CacheDataEvent')
 const CacheEndEvent = require('./CacheEndEvent')
 const IsCached = require('./IsCached')
 const CachedValue = require('./CachedValue')
-const CreatedReadableBufferStream = require('./CreatedReadableBufferStream')
+const ReadableBufferStream = require('./ReadableBufferStream')
 const MimeTypeForExtension = require('./MimeTypeForExtension')
 
 class CachedServingFilesEndpoint extends Endpoint {
@@ -69,7 +72,8 @@ class CachedServingFilesEndpoint extends Endpoint {
       new If(
         new IsCached(this.cache, as('resolvedPath')),
         new PipedReadable(
-          new CreatedReadableBufferStream(
+          new Created(
+            ReadableBufferStream,
             new ConcatenatedBuffers(
               new CachedValue(this.cache, as('resolvedPath'))
             )

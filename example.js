@@ -4,8 +4,8 @@ const path = require('path')
 const {
   Backend,
   RestApi,
-  CreatedServingFilesEndpoint,
-  CreatedCachedServingFilesEndpoint
+  ServingFilesEndpoint,
+  CachedServingFilesEndpoint
 } = require('./index');
 const {
   CreatedOptions
@@ -39,8 +39,8 @@ new Backend(
     new CustomIndexEndpoint(),
     new SimpleResponseOnGETRequest(new RegExp(/^\/get/), 'GET'),
     new SimpleResponseOnPOSTRequest(new RegExp(/^\/post/), 'POST'),
-    new CreatedServingFilesEndpoint(new RegExp(/^\/files/), mapper, notFoundEndpoint),
-    new CreatedCachedServingFilesEndpoint(new RegExp(/^\/cached/), cacheMapper, notFoundEndpoint),
+    new ServingFilesEndpoint(new RegExp(/^\/files/), mapper, notFoundEndpoint),
+    new CachedServingFilesEndpoint(new RegExp(/^\/cached/), cacheMapper, notFoundEndpoint),
     notFoundEndpoint,
     internalServerErrorEndpoint
   ), new CreatedOptions(
