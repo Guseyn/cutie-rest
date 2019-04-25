@@ -1,9 +1,12 @@
 'use strict'
 
 const { AsyncObject } = require('@cuties/cutie')
-const { ReadableWithDataEvent, ReadableWithEndEvent, ReadableWithErrorEvent } = require('@cuties/stream')
-const DataEvent = require('./../event/DataEvent')
-const EndEvent = require('./../event/EndEvent')
+const { ReadableWithErrorEvent } = require('@cuties/stream')
+const { MethodOfIncomingMessage, UrlOfIncomingMessage } = require('@cuties/http')
+const MatchedEndpoint = require('./../endpoint/MatchedEndpoint')
+const InvokedEndpoint = require('./../endpoint/InvokedEndpoint')
+const RequestWithBody = require('./../request/RequestWithBody')
+const FetchedBodyOfRequest = require('./../request/FetchedBodyOfRequest')
 const ErrorEvent = require('./../event/ErrorEvent')
 
 // Represents request-response listener
@@ -15,13 +18,18 @@ class RestApi extends AsyncObject {
   syncCall () {
     return (...endpoints) => {
       return (request, response) => {
-        let body = []
-        new ReadableWithEndEvent(
-          new ReadableWithDataEvent(
+        new InvokedEndpoint(
+          new MatchedEndpoint(
+            endpoints,
+            new UrlOfIncomingMessage(request),
+            new MethodOfIncomingMessage(request)
+          ),
+          new RequestWithBody(
             new ReadableWithErrorEvent(
               request, new ErrorEvent(endpoints, request, response)
-            ), new DataEvent(body)
-          ), new EndEvent(endpoints, request, response, body)
+            ), new FetchedBodyOfRequest(request)
+          ),
+          response
         ).call()
       }
     }
