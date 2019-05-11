@@ -14,7 +14,7 @@ new ExecutedLint(process, './src', './test').after(
   new ExecutedTestCoverageReport(
     new ExecutedTestCoverageCheck(
       new ExecutedTestCoverage(
-        process, './test-executor.js'
+        process, './test.js'
       ),
       { lines: 100, functions: 100, branches: 100, statements: 100 }
     ), 'json-summary'
