@@ -32,8 +32,8 @@ const cacheMapper = (url) => {
 }
 
 new Backend(
-  'http', 
-  8000, 
+  'http',
+  8000,
   '127.0.0.1',
   new RestApi(
     new CustomIndexEndpoint(),

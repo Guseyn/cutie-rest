@@ -1,6 +1,6 @@
 'use strict'
 
-const url = require('url');
+const url = require('url')
 const AsyncObject = require('@cuties/cutie').AsyncObject
 
 class RequestParams extends AsyncObject {
