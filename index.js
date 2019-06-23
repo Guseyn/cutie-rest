@@ -7,6 +7,7 @@ module.exports = {
   Endpoint: require('./src/backend/endpoint/Endpoint'),
   NotFoundEndpoint: require('./src/backend/endpoint/NotFoundEndpoint'),
   RequestBody: require('./src/backend/request/RequestBody'),
+  RequestParams: require('./src/backend/request/RequestParams'),
   ServingFilesEndpoint: require('./src/backend/static/ServingFilesEndpoint'),
   CachedServingFilesEndpoint: require('./src/backend/static/CachedServingFilesEndpoint')
 

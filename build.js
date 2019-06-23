@@ -10,7 +10,7 @@ const {
 const { ReadDataByPath } = require('@cuties/fs')
 const { ParsedJSON } = require('@cuties/json')
 
-new ExecutedLint(process, './src', './test').after(
+new ExecutedLint(process, './src', './test', 'example', 'example.js').after(
   new ExecutedTestCoverageReport(
     new ExecutedTestCoverageCheck(
       new ExecutedTestCoverage(
