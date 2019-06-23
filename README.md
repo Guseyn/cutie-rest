@@ -41,6 +41,7 @@ This library provides following objects: `Backend, RestApi, RequestBody, Created
 | `Backend` | `protocol, port(number), host(string), api(RestApi)[, options]`| It's `AsyncObject`. It Declares backend server with `protocol`(`http` or `https`) on specified `port` and `host`, also it provides declared `api` (REST). `options` is for options of the http/https server(it's optional).|
 | `RestApi` | `...endpoints`(classes that extend `Endpoint`) | Represents request-response listener. Declares endpoints of api. |
 | `RequestBody` | `request` | Reads body of `request` in `body(request, response)` method of `Endpoint` implementation |
+| `RequestParams` | `request` | Reads params of `request` in `body(request, response)` method of `Endpoint` implementation |
 | `Endpoint` | `regexpUrl (RegExp), method(string)[, ...args]` | Declares an endpoint(in api) with url that matches `regexpUrl` and specified `method`('GET', 'POST', etc.). Also it's possible to pass some custom arguments via `...args`. This class has a method `body(request, response[, ...args])` that needs to be overridden and must return async object.|
 | `ServingFilesEndpoint` | `regexpUrl (RegExp), mapper (function(url)), headers(additional headers to 'Content-Type' in response), notFoundEndpoint(Endpoint)` | Extends `Endpoint` and serves files on url that mathes `regexpUrl` with `mapper` function that gets location of a file on a disk by the url. Also it's required to declare `notFoundEndpoint` that handles the cases when a file is not found. You also can specify headers in response(no need to specify the 'Content-Type', library makes it for you). |
 | `CachedServingFilesEndpoint` | `regexpUrl (RegExp), mapper(function(url)), headers(additional headers to 'Content-Type' in response), notFoundEndpoint(Endpoint)` | Does the same that `ServingFilesEndpoint` does and caches files on server side for increasing speed of serving them. |
@@ -59,7 +60,7 @@ const {
   RestApi,
   ServingFilesEndpoint,
   CachedServingFilesEndpoint
-} = require('@cuties/rest');
+} = require('@cuties/rest')
 const {
   CreatedOptions
 } = require('@cuties/https')

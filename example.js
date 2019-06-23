@@ -6,7 +6,7 @@ const {
   RestApi,
   ServingFilesEndpoint,
   CachedServingFilesEndpoint
-} = require('./index');
+} = require('./index')
 const {
   CreatedOptions
 } = require('@cuties/https')
