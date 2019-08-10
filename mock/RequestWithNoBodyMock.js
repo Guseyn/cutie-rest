@@ -1,8 +1,7 @@
 'use strict'
 
-class RequestMock {
+class RequestWithNoBodyMock {
   constructor () {
-    this.body = Buffer.alloc(10)
     this.url = '/search?query=cutie+rest'
     this.headers = {
       'content-length': '1'
@@ -18,4 +17,4 @@ class RequestMock {
   write () {}
 }
 
-module.exports = RequestMock
+module.exports = RequestWithNoBodyMock

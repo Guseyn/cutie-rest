@@ -13,6 +13,7 @@ const {
 const { ReadDataByPath } = require('@cuties/fs')
 const SimpleResponseOnGETRequest = require('./example/SimpleResponseOnGETRequest')
 const SimpleResponseOnPOSTRequest = require('./example/SimpleResponseOnPOSTRequest')
+const SimpleProgressEndpoint = require('./example/SimpleProgressEndpoint')
 const CustomNotFoundEndpoint = require('./example/CustomNotFoundEndpoint')
 const CustomInternalServerErrorEndpoint = require('./example/CustomInternalServerErrorEndpoint')
 const CustomIndexEndpoint = require('./example/CustomIndexEndpoint')
@@ -39,6 +40,7 @@ new Backend(
     new CustomIndexEndpoint(),
     new SimpleResponseOnGETRequest(new RegExp(/^\/get/), 'GET'),
     new SimpleResponseOnPOSTRequest(new RegExp(/^\/post/), 'POST'),
+    new SimpleProgressEndpoint(new RegExp(/^\/progress/), 'POST'),
     new ServingFilesEndpoint(new RegExp(/^\/files/), mapper, notFoundEndpoint),
     new CachedServingFilesEndpoint(new RegExp(/^\/cached/), cacheMapper, notFoundEndpoint),
     notFoundEndpoint,
