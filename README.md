@@ -208,7 +208,7 @@ class SimpleResponseOnPOSTRequest extends Endpoint {
   }
 
   body (request, response) {
-    // request also contains body(as buffer), use RequestBody object for that
+    //  Use RequestBody object for fetching body from request
     return new EndedResponse(
       new WrittenResponse(
         new ResponseWithWrittenHead(

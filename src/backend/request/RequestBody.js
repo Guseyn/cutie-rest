@@ -1,17 +1,18 @@
 'use strict'
 
-const AsyncObject = require('@cuties/cutie').AsyncObject
+const { AsyncObject } = require('@cuties/cutie')
+const fetchBodyOfRequest = require('./custom-calls/fetchBodyOfRequest')
 
-class RequestBody extends AsyncObject {
+class FetchedBodyOfRequest extends AsyncObject {
   constructor (request) {
     super(request)
   }
 
-  syncCall () {
-    return (request) => {
-      return request.body
+  asyncCall () {
+    return (request, callback) => {
+      fetchBodyOfRequest(request, callback)
     }
   }
 }
 
-module.exports = RequestBody
+module.exports = FetchedBodyOfRequest
