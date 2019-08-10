@@ -42,6 +42,7 @@ This library provides following objects: `Backend, RestApi, RequestBody, Created
 | `RestApi` | `...endpoints`(classes that extend `Endpoint`) | Represents request-response listener. Declares endpoints of api. |
 | `RequestBody` | `request` | Reads body of `request` in `body(request, response)` method of `Endpoint` implementation |
 | `RequestParams` | `request` | Reads params of `request` in `body(request, response)` method of `Endpoint` implementation |
+| `RequestWithProgress` | `request, response[, totalLengthHeaderName('content-length' by default)]` | Send progress to client via `response.write` while loading request body |
 | `Endpoint` | `regexpUrl (RegExp), method(string)[, ...args]` | Declares an endpoint(in api) with url that matches `regexpUrl` and specified `method`('GET', 'POST', etc.). Also it's possible to pass some custom arguments via `...args`. This class has a method `body(request, response[, ...args])` that needs to be overridden and must return async object.|
 | `ServingFilesEndpoint` | `regexpUrl (RegExp), mapper (function(url)), headers(additional headers to 'Content-Type' in response), notFoundEndpoint(Endpoint)` | Extends `Endpoint` and serves files on url that mathes `regexpUrl` with `mapper` function that gets location of a file on a disk by the url. Also it's required to declare `notFoundEndpoint` that handles the cases when a file is not found. You also can specify headers in response(no need to specify the 'Content-Type', library makes it for you). |
 | `CachedServingFilesEndpoint` | `regexpUrl (RegExp), mapper(function(url)), headers(additional headers to 'Content-Type' in response), notFoundEndpoint(Endpoint)` | Does the same that `ServingFilesEndpoint` does and caches files on server side for increasing speed of serving them. |
@@ -67,6 +68,7 @@ const {
 const { ReadDataByPath } = require('@cuties/fs')
 const SimpleResponseOnGETRequest = require('./example/SimpleResponseOnGETRequest')
 const SimpleResponseOnPOSTRequest = require('./example/SimpleResponseOnPOSTRequest')
+const SimpleProgressEndpoint = require('./example/SimpleProgressEndpoint')
 const CustomNotFoundEndpoint = require('./example/CustomNotFoundEndpoint')
 const CustomInternalServerErrorEndpoint = require('./example/CustomInternalServerErrorEndpoint')
 const CustomIndexEndpoint = require('./example/CustomIndexEndpoint')
@@ -93,6 +95,7 @@ new Backend(
     new CustomIndexEndpoint(),
     new SimpleResponseOnGETRequest(new RegExp(/^\/get/), 'GET'),
     new SimpleResponseOnPOSTRequest(new RegExp(/^\/post/), 'POST'),
+    new SimpleProgressEndpoint(new RegExp(/^\/progress/), 'POST'),
     new ServingFilesEndpoint(new RegExp(/^\/files/), mapper, {}, notFoundEndpoint),
     new CachedServingFilesEndpoint(new RegExp(/^\/cached/), cacheMapper, {}, notFoundEndpoint),
     notFoundEndpoint,
@@ -222,6 +225,47 @@ class SimpleResponseOnPOSTRequest extends Endpoint {
 }
 
 module.exports = SimpleResponseOnPOSTRequest
+
+```
+
+## SimpleProgressEndpoint
+
+```js
+'use strict'
+
+const {
+  EndedResponse,
+  WrittenResponse,
+  ResponseWithWrittenHead
+} = require('@cuties/http')
+const {
+  Endpoint,
+  RequestBody,
+  RequestWithProgress
+} = require('./../index')
+
+class SimpleProgressEndpoint extends Endpoint {
+  constructor (regexpUrl, type) {
+    super(regexpUrl, type)
+  }
+
+  body (request, response) {
+    return new EndedResponse(
+      new WrittenResponse(
+        new ResponseWithWrittenHead(
+          response, 200, 'ok', {
+            'Content-Type': 'text/plain'
+          }
+        ),
+        new RequestBody(
+          new RequestWithProgress(request, response)
+        )
+      ), ' is delivered'
+    )
+  }
+}
+
+module.exports = SimpleProgressEndpoint
 
 ```
 

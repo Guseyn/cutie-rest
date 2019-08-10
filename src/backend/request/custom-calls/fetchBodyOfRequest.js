@@ -1,12 +1,13 @@
 'use strict'
 
 function fetchBodyOfRequest (request, callback) {
-  let body = []
+  const body = []
   request.on('data', (chunk) => {
     body.push(chunk)
   })
   request.on('end', () => {
-    callback(null, Buffer.concat(body))
+    request.body = Buffer.concat(body)
+    callback(null, request.body)
   })
 }
 

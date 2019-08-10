@@ -7,26 +7,29 @@ const {
 } = require('@cuties/http')
 const {
   Endpoint,
-  RequestBody
+  RequestBody,
+  RequestWithProgress
 } = require('./../index')
 
-class SimpleResponseOnPOSTRequest extends Endpoint {
+class SimpleProgressEndpoint extends Endpoint {
   constructor (regexpUrl, type) {
     super(regexpUrl, type)
   }
 
   body (request, response) {
-    //  Use RequestBody object for fetching body from request
     return new EndedResponse(
       new WrittenResponse(
         new ResponseWithWrittenHead(
           response, 200, 'ok', {
             'Content-Type': 'text/plain'
           }
-        ), new RequestBody(request)
+        ),
+        new RequestBody(
+          new RequestWithProgress(request, response)
+        )
       ), ' is delivered'
     )
   }
 }
 
-module.exports = SimpleResponseOnPOSTRequest
+module.exports = SimpleProgressEndpoint

@@ -2,7 +2,7 @@
 
 class ResponseMock {
   constructor () {}
-  write (chunk, encoding, callback) {
+  write (chunk, encoding = 'utf8', callback = () => {}) {
     callback(null)
   }
   end (data, encoding, callback) {
