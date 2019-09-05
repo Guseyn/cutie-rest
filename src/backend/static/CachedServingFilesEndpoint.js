@@ -4,7 +4,7 @@ const {
   as
 } = require('@cuties/cutie')
 const {
-  If, Else
+  If, Else, ElseIf
 } = require('@cuties/if-else')
 const {
   ResponseWithHeader,
@@ -13,10 +13,15 @@ const {
   UrlOfIncomingMessage
 } = require('@cuties/http')
 const {
-  ConcatenatedBuffers
+  ConcatenatedBuffers,
+  ByteLengthOfBuffer
 } = require('@cuties/buffer')
 const {
-  CreatedReadStream
+  CreatedReadStream,
+  StatsByPath,
+  Size,
+  DoesFileExistSync,
+  IsFile
 } = require('@cuties/fs')
 const {
   ResolvedPath,
@@ -71,32 +76,62 @@ class CachedServingFilesEndpoint extends Endpoint {
     ).as('resolvedPath').after(
       new If(
         new IsCached(this.cache, as('resolvedPath')),
-        new PipedReadable(
-          new Created(
-            ReadableBufferStream,
-            new ConcatenatedBuffers(
-              new CachedValue(this.cache, as('resolvedPath'))
+        new ConcatenatedBuffers(
+          new CachedValue(this.cache, as('resolvedPath'))
+        ).as('cachedFileContent').after(
+          new PipedReadable(
+            new Created(
+              ReadableBufferStream,
+              as('cachedFileContent')
+            ),
+            new ResponseWithHeader(
+              okResponse, 'Content-Length',
+              new ByteLengthOfBuffer(
+                as('cachedFileContent')
+              )
+            )
+          )
+        ),
+        new ElseIf(
+          new DoesFileExistSync(
+            as('resolvedPath')
+          ),
+          new If(
+            new IsFile(
+              new StatsByPath(
+                as('resolvedPath')
+              )
+            ),
+            new PipedReadable(
+              new ReadableWithEndEvent(
+                new ReadableWithDataEvent(
+                  new ReadableWithErrorEvent(
+                    new CreatedReadStream(
+                      as('resolvedPath')
+                    ),
+                    new NotFoundErrorEvent(
+                      this.notFoundEndpoint, request, response
+                    )
+                  ),
+                  new CacheDataEvent(this.cache, as('resolvedPath'))
+                ),
+                new CacheEndEvent(this.cache, as('resolvedPath'))
+              ),
+              new ResponseWithHeader(
+                okResponse, 'Content-Length',
+                new Size(
+                  new StatsByPath(
+                    as('resolvedPath')
+                  )
+                )
+              )
+            ),
+            new Else(
+              this.notFoundEndpoint.body(request, response)
             )
           ),
-          okResponse
-        ),
-        new Else(
-          new PipedReadable(
-            new ReadableWithEndEvent(
-              new ReadableWithDataEvent(
-                new ReadableWithErrorEvent(
-                  new CreatedReadStream(
-                    as('resolvedPath')
-                  ),
-                  new NotFoundErrorEvent(
-                    this.notFoundEndpoint, request, response
-                  )
-                ),
-                new CacheDataEvent(this.cache, as('resolvedPath'))
-              ),
-              new CacheEndEvent(this.cache, as('resolvedPath'))
-            ),
-            okResponse
+          new Else(
+            this.notFoundEndpoint.body(request, response)
           )
         )
       )
