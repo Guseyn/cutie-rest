@@ -4,13 +4,20 @@ const {
   as
 } = require('@cuties/cutie')
 const {
+  If, Else
+} = require('@cuties/if-else')
+const {
   UrlOfIncomingMessage,
   ResponseWithStatusCode,
   ResponseWithHeader,
   ResponseWithHeaders
 } = require('@cuties/http')
 const {
-  CreatedReadStream
+  CreatedReadStream,
+  StatsByPath,
+  Size,
+  DoesFileExistSync,
+  IsFile
 } = require('@cuties/fs')
 const {
   ResolvedPath,
@@ -40,26 +47,51 @@ class ServingFilesEndpoint extends Endpoint {
         this.mapper
       )
     ).as('resolvedPath').after(
-      new PipedReadable(
-        new ReadableWithErrorEvent(
-          new CreatedReadStream(
-            as('resolvedPath')
+      new If(
+        new DoesFileExistSync(
+          as('resolvedPath')
+        ),
+        new If(
+          new IsFile(
+            new StatsByPath(
+              as('resolvedPath')
+            )
           ),
-          new NotFoundErrorEvent(
-            this.notFoundEndpoint, request, response
+          new PipedReadable(
+            new ReadableWithErrorEvent(
+              new CreatedReadStream(
+                as('resolvedPath')
+              ),
+              new NotFoundErrorEvent(
+                this.notFoundEndpoint, request, response
+              )
+            ),
+            new ResponseWithStatusCode(
+              new ResponseWithHeaders(
+                new ResponseWithHeader(
+                  new ResponseWithHeader(
+                    response, 'Content-Type',
+                    new MimeTypeForExtension(
+                      new Extname(
+                        as('resolvedPath')
+                      )
+                    )
+                  ), 'Content-Length',
+                  new Size(
+                    new StatsByPath(
+                      as('resolvedPath')
+                    )
+                  )
+                ), this.headers
+              ), 200
+            )
+          ),
+          new Else(
+            this.notFoundEndpoint.body(request, response)
           )
         ),
-        new ResponseWithStatusCode(
-          new ResponseWithHeaders(
-            new ResponseWithHeader(
-              response, 'Content-Type',
-              new MimeTypeForExtension(
-                new Extname(
-                  as('resolvedPath')
-                )
-              )
-            ), this.headers
-          ), 200
+        new Else(
+          this.notFoundEndpoint.body(request, response)
         )
       )
     )

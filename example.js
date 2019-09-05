@@ -41,8 +41,8 @@ new Backend(
     new SimpleResponseOnGETRequest(new RegExp(/^\/get/), 'GET'),
     new SimpleResponseOnPOSTRequest(new RegExp(/^\/post/), 'POST'),
     new SimpleProgressEndpoint(new RegExp(/^\/progress/), 'POST'),
-    new ServingFilesEndpoint(new RegExp(/^\/files/), mapper, notFoundEndpoint),
-    new CachedServingFilesEndpoint(new RegExp(/^\/cached/), cacheMapper, notFoundEndpoint),
+    new ServingFilesEndpoint(new RegExp(/^\/files/), mapper, {}, notFoundEndpoint),
+    new CachedServingFilesEndpoint(new RegExp(/^\/cached/), cacheMapper, {}, notFoundEndpoint),
     notFoundEndpoint,
     internalServerErrorEndpoint
   ), new CreatedOptions(
