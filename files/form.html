@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>e-form</title>
+    <style type="text/css">
+      legend {
+        background-color: #000;
+        color: #fff;
+        padding: 3px 6px;
+      }
+
+      .output {
+        font: 1rem 'Fira Sans', sans-serif;
+      }
+
+      input, fieldset {
+        margin-top: 1em;
+      }
+
+      e-form {
+        display: block;
+      }
+
+    </style>
+    <script src="/../files/ehtml.js" type="text/javascript"></script>
+  </head>
+
+  <body class="main">
+    <e-json 
+      id="block1"
+      data-src="http://127.0.0.1:8001/get"
+      data-method="GET"
+      data-object="user1"
+      data-actions="applyValuesToChildNodes(#block1, ${user1})">
+    <e-form 
+      id="form"
+      data-request-url="http://127.0.0.1:8001/post"
+      data-request-method="POST"
+      data-request-button-id="#send-post"
+      data-object="saved">
+      <input type="text" name="text"><br/>
+      <button id="send-post">Send POST request</button>
+    </e-form>
+    <br/>
+    <hr/>
+    <e-form 
+      id="form"
+      data-request-url="http://127.0.0.1:8001/put"
+      data-request-method="PUT"
+      data-request-button-id="#send-put"
+      data-object="saved">
+      <input type="text" name="text"><br/>
+      <button id="send-put">Send PUT request</button>
+    </e-form>
+  </body>
+
+</html>

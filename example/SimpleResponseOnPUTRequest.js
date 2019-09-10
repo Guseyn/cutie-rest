@@ -1,33 +1,32 @@
 'use strict'
 
 const {
-  Endpoint
-} = require('./../index')
-const {
   EndedResponse,
   WrittenResponse,
   ResponseWithWrittenHead
 } = require('@cuties/http')
+const {
+  Endpoint,
+  RequestBody
+} = require('./../index')
 
-class SimpleResponseOnGETRequest extends Endpoint {
+class SimpleResponseOnPUTRequest extends Endpoint {
   constructor (regexpUrl, type) {
     super(regexpUrl, type)
   }
 
   body (request, response) {
+    //  Use RequestBody object for fetching body from request
     return new EndedResponse(
       new WrittenResponse(
         new ResponseWithWrittenHead(
           response, 200, 'ok', {
             'Content-Type': 'application/json'
           }
-        ),
-        JSON.stringify({
-          status: 'ok'
-        })
+        ), new RequestBody(request)
       )
     )
   }
 }
 
-module.exports = SimpleResponseOnGETRequest
+module.exports = SimpleResponseOnPUTRequest
