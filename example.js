@@ -5,14 +5,12 @@ const {
   Backend,
   RestApi,
   ServingFilesEndpoint,
-  CachedServingFilesEndpoint
+  CachedServingFilesEndpoint,
+  CORSEndpoint
 } = require('./index')
-const {
-  CreatedOptions
-} = require('@cuties/https')
-const { ReadDataByPath } = require('@cuties/fs')
 const SimpleResponseOnGETRequest = require('./example/SimpleResponseOnGETRequest')
 const SimpleResponseOnPOSTRequest = require('./example/SimpleResponseOnPOSTRequest')
+const SimpleResponseOnPUTRequest = require('./example/SimpleResponseOnPUTRequest')
 const SimpleProgressEndpoint = require('./example/SimpleProgressEndpoint')
 const CustomNotFoundEndpoint = require('./example/CustomNotFoundEndpoint')
 const CustomInternalServerErrorEndpoint = require('./example/CustomInternalServerErrorEndpoint')
@@ -45,8 +43,44 @@ new Backend(
     new CachedServingFilesEndpoint(new RegExp(/^\/cached/), cacheMapper, {}, notFoundEndpoint),
     notFoundEndpoint,
     internalServerErrorEndpoint
-  ), new CreatedOptions(
-    'key', new ReadDataByPath('./example/pem/key.pem'),
-    'cert', new ReadDataByPath('./example/pem/cert.pem')
+  )
+).call()
+
+new Backend(
+  'http',
+  8001,
+  '127.0.0.1',
+  new RestApi(
+    new CustomIndexEndpoint(),
+    new CORSEndpoint(
+      new SimpleResponseOnGETRequest(new RegExp(/^\/get/), 'GET'),
+      {
+        allowedOrigins: [ 'http://127.0.0.1:8000' ],
+        allowedMethods: [ 'GET, OPTIONS' ],
+        allowedHeaders: [ ]
+      }
+    ),
+    new CORSEndpoint(
+      new SimpleResponseOnPOSTRequest(new RegExp(/^\/post/), 'POST'),
+      {
+        allowedOrigins: [ 'http://127.0.0.1:8000' ],
+        allowedMethods: [ 'POST, OPTIONS' ],
+        allowedHeaders: [ ],
+        allowedCredentials: true,
+        maxAge: 86400
+      }
+    ),
+    new CORSEndpoint(
+      new SimpleResponseOnPUTRequest(new RegExp(/^\/put/), 'PUT'),
+      {
+        allowedOrigins: [ 'http://127.0.0.1:8000' ],
+        allowedMethods: [ 'PUT, OPTIONS' ],
+        allowedHeaders: [ ],
+        allowedCredentials: true,
+        maxAge: 86400
+      }
+    ),
+    notFoundEndpoint,
+    internalServerErrorEndpoint
   )
 ).call()

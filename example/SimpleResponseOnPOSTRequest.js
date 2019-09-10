@@ -21,10 +21,10 @@ class SimpleResponseOnPOSTRequest extends Endpoint {
       new WrittenResponse(
         new ResponseWithWrittenHead(
           response, 200, 'ok', {
-            'Content-Type': 'text/plain'
+            'Content-Type': 'application/json'
           }
         ), new RequestBody(request)
-      ), ' is delivered'
+      )
     )
   }
 }

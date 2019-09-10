@@ -34,7 +34,7 @@ const {
 } = require('@cuties/rest')
 ```
 
-This library provides following objects: `Backend, RestApi, RequestBody, CreatedServingFilesEndpoint, CreatedCachedServingFilesEndpoint, ServingFiles, CachedServingFiles` and `Endpoint, NotFoundEndpoint, IndexEndpoint, InternalServerErrorEndpoint` interfaces.
+This library provides following objects: `Backend, RestApi, RequestBody, CreatedServingFilesEndpoint, CreatedCachedServingFilesEndpoint, ServingFiles, CachedServingFiles, CORSEndpoint` and `Endpoint, NotFoundEndpoint, IndexEndpoint, InternalServerErrorEndpoint` interfaces.
 
 | Object | Parameters(type) | Description |
 | ------ | -----------| ----------- |
@@ -48,6 +48,7 @@ This library provides following objects: `Backend, RestApi, RequestBody, Created
 | `CachedServingFilesEndpoint` | `regexpUrl (RegExp), mapper(function(url)), headers(additional headers to 'Content-Type' in response), notFoundEndpoint(Endpoint)` | Does the same that `ServingFilesEndpoint` does and caches files on server side for increasing speed of serving them. |
 | `IndexEndpoint` | no args | `Endpoint` that is used for representing index page. |
 | `NotFoundEndpoint` | `regexpUrl (RegExp)` | `Endpoint` that is used in `RestApi, ServingFilesEndpoint, CachedServingFilesEndpoint` for declaring endpoint on 404(NOT_FOUND) status. |
+| `CORSEndpoint` | `endpoint, { allowedOrigins, allowedMethods, allowedHeaders, allowedCredentials, maxAge }` | Enables CORS for specified endpoint and configuration ([example]()) |
 | `InternalServerErrorEndpoint` | `regexpUrl (RegExp, default is new RegExp(/^\/internal-server-error/))` | `Endpoint` that is used for handling underlying internal failure(not for user error). |
 
 ## Example
@@ -108,7 +109,7 @@ new Backend(
 
 ```
 
-## CustomIndexEndpoint
+### CustomIndexEndpoint
 
 ```js
 'use strict'
@@ -132,7 +133,7 @@ module.exports = CustomIndexEndpoint
 
 [IndexEndpoint](https://github.com/Guseyn/cutie-rest/blob/master/src/backend/endpoint/IndexEndpoint.js)
 
-## CustomNotFoundEndpoint
+### CustomNotFoundEndpoint
 
 ```js
 'use strict'
@@ -154,7 +155,7 @@ module.exports = CustomNotFoundEndpoint
 ```
 [NotFoundEndpoint](https://github.com/Guseyn/cutie-rest/blob/master/src/backend/endpoint/NotFoundEndpoint.js)
 
-## SimpleResponseOnGETRequest
+### SimpleResponseOnGETRequest
 
 ```js
 'use strict'
@@ -190,7 +191,7 @@ module.exports = SimpleResponseOnGETRequest
 
 ```
 
-## SimpleResponseOnPOSTRequest
+### SimpleResponseOnPOSTRequest
 
 ```js
 'use strict'
@@ -228,7 +229,7 @@ module.exports = SimpleResponseOnPOSTRequest
 
 ```
 
-## SimpleProgressEndpoint
+### SimpleProgressEndpoint
 
 ```js
 'use strict'
@@ -269,7 +270,7 @@ module.exports = SimpleProgressEndpoint
 
 ```
 
-## CustomInternalServerErrorEndpoint
+### CustomInternalServerErrorEndpoint
 
 ```js
 'use strict'
@@ -290,3 +291,41 @@ module.exports = CustomInternalServerErrorEndpoint
 
 ```
 [InternalServerErrorEndpoint](https://github.com/Guseyn/cutie-rest/blob/master/src/backend/endpoint/InternalServerErrorEndpoint.js)
+
+## Example Of Using CORSEndpoint
+
+```js
+'use strict'
+
+const {
+  Backend,
+  RestApi,
+  CORSEndpoint
+} = require('@cuties/rest')
+const SimpleResponseOnPOSTRequest = require('./example/SimpleResponseOnPOSTRequest')
+const CustomNotFoundEndpoint = require('./example/CustomNotFoundEndpoint')
+const CustomInternalServerErrorEndpoint = require('./example/CustomInternalServerErrorEndpoint')
+const CustomIndexEndpoint = require('./example/CustomIndexEndpoint')
+
+new Backend(
+  'http', 
+  8001, 
+  '127.0.0.1',
+  new RestApi(
+    new CustomIndexEndpoint(),
+    new CORSEndpoint(
+      new SimpleResponseOnPOSTRequest(new RegExp(/^\/post/), 'POST'),
+      {
+        allowedOrigins: [ 'https://127.0.0.1:8000' ], // or it can be just a string '*' (which is default value)
+        allowedMethods: [ 'POST, OPTIONS' ], // by default it's methods in the encapsulated SimpleResponseOnPOSTRequest and OPTIONS
+        allowedHeaders: [ ], // by default it's all headers of the request,
+        allowedCredentials: true, // by default this value is not set,
+        maxAge: 86400 // by default this value is not set
+      }
+    ),
+    notFoundEndpoint,
+    internalServerErrorEndpoint
+  )
+).call()
+
+```

@@ -12,17 +12,38 @@ class Endpoint {
     To be overriden (must return async object)
   */
   body (request, response, ...args) {
-    throw new Error('method invoke must be overriden')
+    throw new Error('method body must be overriden')
   }
 
   match (url, type) {
     let match = false
     if (this.type) {
-      match = this.type === type && this.regexpUrl.test(url)
+      if (type) {
+        type = type.trim()
+      }
+      match = this.type.split(',').filter(t => t.trim() === type).length > 0 && this.regexpUrl.test(url)
     } else {
       match = this.regexpUrl.test(url)
     }
     return match
+  }
+
+  withAdditionalMethod (method) {
+    this.type += `, ${method}`
+    return this
+  }
+
+  withBody (body) {
+    this.body = body
+    return this
+  }
+
+  is (request, type) {
+    return request.method === type
+  }
+
+  methods () {
+    return this.type.split(',').map(m => m.trim())
   }
 }
 
