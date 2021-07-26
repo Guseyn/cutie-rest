@@ -32,7 +32,7 @@ class Timeout extends AsyncObject {
 class SafeBackend extends Backend {
   onError (error) {
     new DeepStrictEqualAssertion(
-      error, new Error('Protocol bad is not allowed.')
+      error, new Error('Protocol bad is not supported.')
     ).call()
   }
 }
