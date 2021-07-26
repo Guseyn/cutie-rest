@@ -39,6 +39,7 @@ This library provides following objects: `Backend, RestApi, RequestBody, Created
 | Object | Parameters(type) | Description |
 | ------ | -----------| ----------- |
 | `Backend` | `protocol, port(number), host(string), api(RestApi)[, options]`| It's `AsyncObject`. It Declares backend server with `protocol`(`http` or `https`) on specified `port` and `host`, also it provides declared `api` (REST). `options` is for options of the http/https server(it's optional).|
+| `ClusteredBackendWith505ErrorEvent` | `domain, cluster, errorEvent, protocol, port, host, api[, options[, numberOfForks]]` | It's `AsyncObject`. It declares backend which based on clusters (Cluster API from Node.js) and also provides a way to handle any uncaught exceptions in the program via Domain module in Node(will be replace with other alternative solution from Node once it's released). For more details check [example below](#example-of-using-clustered-backend). |
 | `RestApi` | `...endpoints`(classes that extend `Endpoint`) | Represents request-response listener. Declares endpoints of api. |
 | `RequestBody` | `request` | Reads body of `request` in `body(request, response)` method of `Endpoint` implementation |
 | `RequestParams` | `request` | Reads params of `request` in `body(request, response)` method of `Endpoint` implementation |
@@ -48,7 +49,7 @@ This library provides following objects: `Backend, RestApi, RequestBody, Created
 | `CachedServingFilesEndpoint` | `regexpUrl (RegExp), mapper(function(url)), headers(additional headers to 'Content-Type' in response), notFoundEndpoint(Endpoint)` | Does the same that `ServingFilesEndpoint` does and caches files on server side for increasing speed of serving them. |
 | `IndexEndpoint` | no args | `Endpoint` that is used for representing index page. |
 | `NotFoundEndpoint` | `regexpUrl (RegExp)` | `Endpoint` that is used in `RestApi, ServingFilesEndpoint, CachedServingFilesEndpoint` for declaring endpoint on 404(NOT_FOUND) status. |
-| `CORSEndpoint` | `endpoint, { allowedOrigins, allowedMethods, allowedHeaders, allowedCredentials, maxAge }` | Enables CORS for specified endpoint and configuration ([example]()) |
+| `CORSEndpoint` | `endpoint, { allowedOrigins, allowedMethods, allowedHeaders, allowedCredentials, maxAge }` | Enables CORS for specified endpoint and configuration ([example](#example-of-using-corsendpoint)) |
 | `InternalServerErrorEndpoint` | `regexpUrl (RegExp, default is new RegExp(/^\/internal-server-error/))` | `Endpoint` that is used for handling underlying internal failure(not for user error). |
 
 ## Example
@@ -323,6 +324,70 @@ new Backend(
         maxAge: 86400 // by default this value is not set
       }
     ),
+    notFoundEndpoint,
+    internalServerErrorEndpoint
+  )
+).call()
+
+```
+
+## Example Of Using Clustered Backend
+
+```js
+'use strict'
+
+const domain = require('domain')
+const cluster = require('cluster')
+const path = require('path')
+const {
+  ClusteredBackendWith505ErrorEvent,
+  RestApi,
+  ServingFilesEndpoint,
+  CachedServingFilesEndpoint,
+  CORSEndpoint
+} = require('./index')
+const SimpleResponseOnGETRequest = require('./example/SimpleResponseOnGETRequest')
+const SimpleResponseOnPOSTRequest = require('./example/SimpleResponseOnPOSTRequest')
+const SimpleResponseOnPUTRequest = require('./example/SimpleResponseOnPUTRequest')
+const SimpleProgressEndpoint = require('./example/SimpleProgressEndpoint')
+const CustomNotFoundEndpoint = require('./example/CustomNotFoundEndpoint')
+const CustomInternalServerErrorEndpoint = require('./example/CustomInternalServerErrorEndpoint')
+const CustomIndexEndpoint = require('./example/CustomIndexEndpoint')
+const ErrorEndpoint = require('./example/ErrorEndpoint')
+
+const notFoundEndpoint = new CustomNotFoundEndpoint(new RegExp(/\/not-found/))
+const internalServerErrorEndpoint = new CustomInternalServerErrorEndpoint()
+
+const mapper = (url) => {
+  let parts = url.split('/').filter(part => part !== '')
+  return path.join(...parts)
+}
+
+const cacheMapper = (url) => {
+  let parts = url.split('/').filter(part => part !== '').slice(1)
+  parts.unshift('files')
+  return path.join(...parts)
+}
+
+new ClusteredBackendWith505ErrorEvent(
+  domain,
+  cluster,
+  (error, request, response) => {
+    response.statusCode = 500
+    response.setHeader('content-type', 'text/plain')
+    response.end(`Internal Server Error (500):\n ${error}`)
+  },
+  'http',
+  8000,
+  '127.0.0.1',
+  new RestApi(
+    new CustomIndexEndpoint(),
+    new SimpleResponseOnGETRequest(new RegExp(/^\/get/), 'GET'),
+    new ErrorEndpoint(new RegExp(/^\/error/), 'GET'),
+    new SimpleResponseOnPOSTRequest(new RegExp(/^\/post/), 'POST'),
+    new SimpleProgressEndpoint(new RegExp(/^\/progress/), 'POST'),
+    new ServingFilesEndpoint(new RegExp(/^\/files/), mapper, {}, notFoundEndpoint),
+    new CachedServingFilesEndpoint(new RegExp(/^\/cached/), cacheMapper, {}, notFoundEndpoint),
     notFoundEndpoint,
     internalServerErrorEndpoint
   )
