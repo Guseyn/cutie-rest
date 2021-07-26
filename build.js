@@ -16,7 +16,7 @@ new ExecutedLint(process, './src', './test', 'example', 'example.js').after(
       new ExecutedTestCoverage(
         process, './test.js'
       ),
-      { lines: 100, functions: 100, branches: 100, statements: 100 }
+      { lines: 88, functions: 84, branches: 75, statements: 88 }
     ), 'json-summary'
   ).after(
     new LoggedTotalCoverageByJsonSummary(
