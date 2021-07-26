@@ -48,18 +48,18 @@ class Backend extends AsyncObject {
     let server
     if (protocol === 'http') {
       if (options) {
-        server = new CreatedHttpServer(options, api)
+        server = new CreatedHttpServer(options, api || new EmptyRestApi())
       } else {
         server = new CreatedHttpServer(api || new EmptyRestApi())
       }
     } else if (protocol === 'https') {
       if (options) {
-        server = new CreatedHttpsServer(options, api)
+        server = new CreatedHttpsServer(options, api || new EmptyRestApi())
       } else {
         server = new CreatedHttpsServer(api || new EmptyRestApi())
       }
     } else {
-      throw new Error(`Protocol ${protocol} is not allowed.`)
+      throw new Error(`Protocol ${protocol} is not supported.`)
     }
     return server
   }
