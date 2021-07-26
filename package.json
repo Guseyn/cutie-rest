@@ -7,6 +7,7 @@
     "test": "node test",
     "build": "node build",
     "example": "node example",
+    "cluster-example": "node cluster-example",
     "procedural-example": "node procedural-example"
   },
   "repository": {
