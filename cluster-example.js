@@ -36,6 +36,11 @@ const cacheMapper = (url) => {
 new ClusteredBackendWith505ErrorEvent(
   domain,
   cluster,
+  (error, request, response) => {
+    response.statusCode = 500
+    response.setHeader('content-type', 'text/plain')
+    response.end(`Internal Server Error (500):\n ${error}`)
+  },
   'http',
   8000,
   '127.0.0.1',
