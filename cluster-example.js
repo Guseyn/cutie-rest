@@ -4,7 +4,7 @@ const domain = require('domain')
 const cluster = require('cluster')
 const path = require('path')
 const {
-  ClusteredBackendWith505ErrorEvent,
+  ClusteredBackendWith500ErrorEvent,
   RestApi,
   ServingFilesEndpoint,
   CachedServingFilesEndpoint,
@@ -33,7 +33,7 @@ const cacheMapper = (url) => {
   return path.join(...parts)
 }
 
-new ClusteredBackendWith505ErrorEvent(
+new ClusteredBackendWith500ErrorEvent(
   domain,
   cluster,
   (error, request, response) => {
