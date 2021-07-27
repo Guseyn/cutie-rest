@@ -36,7 +36,7 @@ class CallbackForServer extends AsyncObject {
 }
 
 // Represented result is server(with attached api)
-class ClusteredBackendWith505ErrorEvent extends AsyncObject {
+class ClusteredBackendWith500ErrorEvent extends AsyncObject {
   constructor (domain, cluster, errorEvent, protocol, port, host, api, options, numberOfForks = numberOfCPUCores) {
     super(domain, cluster, errorEvent, protocol, port, host, api, options, numberOfForks)
   }
@@ -79,4 +79,4 @@ class ClusteredBackendWith505ErrorEvent extends AsyncObject {
   }
 }
 
-module.exports = ClusteredBackendWith505ErrorEvent
+module.exports = ClusteredBackendWith500ErrorEvent

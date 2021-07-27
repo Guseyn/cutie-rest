@@ -1,7 +1,7 @@
 module.exports = {
 
   Backend: require('./src/backend/Backend'),
-  ClusteredBackendWith505ErrorEvent: require('./src/backend/cluster/ClusteredBackendWith505ErrorEvent'),
+  ClusteredBackendWith500ErrorEvent: require('./src/backend/cluster/ClusteredBackendWith500ErrorEvent'),
   RestApi: require('./src/backend/api/RestApi'),
   Endpoint: require('./src/backend/endpoint/Endpoint'),
   IndexEndpoint: require('./src/backend/endpoint/IndexEndpoint'),

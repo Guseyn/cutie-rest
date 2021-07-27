@@ -340,12 +340,12 @@ const domain = require('domain')
 const cluster = require('cluster')
 const path = require('path')
 const {
-  ClusteredBackendWith505ErrorEvent,
+  ClusteredBackendWith500ErrorEvent,
   RestApi,
   ServingFilesEndpoint,
   CachedServingFilesEndpoint,
   CORSEndpoint
-} = require('./index')
+} = require('@cuties/rest')
 const SimpleResponseOnGETRequest = require('./example/SimpleResponseOnGETRequest')
 const SimpleResponseOnPOSTRequest = require('./example/SimpleResponseOnPOSTRequest')
 const SimpleResponseOnPUTRequest = require('./example/SimpleResponseOnPUTRequest')
@@ -369,7 +369,7 @@ const cacheMapper = (url) => {
   return path.join(...parts)
 }
 
-new ClusteredBackendWith505ErrorEvent(
+new ClusteredBackendWith500ErrorEvent(
   domain,
   cluster,
   (error, request, response) => {
